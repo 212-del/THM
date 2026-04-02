@@ -1,0 +1,7 @@
+#These instruction are meant for kali linux. These soulution will works better on kali linux.
+
+# Step 1
+
+First step is to launch the room from your tryhackme account.
+
+#Step 2 
