@@ -53,7 +53,8 @@ ffuf -u http://lookup.thm/login.php \
 
 Now what i got as output was
 
-``` [Status: 200, Size: 74, Words: 10, Lines: 1, Duration: 64ms]
+``` 
+[Status: 200, Size: 74, Words: 10, Lines: 1, Duration: 64ms]
     * PASS: random_pass
     * USER: random_user
 ```
