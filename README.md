@@ -143,7 +143,7 @@ This repository is primarily a personal learning log, but feedback, corrections,
 
 Follow this journey and connect with the cybersecurity community:
 
-- 🌐 TryHackMe Profile: [tryhackme.com](https://tryhackme.com)
+- 🌐 TryHackMe Profile: [tryhackme.com](https://tryhackme.com/p/LinuxX)
 - 💻 GitHub: [github.com/212-del](https://github.com/212-del)
 
 ---
