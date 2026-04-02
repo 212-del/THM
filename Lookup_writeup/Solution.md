@@ -83,6 +83,4 @@ ffuf -v  -u http://lookup.thm/login.php \
 ```
 
 Now we can see for admin the response was differ. So we tried with admin username in browser and the error was 
-``` 
-Wrong password. Please try again.
- ```
+``` Wrong password. Please try again. ```
