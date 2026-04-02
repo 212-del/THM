@@ -37,7 +37,8 @@ But without jumping to password bruteforcing i tried for sqli and it was not wor
 
 Now finally that we are waiting for..
 
-#Bruteforcing Login Page
+# Bruteforcing Login Page
+
  For this we are going to use ffuf.
  So we will do the below command to do enumuration to login page.
  But Before doing so we need to manually send 1 req first to get the response size and number of words in a invalid response.
