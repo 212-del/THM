@@ -134,10 +134,10 @@ You will now land us to http://files.lookup.thm/ but this is not in out /etc/hos
 now after adding do enter credentials again and you land at the page http://files.lookup.thm/elFinder/elfinder.html#elf_l1_Lw.
 Here you can see each file open and see it. after a lot of enumuration i was able to find the version of elfinder(The web file-manager that is being used here.)
 
-And its version was vulnerable to rce. so i used msfconsole to do this task.
+And its version was vulnerable to rce. i got it after searching for that elfinder version number. so i used msfconsole to do this task.
 to get the exploit just use the preinstalled kali tool searchsploit. by  the command searchsploit -c "elfinder with version number"
 after getting the exploit.
-Do start msfconsole by typing it into the terminal and when it starts do run "search <elfinder with version number>" then you will get a exploit path
+Do start msfconsole by typing it into the terminal and when it starts do run "search <elfinder with version number>" then you will get a exploit path. Use the 4th one or one with excellent rating and path starts with /unix/webapp......... 
 
 Then do "use <exploit_path>"
 set the rhosts to files.lookup.thm by the command set RHOSTS files.lookup.thm
@@ -148,3 +148,4 @@ But i got the error.
 so to resolving steps were : -
 Set the rhosts to room_ip by the command set RHOSTS <room_ip>
 Next set the vhost to files.lookup.thm by the command set VHOST files.lookup.thm
+and now hit the run you will get the shell.
