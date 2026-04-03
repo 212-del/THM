@@ -51,7 +51,7 @@ But without jumping to password bruteforcing i tried for sqli and it was not wor
 
 Now finally that we are waiting for..
 
-# Bruteforcing Login Page
+# Bruteforcing Login Page - Part - 1
 
  For this we are going to use ffuf.
  So we will do the below command to do enumuration to login page.
@@ -148,4 +148,48 @@ But i got the error.
 so to resolving steps were : -
 Set the rhosts to room_ip by the command set RHOSTS <room_ip>
 Next set the vhost to files.lookup.thm by the command set VHOST files.lookup.thm
-and now hit the run you will get the shell.
+and now hit the run you will get the Meterpreter session.
+Meterpreter session is also similar to shell but we enter shell and get the shell.
+We ran few command that we all ran when we get the shell. Command are whoami,id,
+Now this shell is not full tty shell to make it fully tty shell we will use the below command to be comforable with shell
+```
+python3 -c "import pty; pty.spawn('/bin/bash')"
+```
+This will give us a fully tty bash shell.
+# Privilege Escalation — Part 2
+ Now we will start the hunt for current users in this system.
+
+ As we all know this truth about the file /etc/passwd :-- The /etc/passwd file is a text database of user accounts on a Linux/Unix system.
+
+When we did cat /etc/passwd. i got 
+<users_image>
+all entries follows this structure **username:password_placeholder:UID:GID:comment:home_directory:shell**
+In the result we can see all system users except 2 *root* and *think*.
+Now we have another user think whose uid & gid are 1000. It has also its home directory at /home/think lets gets in and see whats there.
+<Enter_think>
+see there is user.txt but we are currently logged in as www-data and that is owned by root and group think. so we can't read it for now.
+But when we saw the hidden files with la  -a flag we can see there is a .password file under /home/think/.
+<Password_think>
+
+Next we will search for SUID binaries as they can gave us root access.
+<SUID_binary>
+We can see a unusual binary named /usr/sbin/pwm
+When we execute this binary so it is trying to execute id and get the username out of it, if we could trick it to think that we are the user think we can see the content of /home/think/.passwords.
+<Execute Binary>
+If we are lucky enough that the binary is executing the command id without using the full path, we can add a modified script has the same name and append it’s path to the path variable. Lets try that
+To do This we will make a file at the location  /tmp with filename id
+To do so we need to first exit from shell and go the meterpreter session since meterpreter session doesn't have a option to create file.
+So The current directory in which we opnened the msfconsole. we will create the id file there. the content within id files will be
+#!/bin/bash
+echo "uid=1001(think) gid=1001(think) groups=1001(think)"
+then we save it on our local disk and upload it with the meterpreter command **upload id**
+<Make_script>
+Since Chmod is supported by meterpreter we will gave this id file executable permission.
+Now make sure you are inside the tmp directory. Cuz we are going to executing a command that will add the current directory to the varible $PATH.
+if you followed by steps and switched from meterpreter to shell i am pretty sure you are at the directory /var/www/files.lookup.thm/public_html/elFinder/php. switch to /tmp
+The command is **PATH=/tmp:$PATH**
+To make sure your Your path command succeed or not. Run echo $PATH if you get /tmp: at the beginning of the line your command is successfully executed.
+
+Now Run that *SUID binary*
+You should get a wordlist copy and save the wordlist for bruteforcing.
+If you don't got the wordlist repeat the steps.
