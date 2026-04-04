@@ -145,6 +145,8 @@ Command explanation:
 
     This is our wordlist (dictionary)
 
-6. 
-
 ```
+
+hashcat can also be that it doesn't run on low aspects devices or gives errors.
+
+To dehash we can also use online methods too
