@@ -1,197 +1,196 @@
-As the 1st one asks for how many servies are running under port 1000. 
+# Simple CTF — Writeup 🚩
 
-It means it is asking how many open ports are there whose port number are less than 1000.
+---
 
-Lets do a quick Nmap to get the result
+## 🔍 Enumeration
 
-<Nmap_res>
+**Q1 & Q2 — Open Ports**
 
-We can clearly see how many ports are running whose port number are less than 1000.
+The first question asks how many services are running under port 1000 — in other words, how many open ports have a port number less than 1000.
 
-This result also gave out answer of 2nd quesiton that What is running on the higher port?
+Let's do a quick Nmap scan to find out.
 
-For the next Quesiion it is asking for What's the CVE you're using against the application?
+![Nmap_res](Nmap_res.png)
 
-But we still doesn't know what application is runnning on this ip. 
+We can clearly see the ports running with a number below 1000. This scan also answers Q2 — *What is running on the higher port?*
 
-<apache_def>
+---
 
-We can see the default page of apache server seems like no service is running. 
+**Q3 — Finding the CVE**
 
-Since Its a webpage we tried to bruteforce endpoints By the command 
+Next up: *What's the CVE you're using against the application?*
+
+We still don't know what application is running on this IP, so let's check.
+
+![apache_def](apache_def.png)
+
+We can see the default Apache page — it seems like no custom service is running at the root.
+
+Since it's a webpage, we tried to brute-force the endpoints using:
 
 ```
-ffuf -u http://<iP>/FUZZ -w /usr/share/seclists/Discovery/Web-content/big.txt
+ffuf -u http://<IP>/FUZZ -w /usr/share/seclists/Discovery/Web-content/big.txt
 ```
 
-<ffuf_res>
+![ffuf_res](ffuf_res.png)
 
-We Got 2 interestign endpoint those are /simple and /robots.txt
+We got 2 interesting endpoints — `/simple` and `/robots.txt`.
 
-<robots_endpoint>
+![robots_endpoint](robots_endpoint.png)
 
-Hitting to robots.txt gave us another endpoint but that is unreachable so thats a clue for us now.
+Hitting `/robots.txt` revealed another endpoint, but it's unreachable — that's a useful clue.
 
-We have now 2 valid Endpoints.
+We now have 2 valid endpoints. Hitting the `/simple` endpoint brought up the well-known open-source CMS — **CMS Made Simple**.
 
-When hitting to the 2nd endpoint it gave us the famous open source software CMS made Simple.
+![cms_version](cms_version.png)
 
-<cms_version>
+We can see the version is **2.2.8**. Now we have an application to work with.
 
-We can see the version is 2.2.8.as well as we will now have a application.
-
-The question asked next is What's the CVE you're using against the application?
-
-We will now search if there is any exploit is available for this version or not
-
-For the we will use the tool **searchsploit**
+We'll search for any available exploit for this version using **searchsploit**:
 
 ```
 searchsploit -c cms 2.2.8
 ```
 
-<searchsploit_res>
+![searchsploit_res](searchsploit_res.png)
 
-We can see clearly that this is vulneable to sqli. and finally we found a vulnerblity but we need a cve of this this search result gave you a path at right plane.
+We can see it's vulnerable to **SQLi**. The search result also shows a path on the right side — we'll need that.
 
-Now to know more about that exploit. We need another commad to know more about that exploit with the help of its path. Make sure to copy that path that you saw in right plane.
+To get more details about the exploit and find the CVE, run:
 
-We will run below command to know *CVE*
 ```
 searchsploit -x <path>
 ```
-You will got the cve number and that your answer for the Q3.
 
+> Make sure to copy the path shown in the right column of the previous result.
 
-We will use it with msfconsole. I immediately started msfconsole and serch by the command **seach cms 2.2.8**. 
+You'll get the CVE number — that's the answer to Q3. ✅
 
-I got a exploit it and set it by **use <exploit_name>**.
+---
 
-<msf_exploit1>
+## 💥 Exploitation
 
-So this is basically asking for a username and password and it is mandatory. So for now we cant use it now.
+We'll use msfconsole to work with this. I searched using the command **search cms 2.2.8** and loaded the exploit with **use \<exploit\_name\>**.
 
-Again we will seach by *searchsploit* tool but with another seach term
+![msf_exploit1](msf_exploit1.png)
+
+This module requires a username and password — both mandatory — so we can't use it just yet.
+
+We'll go back to *searchsploit* with a different search term:
 
 ```
-searchsploit  cms made simple 
+searchsploit cms made simple
 ```
 
-After this command we will get a bunch of result
+After this, we'll get a bunch of results.
 
-<msf_bunch>
+![msf_bunch](msf_bunch.png)
 
-We are now going to do a perfect search with
+Let's narrow it down further:
+
 ```
 searchsploit cms made simple 2.2.8
 ```
 
-We will now get only 1 result with its path we are going to use it by the command
-```
-seachsploit -m 46635
-```
-Now it gets copied into your current location.
-
-The syntax to use this exploit is pyhon2 46635.py -u http://<room_ip>/simple
-
-<exploit_use>
-
-Now we have the password hash for the user mitch.
-
-We can try to dehash the password with hashcat.
-
-We are going to use: -
-```
+We get exactly 1 result. Copy the exploit ID and run:
 
 ```
-The structure of command is hashcat [options] [options_values] [hash(es):salt] [wordlist/mask]
+searchsploit -m 46635
+```
+
+This copies the exploit script to your current directory. The syntax to run it is:
 
 ```
-Command explanation: 
+python2 46635.py -u http://<room_ip>/simple
+```
+
+![exploit_use](exploit_use.png)
+
+We now have the password hash for user **mitch**. 🎯
+
+---
+
+## 🔓 Cracking the Password
+
+We'll crack this hash using **hashcat**. The command structure is:
+
+```
+hashcat [options] [options_values] [hash:salt] [wordlist/mask]
+```
+
+```
+Command explanation:
 
 1. -O flag
-
     Optimized kernel mode
-
     Enables faster cracking
 
 2. -a 0
-
     Attack mode
-
     0 = Straight (dictionary) attack
-      Hashcat will take each word from the wordlist and try it as a password
+    Hashcat takes each word from the wordlist and tries it as the password
 
 3. -m 10
+    Hash type
+    10 = md5($pass.$salt)
 
- Hash type
+    👉 This means:
+    The password is concatenated with the salt, then hashed using MD5
 
-   10 = md5($pass.$salt)
-
- 👉 This means:
-
- The password is concatenated with the salt
- Then hashed using MD5
-
- Formula:
-
-  hash = MD5(password + salt)
+    Formula: hash = MD5(password + salt)
 
 4. 0c01f4468bd75d7a84c7eb73846e8d96:1dac0d92e9fa6bb2
-
     This is the hash + salt pair
 
 5. /usr/share/wordlists/rockyou.txt
-
-    This is our wordlist (dictionary)
-
+    The wordlist (dictionary)
 ```
 
-hashcat can also be that it doesn't run on low aspects devices or gives errors.
+> ⚠️ Hashcat may not run on low-spec devices or might throw errors.
 
-To dehash we can also use online methods too.
+You can also crack the hash online using:
+🔗 [https://hashes.com/en/decrypt/hash](https://hashes.com/en/decrypt/hash)
 
-The url that does our task is *https://hashes.com/en/decrypt/hash*.
+Enter the hash and salt in the format: `password_hash:salt`
 
-Enter the password hash and salt in the format = password_hash+salt.
+Once cracked, submit the password as the answer to Q5. ✅
 
-After doing it we well get a Password.
+---
 
-Now submit this password to question 5 and you're done with Q5.
+## 🔑 SSH Login
 
-For question 6 it is asking me where i can login using the credential above. The answer will be of 3 letters. So ssh keyword quickly clicked into my mind.
+For Q6, it asks where we can log in using the above credentials — the answer is 3 letters. **SSH** came to mind immediately.
 
-And for the next part we will login with ssh for the user whose password we have craked now is mitch.
+Let's log in as `mitch`:
 
 ```
 ssh mitch@<room_ip> -p 2222
 ```
 
-<ssh_login>
+![ssh_login](ssh_login.png)
 
-This ssh session also contains our user flag that of Q7.and also  The answer of Q8.
+This SSH session contains the **user flag** (Q7) and the answer to **Q8** as well.
 
+---
 
-Privilage Escalation Part
+## ⬆️ Privilege Escalation
 
-Now into our ssh session we will check what permission we have by 
+Inside our SSH session, let's check what permissions we have:
 
 ```
 sudo -l
 ```
 
-<perm_img>
+![perm_img](perm_img.png)
 
-We can See that the current user mitch can run the program vim as root.
+We can see that user `mitch` is allowed to run **vim** as root.
 
-For question 9 it is asking what i am going as a leverage to get the root access. The answer is the current program that we are able to root against the user mitch.
+For Q9, it asks what we're using as leverage to gain root access — the answer is the program we're permitted to run as root.
 
-After entering info the vim by the command **sudo vim**. We will type **:!bash** to get a shell.
+After opening vim with **sudo vim**, type **:!bash** to spawn a shell. Since we're running vim as root, the shell we spawn is a **root shell**. 🔥
 
-Since we are able to run the vim as root(sudo). The shell we are spawning with :!bash is a root shell
+![shell_img](shell_img.png)
 
-<shell_img>
+After this, we'll have a root shell — verify it with `whoami`.
 
-After this command we will get the root user you can verify with *whoami*.
-
-Poke around you will also the root flag that is the answer of last Q10.
+Poke around and you'll find the **root flag**, which is the answer to Q10. 🎉
