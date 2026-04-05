@@ -1,4 +1,0 @@
-# Dirsearch started Sun Apr  5 19:41:54 2026 as: /usr/lib/python3/dist-packages/dirsearch/dirsearch.py -u http://10.49.148.79:5000/
-
-400   167B   http://10.49.148.79:5000/console
-200    70B   http://10.49.148.79:5000/robots.txt
