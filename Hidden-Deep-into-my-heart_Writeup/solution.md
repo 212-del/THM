@@ -1,47 +1,47 @@
-After getting the ip At first after opening the ip in browser as http://10.49.148.79:5000
+After getting the IP, at first after opening the IP in the browser as http://10.49.148.79:5000
 
-<def_page>
+![def_page](def_page.png)
 
-The page was not seems a normal page no more complex page so i opened the source code
+The page did not seem like a normal page, no more complex page, so I opened the source code
 
-<source_code>
+![source_code](source_code.png)
 
-But as i can see there is no interesting info in page source.
+But as I can see there is no interesting info in the page source.
 
-But since can't we spotted any endpoint we will do fuzzing now with the command
+But since we couldn't spot any endpoint we will do fuzzing now with the command
 ```bash
 ffuf -u http://10.49.148.79:5000/FUZZ -w /path/to/wordlist 
 ```
 
-The result were below:
+The results were below:
 
-<ffuf_res>
+![ffuf_res](ffuf_res.png)
 
-As we can the useful result is /robots.txt
+As we can see the useful result is /robots.txt
 
-<robots_file>
+![robots_file](robots_file.png)
 
-Now we can see there is secret endpoint. 
+Now we can see there is a secret endpoint. 
 
-When we goto that endpoint we are not reached yet.
+When we go to that endpoint we are not reached yet.
 
-<secret_page>
+![secret_page](secret_page.png)
 
-Here we tried for fuzzing on that hidden endpoint with the command.
+Here we tried fuzzing on that hidden endpoint with the command.
 ```bash
 ffuf -u http://10.49.148.79:5000/cupids_secret_vault/FUZZ -w /path/to/wordlist
 ```
 
 The result was another endpoint
 
-<ffuf_res2>
+![ffuf_res2](ffuf_res2.png)
 
-When i go to that endpoint i got a login page
+When I go to that endpoint I got a login page
 
-<login_page>
+![login_page](login_page.png)
 
 And since its endpoint is /administrator it is obvious for the administrator.
 
-So i tried login as admin and password that that passphrase that i got in the bottom of robots.txt and 
+So I tried logging in as admin and the password — that passphrase that I got at the bottom of robots.txt
 
-Boom!! We got the flag.
+🎉 Boom!! We got the flag.
