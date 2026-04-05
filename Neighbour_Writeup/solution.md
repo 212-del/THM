@@ -1,25 +1,25 @@
-A quick Hit in browser http://10.49.185.184.
+A quick hit in the browser at `http://10.49.185.184`.
 
 It gave us a login page.
 
-<main_png>
+![Main Page](main_page.png)
 
-In the login page it hinted us to do CTRL + U.
+The login page hinted us to press **Ctrl+U** to view the page source.
 
-Here is the source Code.
+Here is the source code.
 
-<source_page>
+![Source Page](source_page.png)
 
-As we can see in line 34 we have the credentials of guest.
+As we can see on line 34, we have the credentials for the guest user.
 
-After login with guest it shows
+After logging in with the guest account, it shows:
 
-<def_page>
+![Default Page](def_page.png)
 
-Consider the URL: http://10.49.185.184/profile.php?user=guest
+Consider the URL: `http://10.49.185.184/profile.php?user=guest`
 
-Since This room is about IDOR. So it is simple nature we will try for parameter tampering.
+Since this room is about **IDOR**, it is natural to try parameter tampering.
 
-After trying a bunch of values of user when hit the value=admin. I got the flag. 
+After trying a bunch of values for the `user` parameter, setting the value to `admin` revealed the flag. 🎉
 
-Easiest flag ever catched.
+Easiest flag ever caught!
