@@ -22,7 +22,7 @@ TryHackMe is one of the most widely used platforms for learning offensive and de
 The primary motivation behind maintaining this repository is multi-faceted:
 
 1. **Knowledge Retention** — Writing down solutions forces a deeper understanding of the material. Passive learning fades; active documentation sticks.
-2. **Community Contribution** — The cybersecurity community thrives on shared knowledge. These writeups are intended to be a resource for fellow learners who may be stuck or looking for alternative approaches.
+2. **Community Contribution** — The cybersecurity community thrives on shared knowledges. These writeups are intended to be a resource for fellow learners who may be stuck or looking for alternative approaches.
 3. **Portfolio Building** — Demonstrating practical, hands-on skills is essential in the cybersecurity field. This repository serves as tangible evidence of consistent practice and growth.
 4. **Reference Material** — Over time, specific techniques, exploit patterns, and tool usage accumulate into a personal reference library that accelerates future work.
 
