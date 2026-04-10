@@ -240,3 +240,15 @@ Similarly.
 And Thats It we will have only 4 char of plaintext.
 
 We will first extract 4 char of key.
+
+To do so we'll go to cyberchef website.
+
+There we will choose xor from left plance to extract the key.
+
+Now in the page only section which supports hex is the field key. So there we put first 8 char of encoded text(already hex encoded) which will be equal  to original 4 char of xor encoded text.
+
+Then we do xor on THM{ and put THM{ in the input field and get the key.
+
+explain these
+
+Now the moment of truth decode the whole line using hex decoder and then xor decode the whole hex using the partial key of lenght 4 with key format utf8 and guess the 5th char by guessing the key when you guess the 5th key you will get the flag 1 and submit the key and got flag2
