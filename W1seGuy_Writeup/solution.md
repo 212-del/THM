@@ -171,7 +171,7 @@ Encoded text + text_to_encode =(encoding with xor)= key
 As we can see in the downloaded file that the string(THM{thisisafakeflag}) is not true. Because the hex output that we get each time after running the command nc <room_ip> 1337. 
 
 We will get a different XOR encoded text. 
-
+```
 The XOR Encoded Text : -
  Encoded Text length  : - 80 char
  Encoded Text byte    : - 40
@@ -179,7 +179,7 @@ The XOR Encoded Text : -
 The PlainText
  Plaintext Length : 20 char
  PlainText Byte   : 20
-
+```
 Here, PlainText Byte != Encoded Text Byte.
 
 That Means Our assumed PlainText is incorrect.
