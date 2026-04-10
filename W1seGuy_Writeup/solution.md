@@ -1,6 +1,6 @@
-So after grabbing the ip i went straight to the browser and entered http://10.48.186.40/
+So after grabbing the IP, I went straight to the browser and entered http://10.48.186.40/
 
-And note it has also told us gave us a python file by download button on the room page.
+And note it also gave us a Python file by the download button on the room page.
 
 The content of it is 
 ```bash
@@ -55,9 +55,9 @@ if __name__ == '__main__':
     server.serve_forever()
 ```
 
-But since it is no any webserver running so no website.
+But since there is no webserver running, so no website.
 
-So our next attepmt will be the obvious nmap scan with the command 
+So our next attempt will be the obvious nmap scan with the command 
 
 ```bash
 nmap -sV -A -O 10.48.186.40
@@ -103,14 +103,14 @@ OS and Service detection performed. Please report any incorrect results at https
 Nmap done: 1 IP address (1 host up) scanned in 21.92 seconds
 
 ```
-As the nmap is saying there is only 1 port opened that is of ssh.
+As the nmap is saying there is only 1 port open that is of SSH.
 
-next as we see the room Description we can see it say 
+Next, as we see the room description, we can see it says 
 ```bash
 The server is listening on port 1337 via TCP. You can connect to it using Netcat or any other tool you prefer.
 ```
 
-So we are going to connect to using nc
+So we are going to connect to it using nc
 ```bash
 nc 10.48.186.40  1337
 ```
@@ -121,11 +121,11 @@ This XOR encoded text has flag 1: 20393a4e2845101b5b2c310903742c0045145e3b351f05
 What is the encryption key?
 ```
 
-And each time i am doing the command nc 10.48.186.40 1337 the XOR encoded text changes.
+And each time I am doing the command nc 10.48.186.40 1337 the XOR encoded text changes.
 
-The reason for is clearly stated in the file that we downloaded from the room page. But here comes our LLM claude we are going to use it for the whole conclution of the file.
+The reason for this is clearly stated in the file that we downloaded from the room page. But here comes our LLM Claude we are going to use it for the whole conclusion of the file.
 
-Whole conclution of the file is 
+Whole conclusion of the file is 
 ```
 📄 What This File Is:
 A Python-based TCP server designed for a CTF (Capture The Flag) challenge, hosted on port 1337.
@@ -154,41 +154,41 @@ Known plaintext attacks
 Basic network interaction via nc
 ```
 
-When we look deep into the file it is XOR encoding a fixed text *THM{thisisafakeflag}* with a key and encrypted text being showed  and that key is being asked when i run
+When we look deep into the file it is XOR encoding a fixed text *THM{thisisafakeflag}* with a key and encrypted text being shown  and that key is being asked when I run
 ```bash
 nc 10.48.186.40 1337
 
 ```
 
-So the magic of XOR enconding that if 
+So the magic of XOR encoding is that if 
 ```
 text_to_encode+ key =(encoding with xor)= Encoded text
 ```
-So the magic is that it can be reverserd to get the key
+So the magic is that it can be reversed to get the key
 ```
 Encoded text + text_to_encode =(encoding with xor)= key
 ```
-As we can see in the downloaded file that the string(THM{thisisafakeflag}) is not true. Because the hex output that we get each time after running the commadn nc <room_ip> 1337. 
+As we can see in the downloaded file that the string(THM{thisisafakeflag}) is not true. Because the hex output that we get each time after running the command nc <room_ip> 1337. 
 
-We will got a different XOR encoded text. 
-
+We will get a different XOR encoded text. 
+```
 The XOR Encoded Text : -
- Encoded Text lenght  : - 80 char
+ Encoded Text length  : - 80 char
  Encoded Text byte    : - 40
 
 The PlainText
- Plaintext Lenght : 20 char
+ Plaintext Length : 20 char
  PlainText Byte   : 20
-
+```
 Here, PlainText Byte != Encoded Text Byte.
 
 That Means Our assumed PlainText is incorrect.
 
 As We can see in the downloaded file that the encoded text is encoded from flag 1 and after submitting the key we will get the flag2.
 
-Now here Our first objective will be to get the key.
+🎯 Now here our first objective will be to get the key.
 
-Remember the Earlier logic of XOR
+💡 Remember the earlier logic of XOR
 
 ```bash
 Plaintext:   H   E   L   L   O
@@ -213,16 +213,16 @@ Key →        K   E   Y   K   E
 As we can see in *To get the key section* that 
  What we have known is
  1. Cipher (Whole Cipher Known.)
- 2. Plaintext(Since Plaintext is flag1 and tryhackme flag often starts with THM{ )
+ 2. Plaintext(Since Plaintext is flag1 and TryHackMe flag often starts with THM{ )
 
 As we can see in *Decrypt Section* that
  What we have known is
   1. Cipher (Whole Cipher Known.)
   2. Key    (Nothing Known)
 
-We are going to chain both section to get the key.
+We are going to chain both sections to get the key.
 
-Small Note: In any hex encoded text 2 char = 1 byte = 1 orginal ASCII char.
+📝 Small Note: In any hex encoded text 2 char = 1 byte = 1 original ASCII char.
 Our encoded text is also further encoded into hex encoding.
 
 See in *To get the key* section. We know the plaintext partially.
@@ -237,21 +237,21 @@ Similarly.
  if 2nd xored char again xored  with 2nd char of plaintext = 2nd char of key
  if 3rd xored char again xored  with 3rd char of plaintext = 3rd char of key
  if 4th xored char again xored  with 4th char of plaintext = 4th char of key
-And Thats It we will have only 4 char of plaintext.
+And That's It we will have only 4 char of plaintext.
 
 We will first extract 4 char of key.
 
 To do so we'll go to cyberchef website.
 
-There we will choose xor from left plance to extract the key.
+There we will choose xor from left panel to extract the key.
 
 Now in the page only section which supports hex is the field key. So there we put first 8 char of encoded text(already hex encoded) which will be equal  to original 4 char of xor encoded text.
 
 Then we do xor on THM{ and put THM{ in the input field and get the key.
 
-But still the key is of length 4 char. But what we need the lenght of key is 5 char. As stated in the downloaded file.
+But still the key is of length 4 char. But what we need the length of key is 5 char. As stated in the downloaded file.
 
-So we will first open the another cyberchef window. (Warning: Learn How to use cyberchef)
+So we will first open another cyberchef window. (Warning: Learn How to use cyberchef)
 
 And into that change the whole encoded text(hex encoded text) using the from hex.
 
