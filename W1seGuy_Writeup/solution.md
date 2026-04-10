@@ -249,6 +249,12 @@ Now in the page only section which supports hex is the field key. So there we pu
 
 Then we do xor on THM{ and put THM{ in the input field and get the key.
 
-explain these
+But still the key is of length 4 char. But what we need the lenght of key is 5 char. As stated in the downloaded file.
 
-Now the moment of truth decode the whole line using hex decoder and then xor decode the whole hex using the partial key of lenght 4 with key format utf8 and guess the 5th char by guessing the key when you guess the 5th key you will get the flag 1 and submit the key and got flag2
+So we will first open the another cyberchef window. (Warning: Learn How to use cyberchef)
+
+And into that change the whole encoded text(hex encoded text) using the from hex.
+
+Then decoded put do xor with over that with the key obtained and keep the key type as utf-8
+
+Still you will not get the result. Cuz the key of 4 char. Now for the 5th char do guess from (A-Z)or(a-z)or(0-9).
