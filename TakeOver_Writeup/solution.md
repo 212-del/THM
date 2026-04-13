@@ -1,4 +1,4 @@
-So in the beginning of this room i got the ip 10.48.189.76 But when i visited to http://10.48.189.76/
+At the beginning of the room, we obtained the IP address 10.48.189.76 But when i visited to http://10.48.189.76/
 
 What i got was 
 
