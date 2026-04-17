@@ -1,22 +1,22 @@
-At the beginning of the room, we obtained the IP address 10.48.189.76 But when i visited to http://10.48.189.76/
+At the beginning of the room, we obtained the IP address 10.48.189.76. When I visited http://10.48.189.76/
 
-What i got was 
+What I got was:
 
-<dns_error>
+![DNS Error](dns_error.png)
 
-So to resolve we need to solve this error we need to list the domain(showed in above picture) right beside the ip in the /etc/hosts file.
+To resolve this error, we need to add the domain (shown in the picture above) beside the IP in the `/etc/hosts` file.
 
-After resolving this is our target.
+After resolving, this is our target:
 
-<homepage_err>
+![Homepage Error](homepage_err.png)
 
-Its due to its certification has expired.
+It's because its certificate has expired.
 
-After this we tapped on advanced and got this as a first look of our target.
+After clicking on **Advanced**, we get our first look at the target.
 
-<homepage_res>
+![Homepage](homepage_res.png)
 
-and here is the source code
+And here is the source code:
 
 ```html
 <!DOCTYPE html>
@@ -112,56 +112,56 @@ and here is the source code
 </html>
 ```
 
-source code is just giving us 3 endpoints 
+The source code reveals the following endpoints:
  
- 1.https://futurevera.thm/assets/img/03.jpg
+ 1. https://futurevera.thm/assets/img/03.jpg
 
- 2.https://futurevera.thm/assets/img/02.jpg
+ 2. https://futurevera.thm/assets/img/02.jpg
 
- 3.https://futurevera.thm/assets/img/01.jpg
+ 3. https://futurevera.thm/assets/img/01.jpg
 
- 4.https://futurevera.thm/css/styles.css
+ 4. https://futurevera.thm/css/styles.css
 
- 5.https://futurevera.thm/assets/favicon.ico
+ 5. https://futurevera.thm/assets/favicon.ico
 
- 6.https://futurevera.thm/js/bootstrap.bundle.min.js
+ 6. https://futurevera.thm/js/bootstrap.bundle.min.js
 
- 7.https://futurevera.thm/js/scripts.js
+ 7. https://futurevera.thm/js/scripts.js
 
-But as said in the room desription that they are rebuiling their support. 
+As mentioned in the room description, they are rebuilding their support.
 
-Maybe there are working on support subdomain or support endpoint.
+Maybe they are working on a support subdomain or support endpoint.
 
-But since support endpoint was not found. But we did find support subdmomain at support.futurevera.thm
+The support endpoint was not found, but we did find the support subdomain at `support.futurevera.thm`.
 
-<dns_error>
+![DNS Error](dns_error.png)
 
-But adding the support.futurevera.thm is not enought you will still get the above error. 
+But adding `support.futurevera.thm` to the hosts file is not enough — you will still get the above error.
 
-Note: Make sure to add support.futurevera.thm in the /etc/hosts file just beside the futurevera.thm
+**Note:** Make sure to add `support.futurevera.thm` in the `/etc/hosts` file right beside `futurevera.thm`.
 
-But still after doing so i got the error
+Even after doing so, I still got an error:
 
-<support_img>
+![Support Subdomain Error](support_img.png)
 
-You can see the error clearly "ERR_SSL_KEY_USAGE_INCOMPATIBLE"
+You can see the error clearly — `ERR_SSL_KEY_USAGE_INCOMPATIBLE`.
 
-After it when i tried the url with http instead of https i got redirected to https://futurevera.thm
+When I tried the URL with `http` instead of `https`, I got redirected to `https://futurevera.thm`.
 
-since this problem is revolving around the certificate  we will go to find the certificate information of this subdomain.
+Since this problem revolves around the certificate, we need to look into the certificate information of this subdomain.
 
-To do so we will use the command 
+To do so, we will use the command:
 ```
 openssl s_client -connect support.futurevera.thm:443 -servername support.futurevera.thm 2>/dev/null | openssl x509 -noout -text
 ```
 
-The purpose of this command is **Connect to a TLS server, extract its certificate, and display all its details in readable form.**
+The purpose of this command is **to connect to a TLS server, extract its certificate, and display all its details in a readable form.**
 
-when we will do this in the output of this command we will get a line that will gave us a new domain
+When we run this command, the output will contain a line that gives us a new domain:
 ```
 DNS:obviously-redated.support.futurevera.thm
 ```
 
-and when we hit in browser for the url http://secrethelpdesk934752.support.futurevera.thm we will get the flag.
+Navigating to `http://secrethelpdesk934752.support.futurevera.thm` in the browser will give us the flag.
 
-Note: Do remember to add http not https. Okay!
+**Note:** Make sure to use `http`, not `https`.
