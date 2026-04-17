@@ -148,3 +148,20 @@ You can see the error clearly "ERR_SSL_KEY_USAGE_INCOMPATIBLE"
 
 After it when i tried the url with http instead of https i got redirected to https://futurevera.thm
 
+since this problem is revolving around the certificate  we will go to find the certificate information of this subdomain.
+
+To do so we will use the command 
+```
+openssl s_client -connect support.futurevera.thm:443 -servername support.futurevera.thm 2>/dev/null | openssl x509 -noout -text
+```
+
+The purpose of this command is **Connect to a TLS server, extract its certificate, and display all its details in readable form.**
+
+when we will do this in the output of this command we will get a line that will gave us a new domain
+```
+DNS:obviously-redated.support.futurevera.thm
+```
+
+and when we hit in browser for the url http://secrethelpdesk934752.support.futurevera.thm we will get the flag.
+
+Note: Do remember to add http not https. Okay!
