@@ -134,7 +134,7 @@ Maybe there are working on support subdomain or support endpoint.
 
 But since support endpoint was not found. But we did find support subdmomain at support.futurevera.thm
 
-<support_err>
+<dns_error>
 
 But adding the support.futurevera.thm is not enought you will still get the above error. 
 
