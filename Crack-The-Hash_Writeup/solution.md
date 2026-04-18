@@ -52,3 +52,27 @@ Search the hashcat examples page (https://hashcat.net/wiki/doku.php?id=example_h
 ```
 
 The hint is saying to analyse the hash from that specific url but we gonna use the chatgpt for analysign that hash.
+
+```
+What each part means
+$2y$
+This indicates the bcrypt algorithm variant.
+2y is commonly used in PHP implementations of bcrypt.
+12$
+This is the cost factor (work factor).
+It means the hashing process runs 2^12 = 4096 iterations.
+Higher = slower but more secure.
+Dwt1BZj6pcyc3Dy1FWZ5ie (22 chars)
+This is the salt.
+Random data added to the password before hashing.
+Ensures that identical passwords produce different hashes.
+eUznr71EeNkJkUlypTsgbX1H68wsRom
+This is the actual hashed output.
+```
+
+
+So now we will seach for online bcrypt online decoder.
+
+But as per my search i cant find any online tool for it.
+
+Then i did chatgpt and it told me to visit hashses.com and there i hit that hash and got the answer *bleh*
