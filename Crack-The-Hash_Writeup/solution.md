@@ -1,122 +1,154 @@
-for the first hash its hint already says that its a md5 hash. the hash is 
+## Level 1
+
+### Hash 1 — MD5
+
+The hint for the first hash already tells us it's an MD5 hash. The hash is:
 
 ```
 48bb6e862e54f2a795ffc4e541caed4d
 ```
 
-Now we can search for any md5 hash decoder and enter this hash and we will get the decoded result.
+We can search for any MD5 hash decoder online, enter this hash, and get the decoded result.
 
 **easy**
 
-For the second hash its hint says *Sha..But which version*
+---
 
-We will now analyse the hash *CBFDAC6008F9CAB4083784CBD1874F76618D2A97*
+### Hash 2 — SHA-1
+
+The hint for the second hash says *Sha... But which version?*
+
+We will now analyse the hash `CBFDAC6008F9CAB4083784CBD1874F76618D2A97`.
 
 ```
 The key clue is length.
 
-This hash is 40 hexadecimal characters
+This hash is 40 hexadecimal characters.
 Each hex character = 4 bits → 40 × 4 = 160 bits
 
 That matches SHA-1, which produces 160-bit hashes (40 hex chars).
 ```
 
-Now i seached onlinne for sha1 decoder and feed it the sha 1 hash *CBFDAC6008F9CAB4083784CBD1874F76618D2A97*
+I searched online for a SHA-1 decoder and fed it the hash `CBFDAC6008F9CAB4083784CBD1874F76618D2A97`.
 
-This gave me the decoded result *password123*
+This gave the decoded result: *password123*
 
+---
 
-Now lets go onto the 3rd hash its hint says *Sha..*
+### Hash 3 — SHA-256
 
-But it is similar like the above one so we need to ananlyse the hash again *1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032*
+The hint for the third hash also says *Sha..*, similar to the previous one, so we need to analyse the hash again: `1C8BFE8F801D79745C4631D09FFF36C82AA37FC4CCE4FC946683D7B336B63032`
 
 ```
- The key clue is length.
+The key clue is length.
 
- This hash is 64 hexadecimal characters
- Each hex character = 4 bits → 64 × 4 = 256 bits
+This hash is 64 hexadecimal characters.
+Each hex character = 4 bits → 64 × 4 = 256 bits
 
- That  matches SHA-256, which produces 256-bit hashes (64 hex chars).
+That matches SHA-256, which produces 256-bit hashes (64 hex chars).
 ```
 
-Again we will seach onlien for sha 256 decoder and decode it online.
+Again, we search online for a SHA-256 decoder and decode it.
 
 The decoded result was *letmein*
 
-Now lets goto out fourth hash that is *$2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom*
+---
 
-And its hint says 
+### Hash 4 — bcrypt
+
+The fourth hash is `$2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom`
+
+Its hint says:
 
 ```
 Search the hashcat examples page (https://hashcat.net/wiki/doku.php?id=example_hashes) for $2y$. This type of hash can take a very long time to crack, so either filter rockyou for four character words, or use a mask for four lower case alphabetical characters.
 ```
 
-The hint is saying to analyse the hash from that specific url but we gonna use the chatgpt for analysign that hash.
+The hint points us to the Hashcat examples page to identify the hash type. Here's a breakdown of what each part of the hash means:
 
 ```
-What each part means
+What each part means:
+
 $2y$
 This indicates the bcrypt algorithm variant.
 2y is commonly used in PHP implementations of bcrypt.
+
 12$
 This is the cost factor (work factor).
 It means the hashing process runs 2^12 = 4096 iterations.
 Higher = slower but more secure.
+
 Dwt1BZj6pcyc3Dy1FWZ5ie (22 chars)
 This is the salt.
 Random data added to the password before hashing.
 Ensures that identical passwords produce different hashes.
+
 eUznr71EeNkJkUlypTsgbX1H68wsRom
 This is the actual hashed output.
 ```
 
+Searching for an online bcrypt decoder, most tools won't crack it directly since bcrypt is intentionally slow by design. Visiting hashes.com and submitting the hash gives us the answer: *bleh*
 
-So now we will seach for online bcrypt online decoder.
+---
 
-But as per my search i cant find any online tool for it.
+## Level 2
 
-Then i did chatgpt and it told me to visit hashses.com and there i hit that hash and got the answer *bleh*
+### Hash 5 — MD4
 
+The fifth hash is `279412f945939ba78ce0758d3fd83daa`
 
-Now Lets go to our fifth hash *279412f945939ba78ce0758d3fd83daa*
+The hint already tells us it is MD4, so we can enter it on hashes.com.
 
-Its hint already says that it is md4 so we can enter it in the same website hashes.com. 
+After doing so, it gave the result: *Eternity22*
 
-After doing the same it gave me the result *Eternity22*
+---
 
-Now lets goto our sixth hash *F09EDCB1FCEFC6DFB23DC3505A882655FF77375ED8AA2D1C13F640FCCC2D0C85*
+### Hash 6 — SHA-256
 
-Since we dont know the hash and it has also no hint we will first find what it is.
+The sixth hash is `F09EDCB1FCEFC6DFB23DC3505A882655FF77375ED8AA2D1C13F640FCCC2D0C85`
+
+Since there's no hint, we need to identify the hash type first.
 
 ```
-  The key clue is length.
+The key clue is length.
 
-  This hash is 64 hexadecimal characters
-  Each hex character = 4 bits → 64 × 4 = 256 bits
+This hash is 64 hexadecimal characters.
+Each hex character = 4 bits → 64 × 4 = 256 bits
 
-That  matches SHA-256, which produces 256-bit hashes (64 hex chars).
+That matches SHA-256, which produces 256-bit hashes (64 hex chars).
 ```
 
-For its decoding too we can refer to hashes.com and that will gave us the decoded result *paule*
+We can look it up on hashes.com, which gives us the decoded result: *paule*
 
-For the seventh hash *1DFECA0C002AE40B8619ECF94819CC1B*
+---
 
-We already have the hint available that its a NTLM. and we can do it with the same website hashes.com
+### Hash 7 — NTLM
 
-And this will gives us the decoded hash *n63umy8lkf4i*
+The seventh hash is `1DFECA0C002AE40B8619ECF94819CC1B`
 
-Now  lets goto our eighth hash *$6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.*
+The hint tells us it's an NTLM hash, so we can use hashes.com directly.
 
-It has a salt too *aReallyHardSalt*
+This gives us the decoded result: *n63umy8lkf4i*
 
-Now lets enter it to the website hashes.com in the format $6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.:aReallyHardSalt
+---
 
-And this will gave us the decoded result of it *waka99*
+### Hash 8 — SHA-512crypt
 
-Infact it doesn't requires the salt.
+The eighth hash is `$6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.*`
 
-Now lets moveon to our nineth hash *e5d8870e5bdd26602cab8dbe07a942c8669e56d6* with the salt *tryhackme*
+It also comes with a salt: *aReallyHardSalt*
 
-Now we will enter the hash into the same website and this reveals the decoded text *481616481616*
+We submit it to hashes.com in the format:
+`$6$aReallyHardSalt$6WKUTqzq.UQQmrm0p/T7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.:aReallyHardSalt`
 
+This gives us the decoded result: *waka99*
 
+In fact, the salt is not required for the submission to work.
+
+---
+
+### Hash 9 — HMAC-SHA1
+
+The ninth hash is `e5d8870e5bdd26602cab8dbe07a942c8669e56d6` with the salt *tryhackme*
+
+Entering the hash into hashes.com reveals the decoded text: *481616481616*
