@@ -1,5 +1,7 @@
 So after visiting the IP in browser http://10.49.152.161/, the page looks like a simple text-to-PDF converter with a single input field.
 
+![homepage_look](homepage_look.png)
+
 In its text field, when I entered some text and hit **Convert to PDF**, it went through some background process and returned a PDF file with the written text available to download.
 
 Now, looking at the text field, the first thing that comes to mind is injecting something that triggers an effect.
