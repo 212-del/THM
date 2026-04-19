@@ -64,6 +64,6 @@ Now as i put this jwt token in the inspect tab and refrested the tab it gave me 
 
 As i goto the homepage of the site now where the product are listed i could see that hidden product 
 
-![admin](hidden.png)
+![hidden](hidden.png)
 
 Now as we will tap onto this product and hit buy it gave us the flag.
