@@ -117,7 +117,7 @@ This repository delivers:
 | 📄 **MD2PDF** | SSRF (Server-Side Request Forgery) | 🟡 Medium | [View →](./MD2PDF_Writeup/) |
 | 🎵 **Lo-Fi** | Local File Inclusion (LFI) / Path Traversal | 🟢 Easy | [View →](./Lo-Fi_Writeup/) |
 | 💌 **Hidden Deep into My Heart** | Web Application Exploitation | 🟡 Medium | [View →](./Hidden-Deep-into-my-heart_Writeup/) |
-| 🛍️ **TryHeartMe** | Web Business Logic / Hidden Endpoint | 🟡 Medium | [View →](./TryHeartMe_Writeup/) |
+| 🛍️ **TryHeartMe** | JWT Token Forgery / Business Logic Bypass | 🟡 Medium | [View →](./TryHeartMe_Writeup/) |
 | 🌐 **TakeOver** | Subdomain Enumeration / Takeover | 🟢 Easy | [View →](./TakeOver_Writeup/) |
 
 ### 🐧 Linux / CTF
@@ -202,6 +202,7 @@ Through these rooms, the following **real-world attack techniques** have been re
 
 | 🎯 Technique | 📚 Description | 🏁 Room(s) |
 |:---|:---|:---|
+| **JWT Forgery** | Forging JSON Web Tokens by manipulating the payload to escalate privileges | TryHeartMe |
 | **IDOR** | Insecure Direct Object Reference — accessing unauthorised resources by manipulating IDs | Corridor, Neighbour |
 | **SSRF** | Server-Side Request Forgery — tricking the server into making internal requests | MD2PDF |
 | **LFI** | Local File Inclusion — reading sensitive server files via unsanitised input | Lo-Fi |
