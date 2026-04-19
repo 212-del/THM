@@ -5,3 +5,4 @@ When i went at that page i saw
 ![homepage_look](homepage_look.png)
 
 
+the task of this room was find a way to purchase the hidden item.
