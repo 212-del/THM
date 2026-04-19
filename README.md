@@ -1,17 +1,13 @@
 <div align="center">
 
 <!-- TryHackMe Badge -->
-<img src="https://tryhackme-badges.s3.amazonaws.com/LinuxX.png" alt="TryHackMe Badge" width="320"/>
+<img src="https://assets.tryhackme.com/img/badges/streak1500.png" alt="TryHackMe Badge"  width="320"/>
 
 <br/><br/>
 
 <!-- GitHub Logos -->
 <a href="https://github.com/212-del">
   <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Classic Octocat" width="55" title="GitHub Classic"/>
-</a>
-&nbsp;&nbsp;
-<a href="https://github.com/212-del">
-  <img src="https://github.githubassets.com/images/modules/logos_page/github-mark.png" alt="GitHub New Mark" width="55" title="GitHub New Mark"/>
 </a>
 
 <br/><br/>
