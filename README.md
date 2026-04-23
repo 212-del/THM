@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-13-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-14-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **13** |
+| 🏁 **Rooms Completed** | **14** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -119,6 +119,7 @@ This repository delivers:
 | 💌 **Hidden Deep into My Heart** | Web Application Exploitation | 🟡 Medium | [View →](./Hidden-Deep-into-my-heart_Writeup/) |
 | 🛍️ **TryHeartMe** | JWT Token Forgery / Business Logic Bypass | 🟡 Medium | [View →](./TryHeartMe_Writeup/) |
 | 🌐 **TakeOver** | Subdomain Enumeration / Takeover | 🟢 Easy | [View →](./TakeOver_Writeup/) |
+| 🗨️ **Speed Chatting** | File Upload Bypass / Python RCE | 🟡 Medium | [View →](./Speed-Chatting_Writeup/) |
 
 ### 🐧 Linux / CTF
 
@@ -207,7 +208,7 @@ Through these rooms, the following **real-world attack techniques** have been re
 | **SSRF** | Server-Side Request Forgery — tricking the server into making internal requests | MD2PDF |
 | **LFI** | Local File Inclusion — reading sensitive server files via unsanitised input | Lo-Fi |
 | **SQL Injection** | Extracting and manipulating database data through unsanitised queries | SimpleCTF |
-| **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe |
+| **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe, Speed Chatting |
 | **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup |
 | **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash |
 | **XOR Cryptanalysis** | Reversing XOR-encrypted ciphertext using known-plaintext attacks | W1seGuy |
@@ -232,7 +233,8 @@ THM/
 │   ├── Lo-Fi_Writeup/                     ← LFI / path traversal
 │   ├── Hidden-Deep-into-my-heart_Writeup/ ← Web exploitation
 │   ├── TryHeartMe_Writeup/                ← Business logic bypass
-│   └── TakeOver_Writeup/                  ← Subdomain takeover
+│   ├── TakeOver_Writeup/                  ← Subdomain takeover
+│   └── Speed-Chatting_Writeup/            ← File upload bypass + Python RCE
 │
 ├── 🐧 Linux / CTF
 │   ├── RootMe_Writeup/                    ← File upload + privilege escalation
@@ -266,7 +268,7 @@ RoomName_Writeup/
 |:---|:---:|:---:|
 | Pre-Security Fundamentals | 🔄 In Progress | — |
 | Jr. Penetration Tester | 🔄 In Progress | — |
-| Web Application Security | 🔄 In Progress | 7 rooms |
+| Web Application Security | 🔄 In Progress | 8 rooms |
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
 | AI Security | 🔄 In Progress | 1 room |
 | SOC Level 1 | ⏳ Planned | — |
