@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-14-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-15-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **14** |
+| 🏁 **Rooms Completed** | **15** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -135,6 +135,7 @@ This repository delivers:
 |:---|:---|:---:|:---:|
 | #️⃣ **Crack the Hash** | Hash Identification & Cracking (MD5, SHA, bcrypt) | 🟢 Easy | [View →](./Crack-The-Hash_Writeup/) |
 | 🔡 **W1seGuy** | XOR Cipher Analysis & Crypto Reversing | 🟡 Medium | [View →](./W1seGuy_Writeup/) |
+| 🔐 **c4ptur3-th3-fl4g** | Encoding, Ciphers & Steganography (14-challenge gauntlet) | 🟢 Easy | [View →](./c4ptur3-th3-fl4g_Writeup/) |
 
 ### 🤖 AI Security
 
@@ -243,7 +244,8 @@ THM/
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
-│   └── W1seGuy_Writeup/                   ← XOR cipher analysis
+│   ├── W1seGuy_Writeup/                   ← XOR cipher analysis
+│   └── c4ptur3-th3-fl4g_Writeup/          ← Encoding, ciphers & steganography
 │
 └── 🤖 AI Security
     └── CupidBot_Writeup/                  ← Prompt injection
