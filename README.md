@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-16-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-17-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **16** |
+| 🏁 **Rooms Completed** | **17** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -120,6 +120,7 @@ This repository delivers:
 | 🛍️ **TryHeartMe** | JWT Token Forgery / Business Logic Bypass | 🟡 Medium | [View →](./TryHeartMe_Writeup/) |
 | 🌐 **TakeOver** | Subdomain Enumeration / Takeover | 🟢 Easy | [View →](./TakeOver_Writeup/) |
 | 🗨️ **Speed Chatting** | File Upload Bypass / Python RCE | 🟡 Medium | [View →](./Speed-Chatting_Writeup/) |
+| 🤖 **AgentT** | PHP 8.1.0-dev Backdoor / Remote Code Execution | 🟢 Easy | [View →](./AgentT_Writeup/) |
 
 ### 🐧 Linux / CTF
 
@@ -236,7 +237,8 @@ THM/
 │   ├── Hidden-Deep-into-my-heart_Writeup/ ← Web exploitation
 │   ├── TryHeartMe_Writeup/                ← Business logic bypass
 │   ├── TakeOver_Writeup/                  ← Subdomain takeover
-│   └── Speed-Chatting_Writeup/            ← File upload bypass + Python RCE
+│   ├── Speed-Chatting_Writeup/            ← File upload bypass + Python RCE
+│   └── AgentT_Writeup/                    ← PHP 8.1.0-dev backdoor RCE
 │
 ├── 🐧 Linux / CTF
 │   ├── RootMe_Writeup/                    ← File upload + privilege escalation
@@ -272,7 +274,7 @@ RoomName_Writeup/
 |:---|:---:|:---:|
 | Pre-Security Fundamentals | 🔄 In Progress | — |
 | Jr. Penetration Tester | 🔄 In Progress | — |
-| Web Application Security | 🔄 In Progress | 8 rooms |
+| Web Application Security | 🔄 In Progress | 9 rooms |
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
 | AI Security | 🔄 In Progress | 1 room |
 | Linux / CTF | 🔄 In Progress | 4 rooms |
