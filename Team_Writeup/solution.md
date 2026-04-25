@@ -1,8 +1,31 @@
-So after getting the ip we first opened it into the browser it serves as a default homepage of apache server
+<div align="center">
+
+<img src="https://assets.tryhackme.com/img/logo/tryhackme_logo_full.svg" alt="TryHackMe" width="280"/>
+
+<br/><br/>
+
+# 🏴 Team — TryHackMe Writeup
+
+[![TryHackMe](https://img.shields.io/badge/TryHackMe-Team-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/room/teamcw)
+[![Difficulty](https://img.shields.io/badge/Difficulty-Easy-brightgreen?style=for-the-badge&logo=shield&logoColor=white)](https://tryhackme.com/room/teamcw)
+[![Category](https://img.shields.io/badge/Category-Boot2Root-blue?style=for-the-badge&logo=linux&logoColor=white)](https://tryhackme.com/room/teamcw)
+[![Techniques](https://img.shields.io/badge/Techniques-LFI%20%7C%20SSH%20%7C%20Cron%20Privesc-orange?style=for-the-badge)](https://tryhackme.com/room/teamcw)
+
+<br/>
+
+<img src="https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif" width="220" alt="Hacking Animation"/>
+
+</div>
+
+---
+
+## 🔍 Initial Enumeration
+
+So after getting the IP, I first opened it in the browser — it serves as the default homepage of the Apache server.
 
 ![default](homepage.png)
 
-The nmap result was 
+The Nmap result was:
 
 ```
 Starting Nmap 7.98 ( https://nmap.org ) at 2026-04-24 23:54 +0530
@@ -38,40 +61,44 @@ OS and Service detection performed. Please report any incorrect results at https
 Nmap done: 1 IP address (1 host up) scanned in 26.81 seconds
 
 ```
-Meaning we can do something with vsftpd 3.0.5 that is **CVE-2025-14242**
 
-But we can't do anything with it is for the Ddos.
+Meaning we can do something with vsftpd 3.0.5 — that is **CVE-2025-14242**.
 
-The important section in the source code i found was
+But we can't do anything with it as it is for DDoS only.
+
+The important section in the source code I found was:
 
 ```html
 <title>Apache2 Ubuntu Default Page: It works! If you see this add 'team.thm' to your hosts!</title>
-
 ```
 
-after doing so it opens up a completely different page. 
+After doing so, it opens up a completely different page.
 
-Meaning the page is using virtual hosting.
+Meaning the page is using **virtual hosting**. 🖥️
 
 ![page](page.png)
 
-The robots.txt also exist there include one name *dale*.
+The `robots.txt` also exists there and it includes one name — *dale*.
 
-When doing directory bruteforcing it gave us only those pages that were inside the source code.
+When doing directory brute-forcing, it gave us only those pages that were already inside the source code.
 
-But as it is said in the hint of question 1.
+---
+
+## 🚩 Q1 — What does user.txt contain?
+
+But as it is said in the hint of Question 1:
 
 ```
-As the "dev" site is under contruction maybe it has some flaws? "url?=" + "This rooms picture" 
+As the "dev" site is under construction maybe it has some flaws? "url?=" + "This rooms picture"
 ```
 
-So first i did add dev.team.thm into the /etc/hosts file.
+So first I added `dev.team.thm` into the `/etc/hosts` file.
 
 Then accessed the dev page.
 
 ![dev](dev.png)
 
-Now there is a link when tapped onto it gave us irrelevent page but the url was not
+Now there is a link — when clicked, it gave us an irrelevant page but the URL was not irrelevant:
 
 ```
 http://dev.team.thm/script.php?page=teamshare.php
@@ -79,41 +106,45 @@ http://dev.team.thm/script.php?page=teamshare.php
 
 ![dev_end](dev_end.png)
 
-Here we can try for parameter tampering.
+Here we can try **parameter tampering**. 🎯
 
-So we tried LFI paylods with ffuf
-
-with the command 
+So we tried LFI payloads with `ffuf` using the command:
 
 ```
 ffuf -w /home/Seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt   -H "Host: dev.team.thm" -u http://dev.team.thm/script.php?page=FUZZ -ac
 ```
 
-It did worked and gave a lot of endpoints.
+It worked and gave a lot of endpoints.
 
-But one endpoint confired that there is confirm user dale.
+But one endpoint confirmed that there is a user named *dale*.
 
-So i put *page=/home/dale/user.txt* and it split out the first flag that was to find what is inside user.txt
+So I put `page=/home/dale/user.txt` and it spat out the first flag — which was what is inside `user.txt`. 🏁
 
-Now inside the lfi payload one of the payload was */etc/ssh/sshd_config*
+> 💡 **Tip:** Whenever you see a `?page=` or `?file=` parameter, always try LFI payloads — there is a good chance the developer forgot to sanitise the input.
 
-Ssh key was there from there i grep the key remove any extra spaces and hash then gave the key permission of 600.
+Now inside the LFI payloads, one of them was `/etc/ssh/sshd_config`.
 
-and i was able to login as dale by the commadn 
+An SSH key was there. From there I grabbed the key, removed any extra spaces and the hash, then gave the key permissions of 600.
+
+And I was able to login as dale using the command:
 
 ```ssh
 ssh -i key dale@ip
 ```
 
-but going to the /root folder says that i need to do privilage escalation.
+But going to the `/root` folder shows that I need to do **privilege escalation**. 🔐
 
-So first we gonna fine the command that i can run as sudo by **sudo -l **
+---
+
+## 🏆 Q2 — What does root.txt contain?
+
+So first I am gonna find the commands I can run as sudo using **`sudo -l`**.
 
 ![sudo](sudo.png)
 
-We can we can run the /home/gyles/admin_checks with sudo as gyles with current user without password.
+We can run `/home/gyles/admin_checks` with sudo as gyles from our current user — without a password. 👀
 
-The content of it was 
+The content of it was:
 
 ```bash
 #!/bin/bash
@@ -132,57 +163,49 @@ date_save=$(date "+%F-%H-%M")
 cp /var/stats/stats.txt /var/stats/stats-$date_save.bak
 
 printf "Stats have been backed up\n"
-
-
-
 ```
-and the content of /home/ftpuser/workshare/New_site.txt was
+
+And the content of `/home/ftpuser/workshare/New_site.txt` was:
 
 ```text
 Dale
         I have started coding a new website in PHP for the team to use, this is currently under development. It can be
 found at ".dev" within our domain.
 
-Also as per the team policy please make a copy of your "id_rsa" and place this in the relevent config file.
+Also as per the team policy please make a copy of your "id_rsa" and place this in the relevant config file.
 
 Gyles 
-
-
 ```
-Now it's sure that dev.team.thm is made by gyles.
 
-When entering into the /home/dale
+Now it is confirmed that `dev.team.thm` was made by gyles.
 
-we saw a line 
+When entering `/home/dale`, we saw this line:
 
 ```
 sudo -u gyles /home/gyles/admin_checks
 ```
-the description of -u = -u tells sudo which user you want to run the command as.
 
-Look at the code of admin_checks in that code 
+The `-u` flag tells sudo which user you want to run the command as.
+
+Now look at the code of `admin_checks` — in that code:
+
 ```
 $error 2>/dev/null
 ```
- in this line
 
-👉 a variable being executed like a command
+👉 A variable is being executed like a command.
 
-now whenever it will prompts for we can execute a command and result will be saved in the file of /var/status/status-$date_save.bak and since we can execute a command
+Now whenever it prompts us, we can execute a command. Since we can execute a command, we will try to **spawn a shell** here. 🐚
 
-We will try to spawn a shell here.
+When we enter **`bash`** as the value of the variable `date`, we will be able to login as user gyles.
 
-when we enter **bash** as a value of varible date.
+As I looked at the `bash_history` of gyles, it told me that something was done in a folder called `admin_stuff`.
 
-we will be able to now login as user gyles.
+But I was not able to find that folder inside `/home/gyles/`.
 
-As i saw the bash_history of the user gyles it told me that it has done something in the folder admin_stuff
+So I searched within the whole filesystem and found it at `/opt/admin_stuff`. 🔎
 
-But i didn't able to find that folder admin_stuff inside the /home/gyles/
-
-So i searched within whole filesystem and found at /opt/admin_stuff 
-
-now here as per the history file user gyles then did following
+Now, as per the history file, user gyles did the following:
 
 ```
 sudo chmod gu+s php
@@ -192,10 +215,9 @@ sudo ./php
 
 This should immediately trigger a thought:
 
-“Why was gyles messing with a file called php and setting special permissions on it?”
+> "Why was gyles messing with a file called `php` and setting special permissions on it?"
 
-
-But in reality there exitst a another file script.sh whose content was
+But in reality, there exists another file `script.sh` whose content was:
 
 ```bash
 #!/bin/bash
@@ -207,87 +229,92 @@ main_site="/usr/local/bin/main_backup.sh"
 #Back ups the sites locally
 $main_site
 $dev_site
-
 ```
 
-But there was something interesting with the folder admin_stuff
+But there was something interesting with the folder `admin_stuff`:
 
 ```bash
 drwxrwx---  2 root admin 4.0K Jan 17  2021 admin_stuff
 ```
 
-```md
-
+```
 👉 Meaning:
 
 Owner: root
 Group: admin
 Writable by: group admin
 ```
-Now we have a shell as gyles
 
-When ran id
+Now we have a shell as gyles. 🎉
 
-i saw gyles a part of the group admin.
+When I ran `id`:
 
-Meaning as a user gyles we could edit the file script.sh
+I saw gyles is a part of the group `admin`.
 
-and if we read the file carefully this is running every 1 min as a root meaning we can run the command 
+Meaning, as user gyles, we could edit the file `script.sh`.
+
+And if we read the file carefully — **this is running every 1 minute as root** — meaning we can run any command as root if we can edit that file.
 
 ```bash
 cat /root/root.txt
-
 ```
-as root.
 
-if we could edit the file script.sh. But.....
+If we could edit the file `script.sh`... But wait —
 
-👉 Being in the group isn’t enough by itself.
-You also need write permission on the file, not just the directory.
+👉 Being in the group is not enough by itself. You also need **write permission on the file**, not just the directory.
 
-Now if we see inside the file script.sh it is also executing 2 files as root and lets see we can control those 2 files or not 
-
-
-Meaning we could edit those 2 files or not.
-
-those 2 files are 
+Now if we look inside `script.sh`, it is also executing 2 other files as root. Let us see whether we can control those 2 files:
 
 ```text
 /usr/local/sbin/dev_backup.sh
 /usr/local/bin/main_backup.sh
 ```
 
-Now too see it permission whether we could do anything with it or not
-
-cheking the main_backup.sh gave us
+Checking the permissions of `main_backup.sh` gave us:
 
 ```
 -rwxrwxr-x 1 root admin 84 Apr 25 17:07 /usr/local/bin/main_backup.sh
 ```
 
-Meaning i am part of group admin too as gyles so i could edit the file main_backup.sh so i attact this line to the file 
+Meaning I am part of group `admin` as gyles, so I could edit the file `main_backup.sh`. So I added this line to the file:
 
 ```bash
 echo "id > /tmp/proof.txt" >> /usr/local/bin/main_backup.sh
 ```
-now at the bootom of the ifle main_backup.sh the comman id > /tmp/proof.txt is attached
 
+Now at the bottom of the file `main_backup.sh`, the command `id > /tmp/proof.txt` is attached.
 
-menaing if that file script.sh is actually in cron job and running as root each minute
+Meaning if `script.sh` is actually in a cron job and running as root every minute, then the `id` command will be run as root one minute after adding the line.
 
- menaing the id commond will be run a root after a minute adding the line.
-
-After a min when i checked /tmp/proof.txt
+After a minute, when I checked `/tmp/proof.txt`:
 
 ```bash
 uid=0(root) gid=0(root) groups=0(root),108(lxd),1004(admin)
 ```
-Meaning it is surely running as root.
 
-now i put 
+Meaning it is definitely running as root. ✅
+
+Now I put:
 
 ```bash
- echo "cat /root/root.txt > /tmp/proof.txt" >> /usr/local/bin/main_backup.sh
+echo "cat /root/root.txt > /tmp/proof.txt" >> /usr/local/bin/main_backup.sh
 ```
 
-And since cron job is running each min when i checked for the file after the min i got the content of root.txt and in this way root.txt solves.
+And since the cron job is running every minute, when I checked the file after one minute, I got the content of `root.txt`. 🏁
+
+And that is how `root.txt` gets solved!
+
+---
+
+<div align="center">
+
+<img src="https://media.giphy.com/media/077i6AULCXc0FKTj9s/giphy.gif" width="80" alt="Hacking"/>
+
+### *Room Pwned! 🎉 Keep hacking — ethically and relentlessly.* 🖥️🔐
+
+<br/>
+
+[![TryHackMe](https://img.shields.io/badge/TryHackMe-LinuxX-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
+[![GitHub](https://img.shields.io/badge/GitHub-212--del-black?style=for-the-badge&logo=github&logoColor=white)](https://github.com/212-del)
+
+</div>
