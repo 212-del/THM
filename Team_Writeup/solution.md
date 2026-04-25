@@ -158,3 +158,86 @@ we saw a line
 ```
 sudo -u gyles /home/gyles/admin_checks
 ```
+the description of -u = -u tells sudo which user you want to run the command as.
+
+Look at the code of admin_checks in that code 
+```
+$error 2>/dev/null
+```
+ in this line
+
+👉 a variable being executed like a command
+
+now whenever it will prompts for we can execute a command and result will be saved in the file of /var/status/status-$date_save.bak and since we can execute a command
+
+We will try to spawn a shell here.
+
+when we enter **bash** as a value of varible date.
+
+we will be able to now login as user gyles.
+
+As i saw the bash_history of the user gyles it told me that it has done something in the folder admin_stuff
+
+But i didn't able to find that folder admin_stuff inside the /home/gyles/
+
+So i searched within whole filesystem and found at /opt/admin_stuff 
+
+now here as per the history file user gyles then did following
+
+```
+sudo chmod gu+s php
+./php
+sudo ./php
+```
+
+This should immediately trigger a thought:
+
+“Why was gyles messing with a file called php and setting special permissions on it?”
+
+
+But in reality there exitst a another file script.sh whose content was
+
+```bash
+#!/bin/bash
+#I have set a cronjob to run this script every minute
+
+
+dev_site="/usr/local/sbin/dev_backup.sh"
+main_site="/usr/local/bin/main_backup.sh"
+#Back ups the sites locally
+$main_site
+$dev_site
+
+```
+
+But there was something interesting with the folder admin_stuff
+
+```bash
+drwxrwx---  2 root admin 4.0K Jan 17  2021 admin_stuff
+```
+
+```md
+
+👉 Meaning:
+
+Owner: root
+Group: admin
+Writable by: group admin
+```
+Now we have a shell as gyles
+
+When ran id
+
+i saw gyles a part of the group admin.
+
+Meaning as a user gyles we could edit the file script.sh
+
+and if we read the file carefully this is running every 1 min as a root meaning we can run the command 
+
+```bash
+cat /root/root.txt
+
+```
+as root.
+
+if we could edit the file script.sh
