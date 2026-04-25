@@ -82,3 +82,71 @@ http://dev.team.thm/script.php?page=teamshare.php
 Here we can try for parameter tampering.
 
 So we tried LFI paylods with ffuf
+
+with the command 
+
+```
+ffuf -w /home/Seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt   -H "Host: dev.team.thm" -u http://dev.team.thm/script.php?page=FUZZ -ac
+```
+
+It did worked and gave a lot of endpoints.
+
+But one endpoint confired that there is confirm user dale.
+
+So i put *page=/home/dale/user.txt* and it split out the first flag that was to find what is inside user.txt
+
+Now inside the lfi payload one of the payload was */etc/ssh/sshd_config*
+
+Ssh key was there from there i grep the key remove any extra spaces and hash then gave the key permission of 600.
+
+and i was able to login as dale by the commadn 
+
+```ssh
+ssh -i key dale@ip
+```
+
+but going to the /root folder says that i need to do privilage escalation.
+
+So first we gonna fine the command that i can run as sudo by **sudo -l **
+
+![sudo](sudo.png)
+
+We can we can run the /home/gyles/admin_checks with sudo as gyles with current user without password.
+
+The content of it was 
+
+```bash
+#!/bin/bash
+
+printf "Reading stats.\n"
+sleep 1
+printf "Reading stats..\n"
+sleep 1
+read -p "Enter name of person backing up the data: " name
+echo $name  >> /var/stats/stats.txt
+read -p "Enter 'date' to timestamp the file: " error
+printf "The Date is "
+$error 2>/dev/null
+
+date_save=$(date "+%F-%H-%M")
+cp /var/stats/stats.txt /var/stats/stats-$date_save.bak
+
+printf "Stats have been backed up\n"
+
+
+
+```
+and the content of /home/ftpuser/workshare/New_site.txt was
+
+```text
+Dale
+        I have started coding a new website in PHP for the team to use, this is currently under development. It can be
+found at ".dev" within our domain.
+
+Also as per the team policy please make a copy of your "id_rsa" and place this in the relevent config file.
+
+Gyles 
+
+
+```
+Now it's sure that dev.team.thm is made by gyles.
