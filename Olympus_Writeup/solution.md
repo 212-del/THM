@@ -160,3 +160,7 @@ Please. Check it out.
 ```
 
 But i think its a advertisement.
+
+Here are some few more endpoints under ~webmaster/
+
+![web](webmaster1.png)
