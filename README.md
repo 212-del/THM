@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-17-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-18-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **17** |
+| 🏁 **Rooms Completed** | **18** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -144,6 +144,7 @@ This repository delivers:
 | Room | Core Vulnerability | Difficulty | Writeup |
 |:---|:---|:---:|:---:|
 | 💘 **CupidBot** | Prompt Injection (AI LLM Exploitation) | 🟡 Medium | [View →](./CupidBot_Writeup/) |
+| 🤖 **Oracle 9** | Prompt Injection (LLM Authority Bypass) | 🟢 Easy | [View →](./Oracle9_WriteUp/) |
 
 </div>
 
@@ -215,7 +216,7 @@ Through these rooms, the following **real-world attack techniques** have been re
 | **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup |
 | **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash |
 | **XOR Cryptanalysis** | Reversing XOR-encrypted ciphertext using known-plaintext attacks | W1seGuy |
-| **Prompt Injection** | Manipulating LLM-based AI applications into revealing secrets | CupidBot |
+| **Prompt Injection** | Manipulating LLM-based AI applications into revealing secrets | CupidBot, Oracle 9 |
 | **Subdomain Enumeration** | Discovering hidden subdomains vulnerable to takeover | TakeOver |
 
 </div>
@@ -252,7 +253,8 @@ THM/
 │   └── c4ptur3-th3-fl4g_Writeup/          ← Encoding, ciphers & steganography
 │
 └── 🤖 AI Security
-    └── CupidBot_Writeup/                  ← Prompt injection
+    ├── CupidBot_Writeup/                  ← Prompt injection
+    └── Oracle9_WriteUp/                   ← LLM authority bypass
 ```
 
 Each writeup folder contains:
@@ -276,7 +278,7 @@ RoomName_Writeup/
 | Jr. Penetration Tester | 🔄 In Progress | — |
 | Web Application Security | 🔄 In Progress | 9 rooms |
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
-| AI Security | 🔄 In Progress | 1 room |
+| AI Security | 🔄 In Progress | 2 rooms |
 | Linux / CTF | 🔄 In Progress | 4 rooms |
 | SOC Level 1 | ⏳ Planned | — |
 | Offensive Pentesting | ⏳ Planned | — |
