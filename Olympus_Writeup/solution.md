@@ -164,3 +164,33 @@ But i think its a advertisement.
 Here are some few more endpoints under ~webmaster/
 
 ![web](webmaster1.png)
+
+I also tried SQLi and parameter fuzzing in both urls
+
+- http://olympus.thm/~webmaster/post.php?post=1
+- http://olympus.thm/~webmaster/category.php?cat_id=1
+
+But we didn't find anything.
+
+On both url i tried editing the value from 1 to 9999 but no response
+
+I tried LFI on both url but LFI too didn't suceed.
+
+But we got something specail into our enumuration 
+
+when we capture the endpoint /admin in our burp and after capruting the response of it it reveals the whole source code of the admin.
+
+
+This is the exact workflow
+
+when i hit 
+
+- http://olympus.thm/~webmaster/admin
+
+and then i turn on the intercept
+
+the req get captured and without modifying anything into i set do intercept the response
+
+THen when i response was intercept the admin page was visible 
+
+![admin](admin.png)
