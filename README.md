@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-18-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-19-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **18** |
+| 🏁 **Rooms Completed** | **19** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -112,6 +112,7 @@ This repository delivers:
 
 | Room | Core Vulnerability | Difficulty | Writeup |
 |:---|:---|:---:|:---:|
+| 🦸 **CyberHeroes** | Client-Side Auth Bypass / JavaScript Source Analysis | 🟢 Easy | [View →](./CyberHeroes_Writeup/) |
 | 🚪 **Corridor** | IDOR (Insecure Direct Object Reference) | 🟢 Easy | [View →](./Corridor_Writeup/) |
 | 👤 **Neighbour** | IDOR / Broken Access Control | 🟢 Easy | [View →](./Neighbour_Writeup/) |
 | 📄 **MD2PDF** | SSRF (Server-Side Request Forgery) | 🟡 Medium | [View →](./MD2PDF_Writeup/) |
@@ -231,6 +232,7 @@ THM/
 ├── 📘 Instruction.md                      ← How to connect to TryHackMe rooms
 │
 ├── 🌐 Web Application
+│   ├── CyberHeroes_Writeup/               ← Client-side auth bypass
 │   ├── Corridor_Writeup/                  ← IDOR exploitation
 │   ├── Neighbour_Writeup/                 ← Broken access control
 │   ├── MD2PDF_Writeup/                    ← SSRF attack
@@ -276,7 +278,7 @@ RoomName_Writeup/
 |:---|:---:|:---:|
 | Pre-Security Fundamentals | 🔄 In Progress | — |
 | Jr. Penetration Tester | 🔄 In Progress | — |
-| Web Application Security | 🔄 In Progress | 9 rooms |
+| Web Application Security | 🔄 In Progress | 10 rooms |
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
 | AI Security | 🔄 In Progress | 2 rooms |
 | Linux / CTF | 🔄 In Progress | 4 rooms |
