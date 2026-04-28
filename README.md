@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-19-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-20-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **19** |
+| 🏁 **Rooms Completed** | **20** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -146,6 +146,7 @@ This repository delivers:
 |:---|:---|:---:|:---:|
 | 💘 **CupidBot** | Prompt Injection (AI LLM Exploitation) | 🟡 Medium | [View →](./CupidBot_Writeup/) |
 | 🤖 **Oracle 9** | Prompt Injection (LLM Authority Bypass) | 🟢 Easy | [View →](./Oracle9_WriteUp/) |
+| 🧠 **AI Threat Modelling Assessment** | AI Threat Modelling / System Architecture Defence | 🟢 Easy | [View →](./AI-THREAT-MODELLING-ASSESSMENT_Writeup/) |
 
 </div>
 
@@ -256,7 +257,8 @@ THM/
 │
 └── 🤖 AI Security
     ├── CupidBot_Writeup/                  ← Prompt injection
-    └── Oracle9_WriteUp/                   ← LLM authority bypass
+    ├── Oracle9_WriteUp/                   ← LLM authority bypass
+    └── AI-THREAT-MODELLING-ASSESSMENT_Writeup/ ← AI threat modelling & system defence
 ```
 
 Each writeup folder contains:
@@ -280,7 +282,7 @@ RoomName_Writeup/
 | Jr. Penetration Tester | 🔄 In Progress | — |
 | Web Application Security | 🔄 In Progress | 10 rooms |
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
-| AI Security | 🔄 In Progress | 2 rooms |
+| AI Security | 🔄 In Progress | 3 rooms |
 | Linux / CTF | 🔄 In Progress | 4 rooms |
 | SOC Level 1 | ⏳ Planned | — |
 | Offensive Pentesting | ⏳ Planned | — |
