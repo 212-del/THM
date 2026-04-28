@@ -16,9 +16,11 @@ Use some common DNS enumeration tools installed on the AttackBox to get the DNS 
 
 Check out similar content on TryHackMe:
 
-![DNS in detail](https://tryhackme.com/room/dnsindetail)
-![Passive Reconnaissance](https://tryhackme.com/room/passiverecon)
-![DNS Manipulation](https://tryhackme.com/room/dnsmanipulation)
+[DNS in detail](https://tryhackme.com/room/dnsindetail)
+
+[Passive Reconnaissance](https://tryhackme.com/room/passiverecon)
+
+[DNS Manipulation](https://tryhackme.com/room/dnsmanipulation)
 
 ❓ *Room Questions =*
 
