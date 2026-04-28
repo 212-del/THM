@@ -21,13 +21,9 @@
 
 </div>
 
----
-
-> 📌 **Instruction for copilot:** *Why is the TryHackMe IP acting as a DNS server?*
->
-> 📌 **Instruction for copilot:** *Explain why `dig` worked — from the very root of the topic, down through every subtopic and sub-subtopic.*
 
 ---
+
 
 ## 📋 Room Overview
 
@@ -53,7 +49,7 @@ So the machine is **purposely running as a DNS server**, not a web server. It wi
 
 ## 🧠 Understanding DNS — From the Ground Up
 
-> 📌 **Instruction for copilot:** *Why is the TryHackMe IP acting as a DNS server?*
+
 
 ### 🌍 What is DNS?
 
@@ -226,7 +222,6 @@ Copy the flag exactly as it appears in the ANSWER SECTION and submit it on the r
 
 ## 🔬 Why Did `dig` Work? — A Deep Dive
 
-> 📌 **Instruction for copilot:** *Explain why `dig` worked — from the very root of the topic, down through every subtopic and sub-subtopic.*
 
 This is the most educational part of the room. Let's trace exactly why this worked from the ground up.
 
@@ -304,11 +299,6 @@ In this room, the `data` field of the returned record contains the flag. That's 
 
 ## 📚 Lessons Learned & Key Takeaways
 
-<div align="center">
-
-<img src="https://media.giphy.com/media/077i6AULCXc0FKTj9s/giphy.gif" width="80" alt="Learning"/>
-
-</div>
 
 This room packs a surprising amount of real-world knowledge into a very short challenge. Here's what to walk away with:
 
@@ -339,6 +329,12 @@ Want to go deeper into DNS? Here are some excellent resources (some are also lin
 [![GitHub](https://img.shields.io/badge/GitHub-212--del-black?style=for-the-badge&logo=github&logoColor=white)](https://github.com/212-del)
 
 <br/>
+
+<div align="center">
+
+<img src="https://media.giphy.com/media/077i6AULCXc0FKTj9s/giphy.gif" width="80" alt="Learning"/>
+
+</div>
 
 *Made with ❤️ and a lot of DNS packets.*
 
