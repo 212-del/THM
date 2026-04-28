@@ -61,7 +61,6 @@ Here's why the other options are less directly exposed:
 
 The LLM Agent is the one that *acts* on the injected instruction — that's what makes it the most exposed component. 🎯
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -94,7 +93,6 @@ The other options don't fit this scenario:
 
 This is purely a case of confidential data escaping where it shouldn't — textbook Sensitive Information Disclosure. 🔓
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -123,7 +121,6 @@ Why the other components are less responsible in this case:
 
 The Retrieval System is the gatekeeper of what data gets injected into the model's context — and if that gate has no access controls, sensitive embeddings flow freely into responses. 🗄️
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -152,7 +149,6 @@ Why the other controls fail here:
 
 Anomaly detection acts as a smart behavioural firewall — it catches what traditional perimeter security controls completely miss. 🧠
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -185,7 +181,6 @@ Why the alternatives don't solve this:
 
 Rate limiting combined with authentication is the industry-standard response to API abuse — it's directly in line with OWASP API Security Top 10 recommendations. 🔒
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -218,7 +213,6 @@ Distinguishing from the other options:
 
 Data poisoning is one of the most insidious threats in the AI security landscape — its effects can persist silently for a long time before being discovered. ☠️
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -255,7 +249,6 @@ Plotting this on a standard risk matrix:
 
 This is squarely a High risk — the combination of ease of execution and breadth of impact puts it at the top of the risk register. 📊
 
-> *Instruction for copilot: Explain why it is the correct answer.*
 
 ---
 
@@ -297,7 +290,6 @@ The attack being simulated here is **Prompt Injection** — the attacker attempt
 
 With only 2 shields available across 6 components, the placement decision is critical.
 
-> *Instruction for copilot: Explain why my approach failed.*
 
 ---
 
@@ -366,7 +358,6 @@ User Input  ──►  API Gateway  ──►  Prompt  ──►  LLM Agent  ─
 
 This time, **3 shields** are available. The attack scenario has shifted — it now appears to focus on **data exfiltration through the AI's retrieval pipeline**, rather than pure prompt injection.
 
-> *Instruction for copilot: Explain by choosing each combo of 3 shields to put onto it and why each combo will fail except the one that I chose.*
 
 ---
 
@@ -416,7 +407,6 @@ User Input  ──►  API Gateway  ──►  Prompt  ──►  LLM Agent  ─
 
 This time, only **2 shields** are available. The attack has evolved — the scenario now appears to be a direct **data layer attack**, specifically targeting the stored data assets rather than manipulating AI behaviour through prompts.
 
-> *Instruction for copilot: Explain by choosing each combo of 2 shields to put onto it and why each combo will fail except the one that I chose.*
 
 ---
 
