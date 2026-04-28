@@ -48,11 +48,6 @@ The rules are straightforward but unforgiving:
 - Misidentifying whether an email is phishing *or* selecting the wrong reason both cost you a life
 - Complete the game successfully to receive the **flag** 🏁
 
----
-
-## 📧 Email Analysis
-
-Instruction for copilot: for each email which is a phishing email generate multiple choice options as reason in which only 1 reason will be correct.
 
 ---
 
@@ -89,7 +84,6 @@ Instruction for copilot: for each email which is a phishing email generate multi
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -112,7 +106,6 @@ A few red flags jump out immediately:
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -135,7 +128,6 @@ This is a **Business Email Compromise (BEC) / gift card scam** — one of the mo
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -158,7 +150,6 @@ This email ticks almost every box of a recruitment scam:
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -181,7 +172,6 @@ This one is particularly obvious if you look at the URL, though in a real attack
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -202,7 +192,6 @@ Instruction for copilot: explain why it looks like phishing
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -225,7 +214,6 @@ The instruction to *"enable macros to view the content"* is one of the most well
 
 **Verdict: ✅ Legitimate**
 
-Instruction for copilot: explain why it looks like no phishing
 
 **Why is this legitimate?**
 
@@ -247,7 +235,6 @@ Instruction for copilot: explain why it looks like no phishing
 
 **Verdict: 🚨 Phishing**
 
-Instruction for copilot: explain why it looks like phishing
 
 **Why is this phishing?**
 
@@ -268,7 +255,6 @@ Instruction for copilot: explain why it looks like phishing
 
 **Verdict: ✅ Legitimate**
 
-Instruction for copilot: explain why it looks like no phishing
 
 **Why is this legitimate?**
 
@@ -291,8 +277,6 @@ This one is fairly clear, but worth understanding the reasoning:
 
 **Verdict: ✅ Legitimate**
 
-Instruction for copilot: explain why it looks like no phishing
-
 **Why is this legitimate?**
 
 1. **Verified sender domain** — `events@tryhackme.com` is a plausible and entirely consistent internal address for event and conference communications from the organisation.
@@ -312,7 +296,6 @@ Instruction for copilot: explain why it looks like no phishing
 
 **Verdict: ✅ Legitimate**
 
-Instruction for copilot: explain why it looks like no phishing
 
 **Why is this legitimate?**
 
@@ -327,9 +310,12 @@ Instruction for copilot: explain why it looks like no phishing
 
 After successfully identifying all emails with the correct verdicts and reasons, the game concluded and the flag was revealed:
 
-![Game Over](over.png)
 
 ![Flag](flag.png)
+
+But If you ran out of 3 lives.
+
+![Game Over](over.png)
 
 > 🎉 **Room completed!** The flag was retrieved after correctly classifying the emails and finishing the game with no more than 3 mistakes. The key is staying methodical — don't rush, read the sender domain carefully, and look for the tell-tale pressure tactics before clicking anything.
 
