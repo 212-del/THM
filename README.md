@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-21-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-22-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **21** |
+| 🏁 **Rooms Completed** | **22** |
 | 🗂️ **Security Categories Covered** | **4** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -131,6 +131,7 @@ This repository delivers:
 | 🏰 **SimpleCTF** | SQL Injection + Privilege Escalation | 🟢 Easy | [View →](./SimpleCTF_Writeup/) |
 | 🔎 **Lookup** | Command Injection + Privilege Escalation | 🟡 Medium | [View →](./Lookup_writeup/) |
 | 👥 **Team** | LFI + SSH Key Exfiltration + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Team_Writeup/) |
+| 🌐 **Dig-Dug** | DNS Enumeration / Custom DNS Server Querying | 🟢 Easy | [View →](./Dig-Dug_Writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
 
@@ -254,7 +255,8 @@ THM/
 │   ├── RootMe_Writeup/                    ← File upload + privilege escalation
 │   ├── SimpleCTF_Writeup/                 ← SQL injection + SSH
 │   ├── Lookup_writeup/                    ← Command injection + privesc
-│   └── Team_Writeup/                      ← LFI + SSH key + cron job privesc
+│   ├── Team_Writeup/                      ← LFI + SSH key + cron job privesc
+│   └── Dig-Dug_Writeup/                   ← DNS enumeration + custom DNS querying
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
@@ -291,7 +293,7 @@ RoomName_Writeup/
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
 | AI Security | 🔄 In Progress | 3 rooms |
 | Social Engineering & Phishing | 🔄 In Progress | 1 room |
-| Linux / CTF | 🔄 In Progress | 4 rooms |
+| Linux / CTF | 🔄 In Progress | 5 rooms |
 | SOC Level 1 | ⏳ Planned | — |
 | Offensive Pentesting | ⏳ Planned | — |
 | Red Teaming | ⏳ Planned | — |
