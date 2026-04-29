@@ -41,7 +41,7 @@
       keyTimes="0;0.22;0.32;0.40;0.92;1.0"
       dur="8s" repeatCount="indefinite"/>
     <text x="20" y="110" font-family="monospace" font-size="13" fill="#8b949e">
-      [22][ssh] Trying john:p4ssw0rd ...
+      [22][ssh] Trying root:password ...
     </text>
   </g>
 
