@@ -52,7 +52,7 @@
       keyTimes="0;0.38;0.48;0.52;0.62;0.92;1.0"
       dur="8s" repeatCount="indefinite"/>
     <text x="20" y="134" font-family="monospace" font-size="13" fill="#ffa657">
-      [22][ssh] host: 10.48.156.200   login: john   password: xxxxxx
+      [22][ssh] host: 10.48.156.200   login: root   password: password
     </text>
   </g>
 
