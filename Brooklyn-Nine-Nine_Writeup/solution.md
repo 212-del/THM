@@ -1,9 +1,6 @@
 <div align="center">
 
-<!-- TryHackMe Badge -->
-<a href="https://tryhackme.com/p/LinuxX">
-  <img src="https://tryhackme-badges.s3.amazonaws.com/LinuxX.png" alt="TryHackMe Badge" width="300"/>
-</a>
+<img src="https://assets.tryhackme.com/img/THMlogo.png" alt="TryHackMe Logo" width="180"/>
 
 <br/><br/>
 
