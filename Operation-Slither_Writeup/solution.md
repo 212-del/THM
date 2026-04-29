@@ -127,3 +127,48 @@ and the reconnaisance guide in this are
 
 - Analyse activity history (such as repositories or commits) for embedded information.
 
+In the comment of same reel there was soundcloud link
+
+```
+https://soundcloud.com/v1x3n-195859753/prototype1
+```
+
+There were many tracks uplaoded in the name of ProtoType1, Prototype2, Prototype3, prototype4 and many other.
+
+I explored the tracks on the SoundCloud profile. While checking the follower list of that profile i found 1 unusual looking profile named
+
+@sh4d0wF4NG
+
+I trusted it the the one user that we are finding cuz letter in this name is also 10 and our answer also need 10 char answer 
+
+Another reason: the interest of this group member are in lofi and his profile too have lofi interest
+
+![logi](user.webp)
+
+and the second one too on the instagram have the lofi interest.
+
+The reel too was lofi realted.
+
+So this is a confirm hit and it is also becames true when i submit it as the answer of q5 that ``` What is the handle of the third operator? ```
+
+Now we need to answer the third one q7 that is ``` What is the value of the flag? ```
+
+If we merge the answer of q5. and q6 we surely know that user have a account on github
+
+here is the one 
+
+![account](account.png)
+
+We will start enumuration here for the flag.
+
+I went staright to its first repo and start seaching within its file but no any response
+
+So i went up to commints in this repo then i 1 commit a strage looking base 64 text into the commit history page
+
+- https://github.com/sh4d0wF4NG/red-team-infra/commit/78de1f17c45b994e97b8629aa7e5f42c31a0e7f7
+
+Look here is the one
+
+![flag](flag3.png)
+
+As you can see base64 encoded text when we decode it further we will be able to find the answer of q7 as the flag.
