@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-25-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-27-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,13 +89,13 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **25** |
-| 🗂️ **Security Categories Covered** | **5** |
+| 🏁 **Rooms Completed** | **27** |
+| 🗂️ **Security Categories Covered** | **6** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
-| 🖼️ **Screenshot Evidence Collected** | **60+** |
-| 📄 **Writeup Documents Written** | **28+** |
-| 🔑 **Flags Captured** | **25+** |
+| 🖼️ **Screenshot Evidence Collected** | **107+** |
+| 📄 **Writeup Documents Written** | **54+** |
+| 🔑 **Flags Captured** | **27+** |
 | 🧠 **CVEs Researched & Exploited** | **3+** |
 
 </div>
@@ -301,12 +301,12 @@ RoomName_Writeup/
 |:---|:---:|:---:|
 | Pre-Security Fundamentals | 🔄 In Progress | — |
 | Jr. Penetration Tester | 🔄 In Progress | — |
-| Web Application Security | 🔄 In Progress | 10 rooms |
-| Cryptography Essentials | 🔄 In Progress | 2 rooms |
+| Web Application Security | 🔄 In Progress | 11 rooms |
+| Cryptography Essentials | 🔄 In Progress | 3 rooms |
 | AI Security | 🔄 In Progress | 3 rooms |
 | OSINT & Threat Intelligence | 🔄 In Progress | 1 room |
 | Social Engineering & Phishing | 🔄 In Progress | 1 room |
-| Linux / CTF | 🔄 In Progress | 6 rooms |
+| Linux / CTF | 🔄 In Progress | 8 rooms |
 | SOC Level 1 | ⏳ Planned | — |
 | Offensive Pentesting | ⏳ Planned | — |
 | Red Teaming | ⏳ Planned | — |
