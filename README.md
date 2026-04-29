@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-22-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-23-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,8 +89,8 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **22** |
-| 🗂️ **Security Categories Covered** | **4** |
+| 🏁 **Rooms Completed** | **23** |
+| 🗂️ **Security Categories Covered** | **5** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
 | 🖼️ **Screenshot Evidence Collected** | **60+** |
@@ -149,6 +149,12 @@ This repository delivers:
 | 🤖 **Oracle 9** | Prompt Injection (LLM Authority Bypass) | 🟢 Easy | [View →](./Oracle9_WriteUp/) |
 | 🧠 **AI Threat Modelling Assessment** | AI Threat Modelling / System Architecture Defence | 🟢 Easy | [View →](./AI-THREAT-MODELLING-ASSESSMENT_Writeup/) |
 
+### 🔎 OSINT & Threat Intelligence
+
+| Room | Core Vulnerability | Difficulty | Writeup |
+|:---|:---|:---:|:---:|
+| 🐍 **Operation Slither** | Cross-Platform OSINT / Social Media Reconnaissance / Threat Actor Profiling | 🟢 Easy | [View →](./Operation-Slither_Writeup/) |
+
 ### 🎣 Social Engineering & Phishing Awareness
 
 | Room | Core Vulnerability | Difficulty | Writeup |
@@ -181,6 +187,7 @@ Scripting        Crypto         CTF Chains        Forensics
 - ✅ **Password & Hash Attacks** — MD5, SHA-1, SHA-256, bcrypt cracking with Hashcat & John
 - ✅ **Cryptographic Analysis** — XOR cipher identification and plaintext recovery
 - ✅ **AI Security Research** — Prompt injection techniques against LLM-based applications
+- ✅ **OSINT & Threat Intelligence** — Cross-platform username correlation, social media enumeration, threat actor profiling
 - ✅ **Reconnaissance & Enumeration** — Nmap, Gobuster, ffuf, subdomain enumeration
 - ✅ **Exploitation Frameworks** — Metasploit, manual CVE exploitation, searchsploit
 - 🔄 **SOC Operations** — Log analysis, incident response (In Progress)
@@ -267,7 +274,8 @@ THM/
     ├── CupidBot_Writeup/                  ← Prompt injection
     ├── Oracle9_WriteUp/                   ← LLM authority bypass
     ├── AI-THREAT-MODELLING-ASSESSMENT_Writeup/ ← AI threat modelling & system defence
-    └── The-Phising-Pond_Writeup/          ← Phishing email identification & analysis
+    ├── The-Phising-Pond_Writeup/          ← Phishing email identification & analysis
+    └── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
 ```
 
 Each writeup folder contains:
@@ -292,6 +300,7 @@ RoomName_Writeup/
 | Web Application Security | 🔄 In Progress | 10 rooms |
 | Cryptography Essentials | 🔄 In Progress | 2 rooms |
 | AI Security | 🔄 In Progress | 3 rooms |
+| OSINT & Threat Intelligence | 🔄 In Progress | 1 room |
 | Social Engineering & Phishing | 🔄 In Progress | 1 room |
 | Linux / CTF | 🔄 In Progress | 5 rooms |
 | SOC Level 1 | ⏳ Planned | — |
