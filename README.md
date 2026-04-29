@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-23-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-24-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,7 +89,7 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **23** |
+| 🏁 **Rooms Completed** | **24** |
 | 🗂️ **Security Categories Covered** | **5** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
@@ -132,6 +132,7 @@ This repository delivers:
 | 🔎 **Lookup** | Command Injection + Privilege Escalation | 🟡 Medium | [View →](./Lookup_writeup/) |
 | 👥 **Team** | LFI + SSH Key Exfiltration + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Team_Writeup/) |
 | 🌐 **Dig-Dug** | DNS Enumeration / Custom DNS Server Querying | 🟢 Easy | [View →](./Dig-Dug_Writeup/) |
+| 🕵️ **Brooklyn Nine Nine** | Anonymous FTP + SSH Brute Force + GTFOBins (`less`) Privilege Escalation | 🟢 Easy | [View →](./Brooklyn-Nine-Nine_Writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
 
@@ -263,7 +264,8 @@ THM/
 │   ├── SimpleCTF_Writeup/                 ← SQL injection + SSH
 │   ├── Lookup_writeup/                    ← Command injection + privesc
 │   ├── Team_Writeup/                      ← LFI + SSH key + cron job privesc
-│   └── Dig-Dug_Writeup/                   ← DNS enumeration + custom DNS querying
+│   ├── Dig-Dug_Writeup/                   ← DNS enumeration + custom DNS querying
+│   └── Brooklyn-Nine-Nine_Writeup/        ← Anonymous FTP + SSH brute force + GTFOBins privesc
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
