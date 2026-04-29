@@ -83,15 +83,15 @@ The only concrete lead we have right now is the username **`@v3n0mbyt3_`**. That
 <div align="center">
 
 ```
-╔══════════════════════════════════════════════════════════╗
-║                                                          ║
-║    T A R G E T   A C Q U I R E D                        ║
-║                                                          ║
-║    Username  :  @v3n0mbyt3_                              ║
-║    Platform  :  Unknown (yet)                            ║
-║    Status    :  [ TRACKING... ]                          ║
-║                                                          ║
-╚══════════════════════════════════════════════════════════╝
+ ╔══════════════════════════════════════════════════════════╗
+ ║                                                          ║
+ ║    T A R G E T   A C Q U I R E D                         ║
+ ║                                                          ║
+ ║    Username  :  @v3n0mbyt3_                              ║
+ ║    Platform  :  Unknown (yet)                            ║
+ ║    Status    :  [ TRACKING... ]                          ║
+ ║                                                          ║
+ ╚══════════════════════════════════════════════════════════╝
 ```
 
 <img src="https://media.giphy.com/media/xTiTnxpQ3ghPiB2Hp6/giphy.gif" width="200" alt="Investigation in progress"/>
@@ -165,12 +165,12 @@ I ran it through my [CyberSecurity Calculator](https://github.com/212-del/CyberS
 
 ```
 Input  :  VEhNe3NsMXRoM3J5X3R3MzN0el80bmRfbDM0a3lfcjNwbDEzcyF9
-Output :  THM{sl1th3ry_tw33tz_4nd_l34ky_r3pl13s!}
+Output :  THM{REDACTED}
 ```
 
 And there's the first flag. Q2 solved.
 
-### ✅ Answer: `THM{sl1th3ry_tw33tz_4nd_l34ky_r3pl13s!}`
+### ✅ Answer: `THM{REDACTED}`
 
 ---
 
@@ -179,12 +179,14 @@ And there's the first flag. Q2 solved.
 <div align="center">
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ⚠  NEW INTEL RECEIVED — SECOND OPERATOR IDENTIFIED
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Status    :  Forum access REVOKED
-  Objective :  Trace second operator from Part 1 leads
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+60GB of data owned by TryTelecomMe is now up for bidding!
+
+Number of users: 64500000 Accepting all types of crypto
+For takers, send your bid on Threads via this handle:
+
+HIDDEN CONTENT 
+----------------------------------------------------------------------------------------------------- 
+You must register or log in to view this content
 ```
 
 </div>
@@ -224,7 +226,7 @@ Following the Part 2 recon guide:
 
 I searched for `_myst1cv1x3n_` across several platforms. The account surfaced on **Instagram**.
 
-Browsing through the Instagram profile, I found a **reel** that had commands and text embedded within the video itself. Going through the reel frame-by-frame, the flag was visible in the content:
+Browsing through the Instagram profile, I found a **reel** that has comments on it, the flag was visible in the comment:
 
 **Reel:** [https://www.instagram.com/reel/C6BuP1CNMCI/](https://www.instagram.com/reel/C6BuP1CNMCI/)
 
@@ -267,14 +269,14 @@ Contact me on REDACTED@protonmail.com
 <div align="center">
 
 ```
-╔═══════════════════════════════════════════════════════╗
-║                                                       ║
-║    O P E R A T O R   # 3   —   L O C A T I N G      ║
-║                                                       ║
-║    Cross-platform pivot in progress...                ║
-║    [ ██████████████████░░░░░░░░ ]  72%               ║
-║                                                       ║
-╚═══════════════════════════════════════════════════════╝
+ ╔═══════════════════════════════════════════════════════╗
+ ║                                                       ║
+ ║    O P E R A T O R   # 3   —   L O C A T I N G        ║
+ ║                                                       ║
+ ║    Cross-platform pivot in progress...                ║
+ ║    [ ██████████████████░░░░░░░░ ]  72%                ║
+ ║                                                       ║
+ ╚═══════════════════════════════════════════════════════╝
 ```
 
 </div>
@@ -388,15 +390,15 @@ This room was genuinely one of the more interesting ones I've done — it forces
 <div align="center">
 
 ```
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-▓                                                   ▓
-▓    M I S S I O N   C O M P L E T E               ▓
-▓                                                   ▓
-▓    Operators Identified  :  3 / 3  ✓             ▓
-▓    Flags Captured        :  3 / 3  ✓             ▓
-▓    Operation Slither     :  N E U T R A L I S E D ▓
-▓                                                   ▓
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+ ▓                                                   ▓
+ ▓    M I S S I O N   C O M P L E T E                ▓
+ ▓                                                   ▓
+ ▓    Operators Identified  :  3 / 3  ✓              ▓
+ ▓    Flags Captured        :  3 / 3  ✓              ▓
+ ▓    Operation Slither     :  N E U T R A L I S E D ▓
+ ▓                                                   ▓
+ ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 ```
 
 ### *The snake has been defanged.* 🐍✅
