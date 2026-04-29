@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- TryHackMe Badge -->
-<img src="https://assets.tryhackme.com/img/badges/streak1500.png" alt="TryHackMe Badge" width="180"/>
+<img src="https://assets.tryhackme.com/img/THMlogo.png" alt="TryHackMe Logo" width="180"/>
 
 <br/><br/>
 
