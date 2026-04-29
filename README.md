@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-24-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-25-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,12 +89,12 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **24** |
+| 🏁 **Rooms Completed** | **25** |
 | 🗂️ **Security Categories Covered** | **5** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
 | 🖼️ **Screenshot Evidence Collected** | **60+** |
-| 📄 **Writeup Documents Written** | **26+** |
+| 📄 **Writeup Documents Written** | **28+** |
 | 🔑 **Flags Captured** | **25+** |
 | 🧠 **CVEs Researched & Exploited** | **3+** |
 
@@ -133,6 +133,7 @@ This repository delivers:
 | 👥 **Team** | LFI + SSH Key Exfiltration + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Team_Writeup/) |
 | 🌐 **Dig-Dug** | DNS Enumeration / Custom DNS Server Querying | 🟢 Easy | [View →](./Dig-Dug_Writeup/) |
 | 🕵️ **Brooklyn Nine Nine** | Anonymous FTP + SSH Brute Force + GTFOBins (`less`) Privilege Escalation | 🟢 Easy | [View →](./Brooklyn-Nine-Nine_Writeup/) |
+| 🐛 **Bugged** | SSH Brute Force / IoT Network Analysis (MQTT) | 🟢 Easy | [View →](./Bugged_Writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
 
@@ -265,7 +266,8 @@ THM/
 │   ├── Lookup_writeup/                    ← Command injection + privesc
 │   ├── Team_Writeup/                      ← LFI + SSH key + cron job privesc
 │   ├── Dig-Dug_Writeup/                   ← DNS enumeration + custom DNS querying
-│   └── Brooklyn-Nine-Nine_Writeup/        ← Anonymous FTP + SSH brute force + GTFOBins privesc
+│   ├── Brooklyn-Nine-Nine_Writeup/        ← Anonymous FTP + SSH brute force + GTFOBins privesc
+│   └── Bugged_Writeup/                    ← SSH brute force + IoT/MQTT network analysis
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
@@ -304,7 +306,7 @@ RoomName_Writeup/
 | AI Security | 🔄 In Progress | 3 rooms |
 | OSINT & Threat Intelligence | 🔄 In Progress | 1 room |
 | Social Engineering & Phishing | 🔄 In Progress | 1 room |
-| Linux / CTF | 🔄 In Progress | 5 rooms |
+| Linux / CTF | 🔄 In Progress | 6 rooms |
 | SOC Level 1 | ⏳ Planned | — |
 | Offensive Pentesting | ⏳ Planned | — |
 | Red Teaming | ⏳ Planned | — |
