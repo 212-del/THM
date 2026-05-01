@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0d1f0d"/>
+      <stop offset="100%" stop-color="#040904"/>
+    </radialGradient>
+    <style>
+      @keyframes sweep {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      @keyframes blip1 {
+        0%,20%  { opacity: 0; r: 3.5px; }
+        22%     { opacity: 0.95; r: 5px; }
+        35%     { opacity: 0.4; r: 3.5px; }
+        50%,100%{ opacity: 0; r: 3.5px; }
+      }
+      @keyframes blip2 {
+        0%,60%  { opacity: 0; r: 2.5px; }
+        62%     { opacity: 0.9; r: 4px; }
+        75%     { opacity: 0.3; r: 2.5px; }
+        85%,100%{ opacity: 0; r: 2.5px; }
+      }
+      @keyframes pulse {
+        0%,100% { opacity: 0.6; }
+        50%     { opacity: 1; }
+      }
+      .sweep-arm  { transform-origin: 110px 110px; animation: sweep 4s linear infinite; }
+      .sweep-trail{ transform-origin: 110px 110px; animation: sweep 4s linear infinite; }
+      .blip1 { animation: blip1 4s linear infinite; }
+      .blip2 { animation: blip2 4s linear infinite; }
+      .label { animation: pulse 2s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="110" cy="110" r="110" fill="url(#bgGrad)"/>
+
+  <!-- Outer border glow -->
+  <circle cx="110" cy="110" r="108" fill="none" stroke="#00ff41" stroke-width="0.4" opacity="0.25"/>
+
+  <!-- Range rings -->
+  <circle cx="110" cy="110" r="100" fill="none" stroke="#1a4a1a" stroke-width="1"/>
+  <circle cx="110" cy="110" r="75"  fill="none" stroke="#1a4a1a" stroke-width="0.7"/>
+  <circle cx="110" cy="110" r="50"  fill="none" stroke="#1a4a1a" stroke-width="0.7"/>
+  <circle cx="110" cy="110" r="25"  fill="none" stroke="#1a4a1a" stroke-width="0.7"/>
+
+  <!-- Crosshair lines -->
+  <line x1="10"  y1="110" x2="210" y2="110" stroke="#1a4a1a" stroke-width="0.5"/>
+  <line x1="110" y1="10"  x2="110" y2="210" stroke="#1a4a1a" stroke-width="0.5"/>
+  <line x1="39"  y1="39"  x2="181" y2="181" stroke="#1a4a1a" stroke-width="0.3"/>
+  <line x1="181" y1="39"  x2="39"  y2="181" stroke="#1a4a1a" stroke-width="0.3"/>
+
+  <!-- Sweep trail (fading arc ~60°) -->
+  <g class="sweep-trail">
+    <path d="M110,110 L210,110 A100,100 0 0,0 185,46 Z"
+          fill="#00ff41" opacity="0.07"/>
+    <path d="M110,110 L210,110 A100,100 0 0,0 196,68 Z"
+          fill="#00ff41" opacity="0.12"/>
+    <path d="M110,110 L210,110 A100,100 0 0,0 205,87 Z"
+          fill="#00ff41" opacity="0.18"/>
+  </g>
+
+  <!-- Sweep arm -->
+  <line x1="110" y1="110" x2="210" y2="110"
+        stroke="#00ff41" stroke-width="1.8" opacity="0.92"
+        class="sweep-arm"/>
+
+  <!-- Blip 1 — red target -->
+  <circle cx="152" cy="68" r="3.5" fill="#ff4141" class="blip1"/>
+
+  <!-- Blip 2 — amber contact -->
+  <circle cx="82" cy="150" r="2.5" fill="#f9e2af" class="blip2"/>
+
+  <!-- Centre dot -->
+  <circle cx="110" cy="110" r="4"  fill="#00ff41"/>
+  <circle cx="110" cy="110" r="1.8" fill="#e8ffe8"/>
+
+  <!-- Label -->
+  <text x="110" y="207" font-family="monospace" font-size="9"
+        fill="#00ff41" text-anchor="middle" class="label">⚓ SCANNING...</text>
+</svg>

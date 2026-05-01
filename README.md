@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-27-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-28-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,13 +89,13 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **27** |
+| 🏁 **Rooms Completed** | **28** |
 | 🗂️ **Security Categories Covered** | **6** |
 | ⚔️ **Attack Techniques Documented** | **10+** |
 | 🛠️ **Tools Practised** | **15+** |
 | 🖼️ **Screenshot Evidence Collected** | **107+** |
 | 📄 **Writeup Documents Written** | **54+** |
-| 🔑 **Flags Captured** | **27+** |
+| 🔑 **Flags Captured** | **28+** |
 | 🧠 **CVEs Researched & Exploited** | **3+** |
 
 </div>
@@ -156,6 +156,7 @@ This repository delivers:
 | Room | Core Vulnerability | Difficulty | Writeup |
 |:---|:---|:---:|:---:|
 | 🐍 **Operation Slither** | Cross-Platform OSINT / Social Media Reconnaissance / Threat Actor Profiling | 🟢 Easy | [View →](./Operation-Slither_Writeup/) |
+| 📜 **Letter** | OSINT / Historical Research / Maritime Investigation | 🟢 Easy | [View →](./Letter_Writeup/) |
 
 ### 🎣 Social Engineering & Phishing Awareness
 
@@ -279,7 +280,8 @@ THM/
     ├── Oracle9_WriteUp/                   ← LLM authority bypass
     ├── AI-THREAT-MODELLING-ASSESSMENT_Writeup/ ← AI threat modelling & system defence
     ├── The-Phising-Pond_Writeup/          ← Phishing email identification & analysis
-    └── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
+    ├── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
+    └── Letter_Writeup/                    ← OSINT / Historical research / Maritime investigation
 ```
 
 Each writeup folder contains:
@@ -304,7 +306,7 @@ RoomName_Writeup/
 | Web Application Security | 🔄 In Progress | 11 rooms |
 | Cryptography Essentials | 🔄 In Progress | 3 rooms |
 | AI Security | 🔄 In Progress | 3 rooms |
-| OSINT & Threat Intelligence | 🔄 In Progress | 1 room |
+| OSINT & Threat Intelligence | 🔄 In Progress | 2 rooms |
 | Social Engineering & Phishing | 🔄 In Progress | 1 room |
 | Linux / CTF | 🔄 In Progress | 8 rooms |
 | SOC Level 1 | ⏳ Planned | — |
