@@ -377,7 +377,7 @@ Stay connected, follow the journey, and join the community:
 
 <br/>
 
-*Have feedback? Found an error? Have a better approach? Feel free to open an issue — all constructive input is welcome.* 🤝
+*Have feedback? Found an error? Have a better approach? Feel free to open an issue — all constructive input is welcome.* 🤝🙂
 
 </div>
 
