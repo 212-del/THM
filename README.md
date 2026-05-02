@@ -75,7 +75,7 @@ Each room documented here represents **genuine hours of hands-on practice**, res
 
 This repository delivers:
 
-- 📝 **Step-by-step walkthroughs** for every completed room
+- 📝 **Step-by-step walkthroughs** for each completed room
 - 🔍 **Deep-dive explanations** of the *why* behind every technique
 - 🛠️ **Tool references and command references** for fast recall
 - 📸 **Screenshot evidence** documenting each exploitation step
