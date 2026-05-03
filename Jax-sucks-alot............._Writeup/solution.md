@@ -28,3 +28,12 @@ As this code suggest us the below exploit to try.
 - Parameter tampering
 - Cookie manipulation
 
+For the stuff of parameter injection i tried fuzzing for endpoints at http://10.48.144.111/FUZZ but returned with no output.
+
+And since in the field subscibe for the newsletter enter email field shows  a text field and when somethingi is entered there and tap on submit it shows as on the same pageas
+
+We'll keep you updated at : <entered text>
+
+Now each time we hit submit it req to a parameter http://10.48.144.111/?email=<Entered Text>
+
+So as per our attacker mindset i tried there for lfi. But not succeded so i interad try
