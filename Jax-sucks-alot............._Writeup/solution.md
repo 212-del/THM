@@ -36,4 +36,13 @@ We'll keep you updated at : <entered text>
 
 Now each time we hit submit it req to a parameter http://10.48.144.111/?email=<Entered Text>
 
-So as per our attacker mindset i tried there for lfi. But not succeded so i interad try
+So as per our attacker mindset i tried there for lfi. But not succeded so i interad try SQLI but it too not worked.
+
+When i saw carefully the session token it was encoding the below structure based on your input into base64 adn putting it as the session id.
+
+The structure is 
+
+Decoded text: {"email":"Your Entered Text in that input field"}
+
+
+As we can see that there is a text that made with nodejs and as per our finding there is specific flaw about specifically this in nodejs.
