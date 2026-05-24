@@ -19,7 +19,7 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-28-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-29-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
 [![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
 [![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
@@ -89,14 +89,14 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **28** |
+| 🏁 **Rooms Completed** | **29** |
 | 🗂️ **Security Categories Covered** | **6** |
-| ⚔️ **Attack Techniques Documented** | **10+** |
-| 🛠️ **Tools Practised** | **15+** |
-| 🖼️ **Screenshot Evidence Collected** | **107+** |
-| 📄 **Writeup Documents Written** | **54+** |
-| 🔑 **Flags Captured** | **28+** |
-| 🧠 **CVEs Researched & Exploited** | **3+** |
+| ⚔️ **Attack Techniques Documented** | **11+** |
+| 🛠️ **Tools Practised** | **16+** |
+| 🖼️ **Screenshot Evidence Collected** | **110+** |
+| 📄 **Writeup Documents Written** | **58+** |
+| 🔑 **Flags Captured** | **29+** |
+| 🧠 **CVEs Researched & Exploited** | **4+** |
 
 </div>
 
@@ -134,6 +134,7 @@ This repository delivers:
 | 🌐 **Dig-Dug** | DNS Enumeration / Custom DNS Server Querying | 🟢 Easy | [View →](./Dig-Dug_Writeup/) |
 | 🕵️ **Brooklyn Nine Nine** | Anonymous FTP + SSH Brute Force + GTFOBins (`less`) Privilege Escalation | 🟢 Easy | [View →](./Brooklyn-Nine-Nine_Writeup/) |
 | 🐛 **Bugged** | SSH Brute Force / IoT Network Analysis (MQTT) | 🟢 Easy | [View →](./Bugged_Writeup/) |
+| ⚡ **Jax** | Node.js Unsafe Deserialization + RCE + NPM Privilege Escalation | 🟡 Medium | [View →](./Jax-sucks-alot............._Writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
 
