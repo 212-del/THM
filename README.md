@@ -127,7 +127,7 @@ This repository delivers:
 
 | Room | Core Vulnerability | Difficulty | Writeup |
 |:---|:---|:---:|:---:|
-| 🖱️ **Pickle Rick** 🌟 | RCE + Command Filtering Bypass + Privilege Escalation | 🟢 Easy | [View →](./Pickle-Rick_Writeup/) |
+| 🥒 **Pickle Rick** 🌟 | RCE + Command Filtering Bypass + Privilege Escalation | 🟢 Easy | [View →](./Pickle-Rick_Writeup/) |
 | 🔓 **RootMe** | File Upload Bypass + SUID Privilege Escalation | 🟢 Easy | [View →](./RootMe_Writeup/) |
 | 🏰 **SimpleCTF** | SQL Injection + Privilege Escalation | 🟢 Easy | [View →](./SimpleCTF_Writeup/) |
 | 🔎 **Lookup** | Command Injection + Privilege Escalation | 🟡 Medium | [View →](./Lookup_writeup/) |
@@ -279,7 +279,7 @@ THM/
 │   └── AgentT_Writeup/                    ← PHP 8.1.0-dev backdoor RCE
 │
 ├── 🐧 Linux / CTF
-│   ├── Pickle-Rick_Writeup/                  ← RCE + Command filtering bypass + Privesc (✨ Enhanced writeup)
+│   ├── Pickle-Rick_Writeup/                  ← RCE + Command Filtering Bypass + Privesc (✨ Enhanced writeup)
 │   ├── RootMe_Writeup/                       ← File upload + privilege escalation
 │   ├── SimpleCTF_Writeup/                    ← SQL injection + SSH
 │   ├── Lookup_writeup/                       ← Command injection + privesc
