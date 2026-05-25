@@ -127,6 +127,7 @@ This repository delivers:
 
 | Room | Core Vulnerability | Difficulty | Writeup |
 |:---|:---|:---:|:---:|
+| 🖱️ **Pickle Rick** 🌟 | RCE + Command Filtering Bypass + Privilege Escalation | 🟢 Easy | [View →](./Pickle-Rick_Writeup/) |
 | 🔓 **RootMe** | File Upload Bypass + SUID Privilege Escalation | 🟢 Easy | [View →](./RootMe_Writeup/) |
 | 🏰 **SimpleCTF** | SQL Injection + Privilege Escalation | 🟢 Easy | [View →](./SimpleCTF_Writeup/) |
 | 🔎 **Lookup** | Command Injection + Privilege Escalation | 🟡 Medium | [View →](./Lookup_writeup/) |
@@ -200,6 +201,21 @@ Scripting        Crypto         CTF Chains        Forensics
 
 ---
 
+## ✨ Writeup Enhancements & Learning Materials
+
+Selected writeups have been significantly expanded with:
+- 🎯 **Detailed Attack Chain Analysis** — Complete vulnerability exploitation flow diagrams
+- 📚 **Comprehensive Explanations** — "Why" behind techniques, not just "How"
+- 🛡️ **Remediation Strategies** — Defense mechanisms and security fixes
+- 💡 **Key Insights & Lessons** — Real-world security implications
+- 📊 **Attack Vectors Summary** — Vulnerability severity and impact analysis
+- 🧭 **Command Filtering Bypass Techniques** — Alternative approaches when direct methods fail
+
+**Currently Enhanced:**
+- 🖱️ **Pickle Rick** — Complete CTF walkthrough with 7+ attack vectors, defensive recommendations, and detailed methodology
+
+---
+
 ## 🔧 Tools & Technologies
 
 <div align="center">
@@ -263,13 +279,14 @@ THM/
 │   └── AgentT_Writeup/                    ← PHP 8.1.0-dev backdoor RCE
 │
 ├── 🐧 Linux / CTF
-│   ├── RootMe_Writeup/                    ← File upload + privilege escalation
-│   ├── SimpleCTF_Writeup/                 ← SQL injection + SSH
-│   ├── Lookup_writeup/                    ← Command injection + privesc
-│   ├── Team_Writeup/                      ← LFI + SSH key + cron job privesc
-│   ├── Dig-Dug_Writeup/                   ← DNS enumeration + custom DNS querying
-│   ├── Brooklyn-Nine-Nine_Writeup/        ← Anonymous FTP + SSH brute force + GTFOBins privesc
-│   └── Bugged_Writeup/                    ← SSH brute force + IoT/MQTT network analysis
+│   ├── Pickle-Rick_Writeup/                  ← RCE + Command filtering bypass + Privesc (✨ Enhanced writeup)
+│   ├── RootMe_Writeup/                       ← File upload + privilege escalation
+│   ├── SimpleCTF_Writeup/                    ← SQL injection + SSH
+│   ├── Lookup_writeup/                       ← Command injection + privesc
+│   ├── Team_Writeup/                         ← LFI + SSH key + cron job privesc
+│   ├── Dig-Dug_Writeup/                      ← DNS enumeration + custom DNS querying
+│   ├── Brooklyn-Nine-Nine_Writeup/           ← Anonymous FTP + SSH brute force + GTFOBins privesc
+│   └── Bugged_Writeup/                       ← SSH brute force + IoT/MQTT network analysis
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
