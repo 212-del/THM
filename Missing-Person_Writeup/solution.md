@@ -203,7 +203,7 @@ Carefully examining the **food.jpg** image, I observed a tablecloth or table cov
 
 ### ✅ Answer 3
 ```
-El Toro
+REDACTED
 ```
 
 ---
@@ -237,7 +237,7 @@ Date/Time Original          : 2025:01:06 14:32:45
 
 ### ✅ Answer 4
 ```
-14:32:45
+REDACTED
 ```
 
 ---
