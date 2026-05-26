@@ -213,6 +213,7 @@ Selected writeups have been significantly expanded with:
 
 **Currently Enhanced:**
 - 🖱️ **Pickle Rick** — Complete CTF walkthrough with 7+ attack vectors, defensive recommendations, and detailed methodology
+- 🔍 **Missing Person** — Professional OSINT investigation with comprehensive methodology, zero-trust validation, and multi-source evidence correlation
 
 ---
 
@@ -299,7 +300,8 @@ THM/
     ├── AI-THREAT-MODELLING-ASSESSMENT_Writeup/ ← AI threat modelling & system defence
     ├── The-Phising-Pond_Writeup/          ← Phishing email identification & analysis
     ├── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
-    └── Letter_Writeup/                    ← OSINT / Historical research / Maritime investigation
+    ├── Letter_Writeup/                    ← OSINT / Historical research / Maritime investigation
+    └── Missing-Person_Writeup/            ← OSINT / Archive forensics / Metadata extraction (✨ Enhanced writeup)
 ```
 
 Each writeup folder contains:
