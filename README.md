@@ -160,6 +160,8 @@ This repository delivers:
 |:---|:---|:---:|:---:|
 | 🐍 **Operation Slither** | Cross-Platform OSINT / Social Media Reconnaissance / Threat Actor Profiling | 🟢 Easy | [View →](./Operation-Slither_Writeup/) |
 | 📜 **Letter** | OSINT / Historical Research / Maritime Investigation | 🟢 Easy | [View →](./Letter_Writeup/) |
+| 🔍 **Missing Person** | OSINT / Digital Forensics / Geolocation Investigation | 🟢 Easy | [View →](./Missing_Person_Writeup/) |
+| 🖼️ **Louvre Heist** | OSINT / Historical Artifact Investigation / Web Recon | 🟢 Easy | [View →](./The-Case:-Seven-Minutes-on-the-Seine_Writeup/) |
 
 ### 🎣 Social Engineering & Phishing Awareness
 
