@@ -102,3 +102,92 @@ Pertamina Motogp race 2025
 It gave me that that circuit name on which the race was conducted and it was answer too of the first quesiton that what was the circuit name of the motoGP race.
 
 
+And when i asked for the when did the evnet toook place and  the answer format was DD-DD/MM/YYYY
+
+so here DD-DD is a day range. Like 02-05.
+
+So i asked the chatGPT that when did the pertamina motoGP race was conducted on that circuit.Answer is  in format DD-DD/MM/YYYY.
+
+And it gave me the straight answer.
+
+We will now moving to the next question that is It is said that he ate some mexican food and the food image was also in that zip file.
+
+We were asked to find the name of that restaurant.
+
+As we open the image of food
+
+We could read the restaurant name on the closest image of table which is  written on table cloth.
+
+## Food Image
+
+![Image](food.jpg)
+
+This is our answer of 3rd quesiton.
+
+Now we're moving further to the 4th question that is at what time the photo is taken we are now to get the help of a tool named exiftool.
+
+Exitftool : It is tool that helps to extact exifdata about an image. Like the exposure, focus, Brightness, Whitebalance, Location, Resolution and as well as photo taken date too.
+
+So we used this tool against the image food.jpg.
+
+And we reached on the conclusion that we get the image creation date and that too was the answer of the question question 4.
+
+Before Moving to the question number 5 we're given a piece of information that is He sent me a message, this is the last I heard from him: ”Went to this
+   cool MotoGP after party, and became friends with one of the local DJs who
+   played that night. We’re going to visit a cave tomorrow.” What is the full
+   address of the bar’s location?
+
+And there is a hint too with the question as per the google maps.
+
+So in next question it is asked that what is the full location of that bar.
+
+
+We know its a bar where the after party of motoGP takes place.
+
+
+So i asked chatgpt into the same window that In which bar did the after party of that motoGP race was conducted. Gave me the google map location link of that site.
+
+And it gave me the location link
+
+As i opened up the google maps i went to the location section where google maps shows the explained location in long form i copied the location from there
+
+But it didn't get true. So somehow i match the answer with the answer foramt and after a bunch of tried the answer get accepted.
+
+Answer format: **. **** ****, ****, ***. *****, ********* ****** ******, **** ******** ***
+
+Jl. Raya Kuta, Kuta, Kec. Pujut, Kabupaten Lombok Tengah, Nusa Tenggara Bar
+
+Now lets move on the next question.
+
+It is asking me for the DJs Stage name.
+
+So i asked chatGPT what was DJs stage that night.
+
+It said it was not posted online. This information was especially given to the users by  a reel that was uploaded on instagram 
+
+By the user @surfuresbar.lombok
+
+as i opened the reel section and seeing the thumbnails i saw that there was a thumbnail named the motoGP after party.
+
+And i opened up and DJs stage name was revealed there that was 
+
+Bong Leleh.
+
+I paste this answer to the chatGPT and asked the last qustion that is question 8 that is What number did the DJ list for his tour business?
+Format: Full number, no country code.
+
+And it said yes there was a phone number that was trending at that time that was
+
+085333137345
+
+And the left qustion was that After digging into the DJ's other online accounts, what cave does he take tourists to?
+
+AS in second piece of infomation it is also told that on the next day they were going to a cave next day after the party day.
+
+So i again asked chatGPT that what are nearby visiting caves near that DJs stage and That Bar location and gave me a few caves names.
+
+And From that listes of names i tried many one and got succed at one that was
+
+Gua Sumur
+
+And in this way are now ready to get into FBI and we have finished out investigation.
