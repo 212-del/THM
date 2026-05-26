@@ -104,4 +104,9 @@ After all answers will be correct we will be given a flag.
 
 This is the first method of getting the flag but there is a another method too to get the flag.
 
+When we saw the source code of the webpage we revealed some endpoints that are 
 
+- /api/questions
+- /api/submit-answers
+- /api/submit-reports
+- /api/success-message
