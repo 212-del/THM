@@ -73,3 +73,35 @@ And i Googled for Interpol reference ID for the Sapphire Diadem of
 Here is the attached PDF.
 
 [![PDF Preview](preview.png)](report.pdf)
+
+This contained the ref ID For the both items that ref ID too was released by Interpol
+
+They are below as per the answer format 
+
+2025/359.1,2025/359.5
+
+After proceeding further we are given a new piece of information that is 
+
+Give the title, inventory number, and dimensions of the central ceiling painting in the Galerie d'Apollon.
+
+Answer format: <title>-<inventory-number>-dimensions
+Example: XXXX_XXXX-INV_1234-9mx10m
+
+The Answer is below with explanation
+
+Apollon_vainqueur_du_serpent_Python-INV_3818-8mx7.5m
+
+This is the large central ceiling painting in the Galerie d'Apollon at the Louvre Museum. The work was painted by Eugène Delacroix in the 19th century to complete the gallery’s ceiling decoration. The painting depicts Apollo defeating the serpent Python, a mythological symbol of triumph and divine order.
+
+
+As we move further we are given new piece of information that is 
+
+What bridge lies directly south of the river-side nearest the aforementioned entrance?
+
+Answer format: BRIDGE_NAME
+
+After all answers will be correct we will be given a flag.
+
+This is the first method of getting the flag but there is a another method too to get the flag.
+
+
