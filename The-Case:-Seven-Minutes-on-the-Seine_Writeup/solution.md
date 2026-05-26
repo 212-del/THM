@@ -1,3 +1,5 @@
+# Part 1
+
 so this was our first look of the room ip when opened up into a browser/
 
 ![image](homepage.png)
@@ -110,3 +112,61 @@ When we saw the source code of the webpage we revealed some endpoints that are
 - /api/submit-answers
 - /api/submit-reports
 - /api/success-message
+
+When processed to the endpoint /api/success-message We got the flag that is answer of q1.
+
+But with the above answer it is not possible to get the flag the answers of Quesitons 1,2,4 and 5 Were Incorrect.
+
+There is also othername of that same entrance that was Porte des Lions so when i submit the answer Porte_des_Lions-22_OCT_2024
+
+It got accepted as a correct answer.
+
+For the Second Question Earlier answer was MV_1024-BAPST-AFFECTE-1887-NON_EXPOSE
+
+But in the answer format it is said the inventory number is AV1911 then it should be informat AV1911 not AV-1911 So i modified the answer
+
+MV1024-BAPST-AFFECTE-1887-NON_EXPOSE
+
+And it got accepted and i got the answer accpepted as correctly.
+
+now lets move on the 4th question its wrong answer was 
+
+Apollon_vainqueur_du_serpent_Python-INV_3818-8mx7.5m
+
+And i started trimming the name of the painting cuz everything was correct
+
+And after trimming to the point 
+
+Apollon_vainqueur-INV_3818-8mx7.5m
+
+It got accepted as a correct answer lets now move onto the last question whose incorrect answer was 
+
+Pont des Arts
+
+I got this answer from my search cuz Pont des Arts is commonly associated with the Louvre because it sits near the central Louvre riverfront and is heavily referenced in tourist descriptions.
+
+the “aforementioned entrance” refers to a point on the western side of the Louvre’s river-facing frontage. When we look directly south from that riverside area across the Seine, the nearest bridge is Pont Royal.
+
+The answer will be Pont_royal.
+
+# Part 2
+
+After getting the ip we have a login page infront of us
+
+![login](login.png)
+
+It is said in the instuction that credentials were known to everybody after the heist and we need to find it online using osint skills.
+
+When Googled this term '7 min heist of louvre musum leaked credentials userid'
+
+I got that both username and password were LOUVRE.
+
+But when i enterd into that login page i got invalid login.
+
+So i made everthing lowecase and then login and i was successfully loggedIN.
+
+![logged](loggedin.png)
+
+After i got access and into the recconnaissance in the part 1 we knew the heist happened on the date Oct-19,2025 so there was a option in the window to check security footage of a specific date.
+
+So when i checked for the date Oct-19,2025 i got the answer flag shown at the top right corner.
