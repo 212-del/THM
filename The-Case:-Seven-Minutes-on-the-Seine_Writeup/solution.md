@@ -282,6 +282,8 @@ Password: [______________]
 [Login Button]
 ```
 
+![image](login.png)
+
 ### **🕵️ OSINT Investigation for Credentials**
 
 The challenge instruction clearly stated: *"Credentials were known to everybody after the heist"* and encouraged using OSINT skills to locate them online.
@@ -338,6 +340,8 @@ Once successfully authenticated, the interface granted access to comprehensive s
 - Multiple camera feed access
 - Timestamp navigation controls
 - Video playback and frame analysis tools
+
+![image](loggedin.png)
 
 #### Critical Investigation Detail:
 
