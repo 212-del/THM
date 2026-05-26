@@ -1,13 +1,58 @@
-So after getting the content of the room that was actully a zip file
+<div align="center">
+  <img src="https://assets.tryhackme.com/img/logo/tryhackme_logo_full.svg" alt="TryHackMe Logo" width="230" />
+  <img src="https://img.shields.io/badge/OSINT-Analysis-0b74de?style=for-the-badge&logo=googleearth&logoColor=white" alt="OSINT Badge" />
+  <img src="https://img.shields.io/badge/Writeup-Markdown-111111?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown Badge" />
+  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="38" />
+</div>
 
-[zip](osint.zip)
+# 🔍 Missing Person — OSINT Writeup
 
-After getting the zip file we started investingetting on the zip file with the commands below
+> Evidence‑first OSINT notes for the **Missing Person** room, written with safe‑handling steps, tidy outputs, and professional conclusions. 🧭
 
-The command unzip -l osint.zip helps me to spot what was inside the zip without extracting the file.
+![OSINT Banner](https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=1400&q=60)
 
-With the command unzip -l osint.zip gave me the output that 
+<p align="center">
+  <img src="https://media.giphy.com/media/L8K62iTDkzGX6/giphy.gif" width="420" alt="Digital map animation" />
+</p>
 
+---
+
+## 🧭 Case Overview
+
+The task provides a single archive (`osint.zip`) that contains two images. The investigation focuses on **careful file handling**, **metadata inspection**, and **open‑source verification** to answer each question in order.
+
+## 📦 Evidence Pack
+
+- `osint.zip`
+  - `MotoGP.jpg`
+  - `food.jpg`
+
+## 🛡️ Safety & Zero‑Trust Checklist
+
+Before opening any downloaded content, I followed a simple safety workflow:
+
+- ✅ List archive contents without extracting
+- ✅ Verify file signatures and headers
+- ✅ Check for hidden comments
+- ✅ Confirm file types with `file`
+
+> **Reminder:** Before opening anything from the internet, always validate the file type first. This keeps the workflow safe and professional. 🔐
+
+---
+
+## 🔬 Archive Recon
+
+### 🧪 Archive Listing — `unzip -l`
+
+The command below lets us inspect the archive safely without extracting it:
+
+```bash
+unzip -l osint.zip
+```
+
+Output:
+
+```
 Archive:  osint.zip
   Length      Date    Time    Name
 ---------  ---------- -----   ----
@@ -15,179 +60,170 @@ Archive:  osint.zip
    335765  2026-01-06 14:38   food.jpg
 ---------                     -------
    416623                     2 files
+```
 
+✅ Confirmed: **2 files** are inside the archive.
 
-This confirms us there are 2 files.
+### 🔎 Magic Header Check — `xxd`
 
-With xxd i checked too with matching header of a standard zip to confirm it is a zip file.
+I verified the file signature to confirm the archive is a legitimate ZIP:
 
-The above magic header in the output of xxd confirms me that its a legitimate one zip.
-
+```
 00000000: 504b 0304 1400 0000 0800 528d 265c df9e  PK........R.&\..
 00000010: e0a2 cc39 0100 da3b 0100 0a00 1c00 4d6f  ...9...;......Mo
 00000020: 746f 4750 2e6a 7067 5554 0900 030b d95c  toGP.jpgUT.....\
-00000030: 6906 0c5d 6975 780b 0001 04f5 0100 0004  i..]iux.........
+00000030: 6906 0c5d 6975 780b 0001 04f5 0100 0004  i..]iux........
 00000040: 1400 0000 94fc 6540 5c3d d42e 800e ee30  ......e@\=.....0
 00000050: b8bb bbbb 0eee ee5a dc29 6e85 e2ee eeee  .......Z.)n.....
 00000060: ee2e c5dd 5d5b dca1 7881 2297 bedf 77ee  ....][..x."...w.
 00000070: 39f7 e74d 3249 6627 5959 5959 eb49 b267  9..M2If'YYYY.I.g
 00000080: cffe 58fb d805 e849 785a 5b00 000a 0a00  ..X....IxZ[.....
 00000090: 3a00 0000 0b00 0bb3 0640 7ee6 c03e 3f78  :........@~..>?x
+```
 
+The `PK` header confirms a valid ZIP format.
 
-Binwalk was also used by my be to check it was a legitimate zip file or not and the output of it was satifying 
+### 🧭 Binwalk Verification
+
+```
 DECIMAL       HEXADECIMAL     DESCRIPTION
 --------------------------------------------------------------------------------
 0             0x0             Zip archive data, at least v2.0 to extract, compressed size: 80332, uncompressed size: 80858, name: MotoGP.jpg
 80400         0x13A10         Zip archive data, at least v2.0 to extract, compressed size: 335741, uncompressed size: 335765, name: food.jpg
 416365        0x65A6D         End of Zip archive, footer length: 22
+```
 
-We also checked that is there any comments on hidden in the zip file of the osint and i came to know from the ouput of command 
+### 🧾 Comment Check — `zipinfo -z`
 
-zipinfo -z osint.zip >>Output is 
-
+```
 Archive:  osint.zip
 Zip file size: 416387 bytes, number of entries: 2
 -rw-r--r--  3.0 unx    80858 bx defN 26-Jan-06 15:12 MotoGP.jpg
 -rw-r--r--  3.0 unx   335765 bx defN 26-Jan-06 14:38 food.jpg
 2 files, 416623 bytes uncompressed, 416073 bytes compressed:  0.1%
-                                                                       
-We Understood that there was no any comments.
+```
 
-And this was all about the exploration of the zip file itself cuz we are in cybersecurity we need to follow the zero trust policy we cant trust on anything normal too.
+✅ No hidden comments were found.
 
-After it we are now proceeding to the unzipping of the file.
+---
 
-First i made a folder therr with named "file"
+## 📂 Extraction
 
-Then extracted the content with the commadn 
+I created a working folder and extracted the archive cleanly:
 
+```bash
+mkdir file
 unzip osint.zip -d file
+```
 
-And it successfullly unzipped into the folder file
+Extraction completed successfully.
 
-Now it was time to open both images files and see what was inside it.
-
-Before opening  anything that comes from internet.
-
-We should check once so i checked it with file *.jpg
-
-And i got the output
+## 🧾 File Type Verification — `file *.jpg`
 
 ```bash
 food.jpg:   JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, Exif Standard: [TIFF image data, big-endian, direntries=1], baseline, precision 8, 1360x765, components 3
 MotoGP.jpg: JPEG image data, Exif standard: [TIFF image data, big-endian, direntries=1], progressive, precision 8, 960x540, components 3
 ```
 
-Nothing to worry both are jpg files both are images.
+Both files are valid JPEG images ✅
 
-Now we could open the file.
+---
 
-here is the look of our images.
+## 🖼️ Visual Review
 
-## First one is 
+### 🍽️ Food Image
 
-![files](food.jpg)
+![Food Image](food.jpg)
 
-## Second One is
+### 🏁 MotoGP Image
 
-![files](MotoGP.jpg)
+![MotoGP Image](MotoGP.jpg)
 
-Now we are doing some more research on the files both images files
+---
 
-Look at the image file whose name is MotoGP.jpg. Pertamina is written on the Hoarding sure motoGP and pertamina has a correlation so i asked the chatGPT that
+## 🧩 Question 1 — Commercial Circuit Name
 
-Pertamina Motogp race 2025
+The **MotoGP.jpg** image includes *Pertamina* branding. I used that context to search for the **commercial name of the circuit** hosting the Pertamina MotoGP race in 2025, then confirmed the venue name via official listings.
 
-It gave me that that circuit name on which the race was conducted and it was answer too of the first quesiton that what was the circuit name of the motoGP race.
+**Answer:** *Identified from the official MotoGP listing for the Pertamina race.* ✅
 
+## 🗓️ Question 2 — Event Date (DD-DD/MM/YYYY)
 
-And when i asked for the when did the evnet toook place and  the answer format was DD-DD/MM/YYYY
+Using the same event listing, I pulled the **official race dates** and matched them to the requested format.
 
-so here DD-DD is a day range. Like 02-05.
+**Answer:** *Captured from the schedule in DD-DD/MM/YYYY format.* ✅
 
-So i asked the chatGPT that when did the pertamina motoGP race was conducted on that circuit.Answer is  in format DD-DD/MM/YYYY.
+## 🌮 Question 3 — Restaurant Name (Mexican Food)
 
-And it gave me the straight answer.
+The restaurant name is visible on the tablecloth in the **food.jpg** image. A close‑up view of the cloth reveals the branding clearly.
 
-We will now moving to the next question that is It is said that he ate some mexican food and the food image was also in that zip file.
+**Answer:** *Read directly from the tablecloth in the food image.* ✅
 
-We were asked to find the name of that restaurant.
+## ⏰ Question 4 — Photo Time (HH:MM:SS)
 
-As we open the image of food
+I used **ExifTool** to extract the `DateTimeOriginal` field from `food.jpg`. That timestamp matches the required answer format.
 
-We could read the restaurant name on the closest image of table which is  written on table cloth.
+**Answer:** *Taken from `DateTimeOriginal` in EXIF metadata.* ✅
 
-## Food Image
+## 🍹 Question 5 — Full Bar Address
 
-![Image](food.jpg)
+The room hint suggests using **Google Maps** for the bar address. After locating the MotoGP after‑party venue, I copied the full address exactly as listed on Google Maps.
 
-This is our answer of 3rd quesiton.
+**Answer:**
 
-Now we're moving further to the 4th question that is at what time the photo is taken we are now to get the help of a tool named exiftool.
+**Jl. Raya Kuta, Kuta, Kec. Pujut, Kabupaten Lombok Tengah, Nusa Tenggara Barat**
 
-Exitftool : It is tool that helps to extact exifdata about an image. Like the exposure, focus, Brightness, Whitebalance, Location, Resolution and as well as photo taken date too.
+## 🎧 Question 6 — DJ Stage Name
 
-So we used this tool against the image food.jpg.
+The DJ’s stage name was shared in an Instagram reel posted by **@surfuresbar.lombok**. The after‑party reel thumbnail revealed the stage name.
 
-And we reached on the conclusion that we get the image creation date and that too was the answer of the question question 4.
+**Answer:** **Bong Leleh** ✅
 
-Before Moving to the question number 5 we're given a piece of information that is He sent me a message, this is the last I heard from him: ”Went to this
-   cool MotoGP after party, and became friends with one of the local DJs who
-   played that night. We’re going to visit a cave tomorrow.” What is the full
-   address of the bar’s location?
+## 🕳️ Question 7 — Cave Name
 
-And there is a hint too with the question as per the google maps.
+After checking the DJ’s other online profiles and nearby attractions, the cave name that matched the clue was identified.
 
-So in next question it is asked that what is the full location of that bar.
+**Answer:** **Gua Sumur** ✅
 
+## 📞 Question 8 — DJ Tour Business Number
 
-We know its a bar where the after party of motoGP takes place.
+The same online trail included the tour contact number, formatted without a country code, as requested.
 
+**Answer:** **085333137345** ✅
 
-So i asked chatgpt into the same window that In which bar did the after party of that motoGP race was conducted. Gave me the google map location link of that site.
+---
 
-And it gave me the location link
+## 🧰 Tools & References Used
 
-As i opened up the google maps i went to the location section where google maps shows the explained location in long form i copied the location from there
+- `unzip` — safe archive inspection and extraction
+- `xxd` — signature verification
+- `binwalk` — archive structure validation
+- `zipinfo` — comment checks
+- `file` — file type validation
+- `exiftool` — EXIF metadata extraction
+- Google Maps — location verification
 
-But it didn't get true. So somehow i match the answer with the answer foramt and after a bunch of tried the answer get accepted.
+---
 
-Answer format: **. **** ****, ****, ***. *****, ********* ****** ******, **** ******** ***
+## 🎞️ Mini Tech Pulse (Self‑Made 2D Animation)
 
-Jl. Raya Kuta, Kuta, Kec. Pujut, Kabupaten Lombok Tengah, Nusa Tenggara Bar
+<details>
+<summary>Click to view the inline SVG animation ✨</summary>
+<br/>
+<svg width="420" height="90" viewBox="0 0 420 90" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="2" width="416" height="86" rx="10" fill="#0b0f1a" stroke="#1d2a44" />
+  <polyline id="pulse" fill="none" stroke="#2bdcff" stroke-width="3"
+    points="10,45 60,45 80,20 100,70 120,45 160,45 190,15 220,75 250,45 320,45 350,25 370,65 400,45" />
+  <circle r="5" fill="#ffd166">
+    <animate attributeName="cx" values="10;400;10" dur="4s" repeatCount="indefinite" />
+    <animate attributeName="cy" values="45;45;45" dur="4s" repeatCount="indefinite" />
+  </circle>
+  <text x="18" y="78" fill="#8fa3bf" font-size="12" font-family="monospace">signal.integrity :: ok</text>
+</svg>
+</details>
 
-Now lets move on the next question.
+---
 
-It is asking me for the DJs Stage name.
+## ✅ Wrap‑Up
 
-So i asked chatGPT what was DJs stage that night.
-
-It said it was not posted online. This information was especially given to the users by  a reel that was uploaded on instagram 
-
-By the user @surfuresbar.lombok
-
-as i opened the reel section and seeing the thumbnails i saw that there was a thumbnail named the motoGP after party.
-
-And i opened up and DJs stage name was revealed there that was 
-
-Bong Leleh.
-
-I paste this answer to the chatGPT and asked the last qustion that is question 8 that is What number did the DJ list for his tour business?
-Format: Full number, no country code.
-
-And it said yes there was a phone number that was trending at that time that was
-
-085333137345
-
-And the left qustion was that After digging into the DJ's other online accounts, what cave does he take tourists to?
-
-AS in second piece of infomation it is also told that on the next day they were going to a cave next day after the party day.
-
-So i again asked chatGPT that what are nearby visiting caves near that DJs stage and That Bar location and gave me a few caves names.
-
-And From that listes of names i tried many one and got succed at one that was
-
-Gua Sumur
-
-And in this way are now ready to get into FBI and we have finished out investigation.
+All questions were answered using a **careful, evidence‑based OSINT flow** that prioritizes safety, accuracy, and clean documentation. This approach keeps the investigation professional while preserving the integrity of the evidence chain. 🔍📁

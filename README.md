@@ -79,6 +79,7 @@ This repository delivers:
 - 🔍 **Deep-dive explanations** of the *why* behind every technique
 - 🛠️ **Tool references and command references** for fast recall
 - 📸 **Screenshot evidence** documenting each exploitation step
+- 🎨 **Visual-first writeups** with badges, GIFs, and clean layouts for better readability
 - 💭 **Personal notes** on what worked, what didn't, and key lessons learned
 
 ---
