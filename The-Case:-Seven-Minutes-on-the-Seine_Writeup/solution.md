@@ -39,3 +39,37 @@ When i Googled for the Empress Eugénie Brooch it gave me 2 brooch names
 Empress Eugénie owned several significant brooches, most notably the Diamond Bow Brooch and the Reliquary Brooch, both of which were stolen from the Louvre in October 2025. 
 
 Meaning This is the same incident i think that is desribed here about the theft in this room.
+
+After researching about the Reliquary Brooch, I got info a lot these are 
+
+MV_1024 → the official inventory number (“MV 1024”)
+BAPST → the maker’s surname, from “Alfred Bapst”
+AFFECTE → acquisition mode, from French “affecté au Louvre” (assigned to the Louvre)
+1887 → acquisition/assignment year
+NON_EXPOSE → current status on the record, meaning “not on display”
+
+So as per the answer format
+
+Answer format: <INV>-<MAKER>-<MODE>-<YEAR>-<STATUS>
+Note: Use UPPERCASE, no accents, spaces as underscores.
+Example: OA1234-NAME-AFFECTE-1887-NON_EXPOSE
+
+The answer will be : MV_1024-BAPST-AFFECTE-1887-NON_EXPOSE
+
+Now as we move further towards investigation on the page We were present with new piece of information that are
+
+
+Two of the stolen pieces received INTERPOL reference IDs on the public poster / database. What are the INTERPOL reference IDs for the Sapphire Diadem of Queens Marie-Amélie and Hortense, and the Reliquary Brooch?
+
+Answer format: <REF1>,<REF2>
+Example: 2022/23.5,2021/15.1
+
+As it is being asked the refrence ID of public poster/database released by Interpol for the Sapphire Diadem of
+   Queens Marie-Amélie and Hortense, and the Reliquary Brooch
+
+And i Googled for Interpol reference ID for the Sapphire Diadem of
+   Queens Marie-Amélie and Hortense, and the Reliquary Brooch and i got a pdf file in which the reference ID of both Items as well as Refence Number of Other Items were also mentioned in that PDF.
+
+Here is the attached PDF.
+
+[![PDF Preview](preview.png)](report.pdf)
