@@ -19,9 +19,9 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-29-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
-[![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-10%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
-[![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-15%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-30-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-12%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
+[![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-16%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
 
 <br/>
@@ -89,14 +89,15 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **29** |
+| 🏁 **Rooms Completed** | **30** |
 | 🗂️ **Security Categories Covered** | **6** |
-| ⚔️ **Attack Techniques Documented** | **11+** |
+| ⚔️ **Attack Techniques Documented** | **12+** |
 | 🛠️ **Tools Practised** | **16+** |
-| 🖼️ **Screenshot Evidence Collected** | **110+** |
-| 📄 **Writeup Documents Written** | **58+** |
-| 🔑 **Flags Captured** | **29+** |
+| 🖼️ **Screenshot Evidence Collected** | **112+** |
+| 📄 **Writeup Documents Written** | **60+** |
+| 🔑 **Flags Captured** | **30+** |
 | 🧠 **CVEs Researched & Exploited** | **4+** |
+| ✨ **Enhanced Writeups** | **3** |
 
 </div>
 
@@ -294,14 +295,15 @@ THM/
 │   ├── W1seGuy_Writeup/                   ← XOR cipher analysis
 │   └── c4ptur3-th3-fl4g_Writeup/          ← Encoding, ciphers & steganography
 │
-└── 🤖 AI Security
-    ├── CupidBot_Writeup/                  ← Prompt injection
-    ├── Oracle9_WriteUp/                   ← LLM authority bypass
-    ├── AI-THREAT-MODELLING-ASSESSMENT_Writeup/ ← AI threat modelling & system defence
-    ├── The-Phising-Pond_Writeup/          ← Phishing email identification & analysis
-    ├── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
-    ├── Letter_Writeup/                    ← OSINT / Historical research / Maritime investigation
-    └── Missing-Person_Writeup/            ← OSINT / Archive forensics / Metadata extraction (✨ Enhanced writeup)
+├── 🤖 AI Security
+│   ├── CupidBot_Writeup/                  ← Prompt injection
+│   ├── Oracle9_WriteUp/                   ← LLM authority bypass
+│   ├── AI-THREAT-MODELLING-ASSESSMENT_Writeup/ ← AI threat modelling & system defence
+│   ├── The-Phising-Pond_Writeup/          ← Phishing email identification & analysis
+│   ├── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
+│   ├── Letter_Writeup/                    ← OSINT / Historical research / Maritime investigation
+│   ├── Missing-Person_Writeup/            ← OSINT / Archive forensics / Metadata extraction (✨ Enhanced writeup)
+│   └── The-Case:-Seven-Minutes-on-the-Seine_Writeup/ ← OSINT / Museum heist investigation / Forensic analysis (✨ Enhanced writeup)
 ```
 
 Each writeup folder contains:
