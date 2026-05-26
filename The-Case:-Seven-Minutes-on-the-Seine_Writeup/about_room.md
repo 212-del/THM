@@ -4,6 +4,7 @@
 
 You are the analyst on call after a hi-vis crew struck the Galerie d'Apollon and fled toward the river. Investigate using only open sources.
 
+## Part 1
 Something audacious unfolded beneath the glass pyramid.
 
 In the early hours, a crew in hi-vis vests breached the Galerie d'Apollon inside the Louvre. Security feeds went dark, and seven minutes later, the team disappeared toward the river.
@@ -13,9 +14,19 @@ You are the first analyst on call. Your mission is to reconstruct the details of
 Gather and verify information from public sources: museum pages, heritage archives, news coverage, social media, and open databases.
 
 Click the Start Machine button and access the portal via this [link](https://tryhackme.com/api/v2/vms/start) to get started. Note that the machine may take 2-3 minutes to initialise.
+
+## Part 2
+
+A recent news report referencing an earlier audit of the museum’s surveillance network revealed serious weaknesses: outdated servers, inconsistent camera coverage, and a weak password policy. As the on-call CCTV analyst, your job is to verify whether the credential clues in those reports are valid against the system and then use them to review the footage from the day of the incident, documenting every step and source.
+
+You may refer to online sources to identify the correct credential pair for this lab environment and review the footage from the day of the incident.
+
+Click the Start Lab Machine button and access the portal via this [link](https://tryhackme.com/api/v2/vms/start) to get started. Note that the machine may take 2-3 minutes to initialise.
  
 ❓ *Room Questions =*
 
 | #   | Question                                                              | 💡 Hint                                                                                                                                                                                                          |
 |-----|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Q1  | What is the value of the flag?                       			      | Nothing                                                                                                                                                                                                          |
+
+| Q2  | What is the value of the flag?                       			      | Nothing                                                                                                                                                                                                          |
