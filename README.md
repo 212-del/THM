@@ -97,7 +97,7 @@ This repository delivers:
 | 📄 **Writeup Documents Written** | **60+** |
 | 🔑 **Flags Captured** | **30+** |
 | 🧠 **CVEs Researched & Exploited** | **4+** |
-| ✨ **Enhanced Writeups** | **4** |
+| ✨ **Enhanced Writeups** | **5** |
 
 </div>
 
@@ -254,9 +254,9 @@ Through these rooms, the following **real-world attack techniques** have been re
 | **IDOR** | Insecure Direct Object Reference — accessing unauthorised resources by manipulating IDs | Corridor, Neighbour |
 | **SSRF** | Server-Side Request Forgery — tricking the server into making internal requests | MD2PDF |
 | **LFI** | Local File Inclusion — reading sensitive server files via unsanitised input | Lo-Fi |
-| **SQL Injection** | Extracting and manipulating database data through unsanitised queries | SimpleCTF |
-| **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe, Speed Chatting |
-| **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup |
+| **SQL Injection** | Extracting and manipulating database data through unsanitised queries | SimpleCTF, Plotted-TMS |
+| **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe, Speed Chatting, Plotted-TMS |
+| **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup, Plotted-TMS |
 | **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash |
 | **XOR Cryptanalysis** | Reversing XOR-encrypted ciphertext using known-plaintext attacks | W1seGuy |
 | **Prompt Injection** | Manipulating LLM-based AI applications into revealing secrets | CupidBot, Oracle 9 |
@@ -283,7 +283,8 @@ THM/
 │   ├── TryHeartMe_Writeup/                ← Business logic bypass
 │   ├── TakeOver_Writeup/                  ← Subdomain takeover
 │   ├── Speed-Chatting_Writeup/            ← File upload bypass + Python RCE
-│   └── AgentT_Writeup/                    ← PHP 8.1.0-dev backdoor RCE
+│   ├── AgentT_Writeup/                    ← PHP 8.1.0-dev backdoor RCE
+│   └── Plotted-TMS_Writeup/               ← SQL Injection + File Upload RCE + Privilege Escalation (✨ Enhanced writeup)
 │
 ├── 🐧 Linux / CTF
 │   ├── Pickle-Rick_Writeup/                  ← RCE + Command Filtering Bypass + Privesc (✨ Enhanced writeup)
