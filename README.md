@@ -97,7 +97,7 @@ This repository delivers:
 | 📄 **Writeup Documents Written** | **60+** |
 | 🔑 **Flags Captured** | **30+** |
 | 🧠 **CVEs Researched & Exploited** | **4+** |
-| ✨ **Enhanced Writeups** | **3** |
+| ✨ **Enhanced Writeups** | **4** |
 
 </div>
 
@@ -162,6 +162,7 @@ This repository delivers:
 | 📜 **Letter** | OSINT / Historical Research / Maritime Investigation | 🟢 Easy | [View →](./Letter_Writeup/) |
 | 🔍 **Missing Person** | OSINT / Digital Forensics / Geolocation Investigation | 🟢 Easy | [View →](./Missing_Person_Writeup/) |
 | 🖼️ **Louvre Heist** | OSINT / Historical Artifact Investigation / Web Recon | 🟢 Easy | [View →](./The-Case:-Seven-Minutes-on-the-Seine_Writeup/) |
+| 📔 **Dev-Diaries** ✨ | GitHub OSINT / Commit History Analysis / Email Metadata Extraction / Subdomain Enumeration | 🟢 Easy | [View →](./Dev-Diaries_Writeup/) |
 
 ### 🎣 Social Engineering & Phishing Awareness
 
@@ -217,6 +218,8 @@ Selected writeups have been significantly expanded with:
 **Currently Enhanced:**
 - 🖱️ **Pickle Rick** — Complete CTF walkthrough with 7+ attack vectors, defensive recommendations, and detailed methodology
 - 🔍 **Missing Person** — Professional OSINT investigation with comprehensive methodology, zero-trust validation, and multi-source evidence correlation
+- 🖼️ **The Case: Seven Minutes on the Seine** — OSINT and museum heist investigation with forensic analysis and artifact authentication
+- 📔 **Dev-Diaries** — GitHub OSINT with commit history analysis, metadata extraction techniques, and subdomain enumeration methodology
 
 ---
 
@@ -305,7 +308,8 @@ THM/
 │   ├── Operation-Slither_Writeup/         ← OSINT / Cross-platform threat actor profiling
 │   ├── Letter_Writeup/                    ← OSINT / Historical research / Maritime investigation
 │   ├── Missing-Person_Writeup/            ← OSINT / Archive forensics / Metadata extraction (✨ Enhanced writeup)
-│   └── The-Case:-Seven-Minutes-on-the-Seine_Writeup/ ← OSINT / Museum heist investigation / Forensic analysis (✨ Enhanced writeup)
+│   ├── The-Case:-Seven-Minutes-on-the-Seine_Writeup/ ← OSINT / Museum heist investigation / Forensic analysis (✨ Enhanced writeup)
+│   └── Dev-Diaries_Writeup/               ← GitHub OSINT / Commit analysis / Email extraction (✨ Enhanced writeup)
 ```
 
 Each writeup folder contains:
