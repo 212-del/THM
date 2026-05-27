@@ -80,6 +80,8 @@ To find the developer's GitHub account, we performed a targeted search:
 Search term: "marvenly github"
 ```
 
+![result](result.png)
+
 The search results displayed several GitHub profiles. Among the results, one profile stood out—it had:
 - More interactions and contributions
 - A username that closely matched the company/project name
