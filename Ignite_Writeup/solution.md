@@ -1,0 +1,29 @@
+So this our first look our target after opening the ip into the browser
+
+![ip](homepage.png)
+
+The directory enumuaration reuslt were
+
+- README.md
+- robots.txt > /fuel/
+- /contibuting.md
+- composer.json
+
+When i went to robots.txt and it gave me one more endpoint that is /fuel
+
+When i went to /fuel it redirected me to a login page.
+
+![login](login.png)
+
+After getting the login page we tried
+
+Bruteforcing the page but there was rate limiting so we left it
+
+And if keep scrooling the homepage to the bottom we have got the credentials to login.
+
+After loggedin here is our first look.
+
+![logged](loggedin.png)
+
+
+
