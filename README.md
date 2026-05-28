@@ -131,6 +131,7 @@ This repository delivers:
 | 🥒 **Pickle Rick** 🌟 | RCE + Command Filtering Bypass + Privilege Escalation | 🟢 Easy | [View →](./Pickle-Rick_Writeup/) |
 | 🔓 **RootMe** | File Upload Bypass + SUID Privilege Escalation | 🟢 Easy | [View →](./RootMe_Writeup/) |
 | 🏰 **SimpleCTF** | SQL Injection + Privilege Escalation | 🟢 Easy | [View →](./SimpleCTF_Writeup/) |
+| 🛠️ **LazyAdmin** ✨ | Database Exposure + PHP Code Injection + Privilege Escalation (NOPASSWD Exploit) | 🟡 Medium | [View →](./LazyAdmin_Writeup/) |
 | 🔎 **Lookup** | Command Injection + Privilege Escalation | 🟡 Medium | [View →](./Lookup_writeup/) |
 | 👥 **Team** | LFI + SSH Key Exfiltration + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Team_Writeup/) |
 | 🌐 **Dig-Dug** | DNS Enumeration / Custom DNS Server Querying | 🟢 Easy | [View →](./Dig-Dug_Writeup/) |
