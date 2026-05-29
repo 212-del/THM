@@ -288,6 +288,7 @@ THM/
 │   └── Plotted-TMS_Writeup/               ← SQL Injection + File Upload RCE + Privilege Escalation (✨ Enhanced writeup)
 │
 ├── 🐧 Linux / CTF
+│   ├── Ignite_Writeup/                       ← Fuel CMS RCE + Privilege Escalation (✨ Enhanced writeup)
 │   ├── Pickle-Rick_Writeup/                  ← RCE + Command Filtering Bypass + Privesc (✨ Enhanced writeup)
 │   ├── RootMe_Writeup/                       ← File upload + privilege escalation
 │   ├── SimpleCTF_Writeup/                    ← SQL injection + SSH
