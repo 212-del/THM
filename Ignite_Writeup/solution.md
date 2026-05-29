@@ -245,7 +245,6 @@ After locating and examining the `database.php` file, we discover critical infor
 
 ![Database Config File 2](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/14.png)
 
-![Database Config File 3](https://deskel.github.io/assets/images/THM/2020-08-07-ignite-ctf/15.png)
 
 **Information Extracted:**
 - Database username and password
