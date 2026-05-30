@@ -97,7 +97,7 @@ This repository delivers:
 | 📄 **Writeup Documents Written** | **60+** |
 | 🔑 **Flags Captured** | **30+** |
 | 🧠 **CVEs Researched & Exploited** | **4+** |
-| ✨ **Enhanced Writeups** | **5** |
+| ✨ **Enhanced Writeups** | **6** |
 
 </div>
 
@@ -138,6 +138,7 @@ This repository delivers:
 | 🕵️ **Brooklyn Nine Nine** | Anonymous FTP + SSH Brute Force + GTFOBins (`less`) Privilege Escalation | 🟢 Easy | [View →](./Brooklyn-Nine-Nine_Writeup/) |
 | 🐛 **Bugged** | SSH Brute Force / IoT Network Analysis (MQTT) | 🟢 Easy | [View →](./Bugged_Writeup/) |
 | ⚡ **Jax** | Node.js Unsafe Deserialization + RCE + NPM Privilege Escalation | 🟡 Medium | [View →](./Jax-sucks-alot............._Writeup/) |
+| 🔥 **Thompson** ✨ | Apache Tomcat Default Credentials + JSP RCE + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Thompson_Writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
 
@@ -298,7 +299,8 @@ THM/
 │   ├── Team_Writeup/                         ← LFI + SSH key + cron job privesc
 │   ├── Dig-Dug_Writeup/                      ← DNS enumeration + custom DNS querying
 │   ├── Brooklyn-Nine-Nine_Writeup/           ← Anonymous FTP + SSH brute force + GTFOBins privesc
-│   └── Bugged_Writeup/                       ← SSH brute force + IoT/MQTT network analysis
+│   ├── Bugged_Writeup/                       ← SSH brute force + IoT/MQTT network analysis
+│   └── Thompson_Writeup/                     ← Apache Tomcat RCE + Cron Job Privesc (✨ Enhanced writeup)
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
