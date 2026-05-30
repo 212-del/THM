@@ -19,9 +19,9 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-30-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
-[![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-12%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
-[![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-16%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-31-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-13%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
+[![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-17%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
 
 <br/>
@@ -89,15 +89,15 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **30** |
+| 🏁 **Rooms Completed** | **31** |
 | 🗂️ **Security Categories Covered** | **6** |
-| ⚔️ **Attack Techniques Documented** | **12+** |
-| 🛠️ **Tools Practised** | **16+** |
-| 🖼️ **Screenshot Evidence Collected** | **112+** |
-| 📄 **Writeup Documents Written** | **60+** |
-| 🔑 **Flags Captured** | **30+** |
-| 🧠 **CVEs Researched & Exploited** | **4+** |
-| ✨ **Enhanced Writeups** | **6** |
+| ⚔️ **Attack Techniques Documented** | **13+** |
+| 🛠️ **Tools Practised** | **17+** |
+| 🖼️ **Screenshot Evidence Collected** | **115+** |
+| 📄 **Writeup Documents Written** | **62+** |
+| 🔑 **Flags Captured** | **31+** |
+| 🧠 **CVEs Researched & Exploited** | **5+** |
+| ✨ **Enhanced Writeups** | **7** |
 
 </div>
 
@@ -139,6 +139,7 @@ This repository delivers:
 | 🐛 **Bugged** | SSH Brute Force / IoT Network Analysis (MQTT) | 🟢 Easy | [View →](./Bugged_Writeup/) |
 | ⚡ **Jax** | Node.js Unsafe Deserialization + RCE + NPM Privilege Escalation | 🟡 Medium | [View →](./Jax-sucks-alot............._Writeup/) |
 | 🔥 **Thompson** ✨ | Apache Tomcat Default Credentials + JSP RCE + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Thompson_Writeup/) |
+| 📊 **Kiba** ✨ | Kibana RCE (CVE-2019-7609) + Linux Capabilities + Privilege Escalation | 🟡 Medium | [View →](./kiba_writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
 
@@ -222,6 +223,7 @@ Selected writeups have been significantly expanded with:
 - 🔍 **Missing Person** — Professional OSINT investigation with comprehensive methodology, zero-trust validation, and multi-source evidence correlation
 - 🖼️ **The Case: Seven Minutes on the Seine** — OSINT and museum heist investigation with forensic analysis and artifact authentication
 - 📔 **Dev-Diaries** — GitHub OSINT with commit history analysis, metadata extraction techniques, and subdomain enumeration methodology
+- 🔒 **Kiba** ✨ — Kibana RCE exploitation with structured question breakdown, Linux capabilities deep-dive, and privilege escalation techniques
 
 ---
 
