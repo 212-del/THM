@@ -73,6 +73,8 @@ After identifying port 10000, I accessed it directly in the browser:
 
 ![Webmin Login Page](https://miro.medium.com/v2/resize:fit:720/format:webp/1*vrEeRLx8X8O9xCRHblefIQ.png)
 
+And i got the DNS Error.
+
 #### 🔗 DNS & SSL Configuration Issues
 
 The browser's automatic redirection led to a DNS error. To resolve this, I added the target hostname mapping to my local `/etc/hosts` file:
@@ -81,11 +83,13 @@ The browser's automatic redirection led to a DNS error. To resolve this, I added
 10.49.186.80 ip-10-49-186-80.ap-south-1.compute.internal
 ```
 
+
 After updating the hosts file, I encountered an SSL certificate error (the application uses a self-signed certificate):
 
 ![SSL Certificate Error](https://supporthost.com/wp-content/uploads/2022/06/chrome-err-cert-authority-invalid-selfsigned-certificate-1024x496.png)
 
 **Solution:** I clicked the "Advanced" button and proceeded to bypass the SSL warning.
+
 
 #### ✅ Webmin Login Page
 
