@@ -81,4 +81,39 @@ As if we saw in the nmap output look at the snippet
 
 Meaning its Webmin is 1.890 we could seach for vuln into it.
 
+When i did search for it by the tool searchsploit
 
+i got this one interesting
+
+Webmin 1.920 - Remote Code Execution            | linux/webapps/47293.sh
+
+Its usage is
+
+bash <exploitname> <target_url>
+
+Example 
+
+bash exploit.sh https://ip-10-49-186-80.ap-south-1.compute.internal:10000/
+
+And in this way we will execute the commadn.
+
+But since even after executing i didn't get any shell or info that target is vulnerable.
+
+Instead i got 
+
+```error
+Testing for RCE (CVE-2019-15107) on https://ip-10-49-186-80.ap-south-1.compute.internal:10000/: \033[0;32mOK! (target is not vulnerable)\033[0m
+```
+
+This shatters my heart into pieces.
+
+Here comes our msfconsole into our help and it helped me to get the shell 
+
+![shell](https://miro.medium.com/v2/resize:fit:720/format:webp/0*m33MD_uffI7nbwq8.png)
+
+And this is the shell that makes me happy till now i got the root shell without doing privilage escalation.
+
+after a while spending time to enumurate here and there and i got the both flags at the locaiton
+
+- /home/dark/user.txt
+- /root/root.txt
