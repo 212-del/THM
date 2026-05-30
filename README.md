@@ -258,6 +258,7 @@ Through these rooms, the following **real-world attack techniques** have been re
 | **SQL Injection** | Extracting and manipulating database data through unsanitised queries | SimpleCTF, Plotted-TMS |
 | **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe, Speed Chatting, Plotted-TMS |
 | **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup, Plotted-TMS |
+| **CVE-Based RCE** | Exploiting known vulnerabilities (CVE-2019-15107) in admin panels like Webmin | Source |
 | **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash |
 | **XOR Cryptanalysis** | Reversing XOR-encrypted ciphertext using known-plaintext attacks | W1seGuy |
 | **Prompt Injection** | Manipulating LLM-based AI applications into revealing secrets | CupidBot, Oracle 9 |
@@ -290,6 +291,7 @@ THM/
 ├── 🐧 Linux / CTF
 │   ├── Ignite_Writeup/                       ← Fuel CMS RCE + Privilege Escalation (✨ Enhanced writeup)
 │   ├── Pickle-Rick_Writeup/                  ← RCE + Command Filtering Bypass + Privesc (✨ Enhanced writeup)
+│   ├── Source_Writeup/                       ← Webmin RCE Exploitation via CVE-2019-15107 + Root Access (✨ Enhanced writeup)
 │   ├── RootMe_Writeup/                       ← File upload + privilege escalation
 │   ├── SimpleCTF_Writeup/                    ← SQL injection + SSH
 │   ├── Lookup_writeup/                       ← Command injection + privesc

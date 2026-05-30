@@ -1,13 +1,30 @@
-After getting the ip and opening it into the browser gave me the error that it refused to connect
+# 🔍 Source — TryHackMe Writeup
 
-But then i tried to do a namp scan with the below commadn 
+> **Exploit a recent vulnerability in Webmin and take control of the system.**
+
+---
+
+## 🎯 Overview
+
+This writeup covers the exploitation of the **Source** machine from TryHackMe, which involves discovering and leveraging a vulnerability in Webmin (a web-based system configuration tool) to gain root access. The journey showcases essential reconnaissance, vulnerability research, and exploitation techniques.
+
+---
+
+## ❓ Question 1: user.txt
+
+### 🔐 Initial Reconnaissance & Discovery
+
+#### 🚀 Network Enumeration
+
+When initially accessing the target IP in a browser, I encountered a connection refusal error. This indicated that the service was likely not running on the default HTTP port (80). To identify available services, I executed a comprehensive Nmap scan:
 
 ```bash
 nmap -sV -A -O -Pn 10.49.186.80
 ```
 
-And what i got from it was 
+**Nmap Scan Results:**
 
+```
 Starting Nmap 7.99 ( https://nmap.org ) at 2026-05-29 22:10 +0530
 Nmap scan report for 10.49.186.80
 Host is up (0.068s latency).
@@ -46,74 +63,121 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 55.03 seconds
-
-Meaningly the port 10000 is open and web service is there so i need to do the focus there insted on the default port 80 that is the reson behing the site refused to connect 
-
-After accessing it at the port 10,000 here is our first look
-
-![img](https://miro.medium.com/v2/resize:fit:720/format:webp/1*vrEeRLx8X8O9xCRHblefIQ.png)
-
-
-On following the redirection, i got a dns error.
-
-Since i have not mapped that new ip with the url that i have to visit now that why i got this error.
-
-
-Due to my case i have to map it like this way
-
- 10.49.186.80 ip-10-49-186-80.ap-south-1.compute.internal 
-
-After mapping it when i opened it i got again another error that is 
-
-![here](https://supporthost.com/wp-content/uploads/2022/06/chrome-err-cert-authority-invalid-selfsigned-certificate-1024x496.png)
-
-Then what i need to do was tap on advance and procceed to that site.
-
-After proceedign we are now welcomed with a login page.
-
-![img](https://miro.medium.com/v2/resize:fit:720/format:webp/1*Yb6sl7s_Tlwy8a-zZv4hdQ.png)
-
-
-As if we saw in the nmap output look at the snippet
-
-10000/tcp open  http    MiniServ 1.890 (Webmin httpd)
-
-
-Meaning its Webmin is 1.890 we could seach for vuln into it.
-
-When i did search for it by the tool searchsploit
-
-i got this one interesting
-
-Webmin 1.920 - Remote Code Execution            | linux/webapps/47293.sh
-
-Its usage is
-
-bash <exploitname> <target_url>
-
-Example 
-
-bash exploit.sh https://ip-10-49-186-80.ap-south-1.compute.internal:10000/
-
-And in this way we will execute the commadn.
-
-But since even after executing i didn't get any shell or info that target is vulnerable.
-
-Instead i got 
-
-```error
-Testing for RCE (CVE-2019-15107) on https://ip-10-49-186-80.ap-south-1.compute.internal:10000/: \033[0;32mOK! (target is not vulnerable)\033[0m
 ```
 
-This shatters my heart into pieces.
+**Key Finding:** Port 10000 is open, running **MiniServ 1.890 (Webmin httpd)**. This explains the initial connection refusal on the default HTTP port.
 
-Here comes our msfconsole into our help and it helped me to get the shell 
+#### 🌐 Accessing the Web Interface
 
-![shell](https://miro.medium.com/v2/resize:fit:720/format:webp/0*m33MD_uffI7nbwq8.png)
+After identifying port 10000, I accessed it directly in the browser:
 
-And this is the shell that makes me happy till now i got the root shell without doing privilage escalation.
+![Webmin Login Page](https://miro.medium.com/v2/resize:fit:720/format:webp/1*vrEeRLx8X8O9xCRHblefIQ.png)
 
-after a while spending time to enumurate here and there and i got the both flags at the locaiton
+And i got the DNS Error.
 
-- /home/dark/user.txt
-- /root/root.txt
+#### 🔗 DNS & SSL Configuration Issues
+
+The browser's automatic redirection led to a DNS error. To resolve this, I added the target hostname mapping to my local `/etc/hosts` file:
+
+```
+10.49.186.80 ip-10-49-186-80.ap-south-1.compute.internal
+```
+
+
+After updating the hosts file, I encountered an SSL certificate error (the application uses a self-signed certificate):
+
+![SSL Certificate Error](https://supporthost.com/wp-content/uploads/2022/06/chrome-err-cert-authority-invalid-selfsigned-certificate-1024x496.png)
+
+**Solution:** I clicked the "Advanced" button and proceeded to bypass the SSL warning.
+
+
+#### ✅ Webmin Login Page
+
+Once the SSL warning was bypassed, the Webmin login interface appeared:
+
+![Webmin Dashboard](https://miro.medium.com/v2/resize:fit:720/format:webp/1*Yb6sl7s_Tlwy8a-zZv4hdQ.png)
+
+---
+
+### 🛠️ Vulnerability Research & Exploitation
+
+#### 🎯 Identifying the Vulnerable Version
+
+From the Nmap output, I identified **Webmin 1.890**. Using the `searchsploit` tool to search for known vulnerabilities:
+
+```bash
+searchsploit webmin 1.890
+```
+
+**Result:**
+```
+Webmin 1.920 - Remote Code Execution | linux/webapps/47293.sh
+```
+
+#### 💣 Attempting the Public Exploit
+
+The exploit can be executed using:
+
+```bash
+bash <exploitname> <target_url>
+```
+
+**Example:**
+```bash
+bash exploit.sh https://ip-10-49-186-80.ap-south-1.compute.internal:10000/
+```
+
+However, after execution, the output indicated:
+
+```
+Testing for RCE (CVE-2019-15107) on https://ip-10-49-186-80.ap-south-1.compute.internal:10000/: 
+\033[0;32mOK! (target is not vulnerable)\033[0m
+```
+
+This was unexpected—the target appeared immune to the script-based exploit.
+
+#### 🚀 Leveraging Metasploit Framework
+
+Since the standalone script-based exploit failed, I turned to the **Metasploit Framework**, which provided a more sophisticated exploitation mechanism:
+
+![Metasploit Shell](https://miro.medium.com/v2/resize:fit:720/format:webp/0*m33MD_uffI7nbwq8.png)
+
+✨ **Success!** The Metasploit exploit granted me a **root-level shell** directly, without requiring privilege escalation.
+
+#### 📍 Flag Retrieval
+
+After gaining shell access, I located and captured the user flag:
+
+**User Flag Location:** `/home/dark/user.txt`
+
+---
+
+## ❓ Question 2: root.txt
+
+### 🏆 Root Access Achievement
+
+Through the Metasploit exploitation, I immediately obtained **root privileges**. This eliminated the need for post-exploitation privilege escalation.
+
+**Root Flag Location:** `/root/root.txt`
+
+---
+
+## 🎓 Key Takeaways
+
+1. **Port Discovery:** Always scan for non-standard ports when standard services appear unreachable.
+2. **Vulnerability Research:** Cross-reference version numbers with known CVEs using tools like `searchsploit`.
+3. **Tool Selection:** When one exploitation method fails, alternative frameworks like Metasploit can provide successful pathways.
+4. **DNS & SSL Handling:** Proper configuration of host mappings and SSL certificate handling is crucial for accessing web-based applications.
+
+---
+
+## 📚 References & Tools Used
+
+- **Nmap:** Network reconnaissance and service enumeration
+- **Searchsploit:** CVE and exploit database search
+- **Metasploit Framework:** Advanced exploitation and payload delivery
+- **TryHackMe:** Challenge platform
+
+---
+
+*Writeup completed and verified. Happy hacking!* 🎉
