@@ -162,6 +162,7 @@ Here are a few essential commands to keep handy during any TryHackMe room:
 | `nmap -sV -sC <MACHINE_IP>` | Run a default service/version scan on the target |
 | `gobuster dir -u http://<IP> -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt` | Directory enumeration |
 | `cat /etc/hosts` | View your current hosts file entries |
+| `hydra -l john -P /home/Seclists/Passwords/Common-Credentials/xato-net-10-million-passwords-1000000.txt 10.49.130.158 ssh` | SSH passphrase breaking command |
 
 ---
 
