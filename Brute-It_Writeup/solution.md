@@ -10,7 +10,7 @@ For directory enumuration endpoints were
 
 - /admin
 - /admin/.zip
-- /admin/id_rsa
+- /admin/panel/id_rsa
 
 Nmap scan gave us 2 ports opened 
 
@@ -42,3 +42,44 @@ After this we opened the source code and got this line
 So we are sure there the username is admin here but there is john named username too.
 
 
+Since i got the id_rsa for at the location /admin/panel/id_rsa
+
+Then we are able to do the login but as were doing login we are prompted to enter a passphare.
+
+But we dont know the passphrase 
+
+So to do so we need to crack the passphrase.
+
+For it we are going to execute these sequece of commands.
+
+ssh2john <path to key> <path to hashed key>
+
+ssh2john : this is the tool which helps to get the hashed key
+
+After this we need to crack the key for pharase with the below commands 
+
+john --wordlist=/path/to/wordlsit key_hash
+
+But when i did these seq of commands i didn't get the password.
+
+But soon after i changed the wordlist and tried again.
+
+But this too didn't get me passpharse after spending my all long password lists i was frusturated very badly. i then decided to spend my all wordlist to crack the passphrase with the command
+
+With the loop : 
+
+```bash
+for file in /home/seclists/password/common-credentials/*.txt; do
+john --wordlist=$file hashed_key
+done
+```
+
+This command finally gives us the passphrase.
+
+With the passphrase i am able to get the login with the command
+
+ssh -i key john@10.49.161.41
+
+And when prompted for the password i entered the password.
+
+Make sure to give key the 600 permision before connecting to ssh using the key.
