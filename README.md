@@ -97,7 +97,7 @@ This repository delivers:
 | 📄 **Writeup Documents Written** | **62+** |
 | 🔑 **Flags Captured** | **31+** |
 | 🧠 **CVEs Researched & Exploited** | **5+** |
-| ✨ **Enhanced Writeups** | **7** |
+| ✨ **Enhanced Writeups** | **8** |
 
 </div>
 
@@ -137,6 +137,7 @@ This repository delivers:
 | 🌐 **Dig-Dug** | DNS Enumeration / Custom DNS Server Querying | 🟢 Easy | [View →](./Dig-Dug_Writeup/) |
 | 🕵️ **Brooklyn Nine Nine** | Anonymous FTP + SSH Brute Force + GTFOBins (`less`) Privilege Escalation | 🟢 Easy | [View →](./Brooklyn-Nine-Nine_Writeup/) |
 | 🐛 **Bugged** | SSH Brute Force / IoT Network Analysis (MQTT) | 🟢 Easy | [View →](./Bugged_Writeup/) |
+| 💪 **Brute-It** ✨ | SSH Key Cracking + Web Form Brute Force + Sudo Privilege Escalation + Hash Cracking | 🟢 Easy | [View →](./Brute-It_Writeup/) |
 | ⚡ **Jax** | Node.js Unsafe Deserialization + RCE + NPM Privilege Escalation | 🟡 Medium | [View →](./Jax-sucks-alot............._Writeup/) |
 | 🔥 **Thompson** ✨ | Apache Tomcat Default Credentials + JSP RCE + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Thompson_Writeup/) |
 | 📊 **Kiba** ✨ | Kibana RCE (CVE-2019-7609) + Linux Capabilities + Privilege Escalation | 🟡 Medium | [View →](./kiba_writeup/) |
