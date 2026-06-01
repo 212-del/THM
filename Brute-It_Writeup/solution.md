@@ -1,72 +1,120 @@
-So after getting the ip and opnenign it into the brower
+# 🎯 Brute-It Writeup - Complete Solution Guide
 
-It presented itself with apache2 default page
+## 📋 Table of Contents
+1. [Initial Reconnaissance](#-initial-reconnaissance)
+2. [Nmap & Directory Enumeration](#-nmap--directory-enumeration)
+3. [SSH Key Discovery & Passphrase Cracking](#-ssh-key-discovery--passphrase-cracking)
+4. [Web Admin Panel Brute Force](#-web-admin-panel-brute-force)
+5. [SSH Access & User Flag](#-ssh-access--user-flag)
+6. [Privilege Escalation](#-privilege-escalation)
+7. [Password Hash Cracking](#-password-hash-cracking)
 
-![img](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2jXbyL79IpN7aO7Fa1XYpoeJnjz-1ADwUPUkO6rNUwbUP9VDzTwsFb2EouiY4Sn_aWT1I66fJ2yZ4iAuQpyApSRF2QBga4agCEMuNGlIp5OFbJnY5qiNrcEghj0hp0-aeWiG4lnt7AFU/s640/Apache+Default+Page.PNG)
+---
 
-After it i started to 2 most critical stuffs do a directory enumuration(recursive one) and nmap scan.
+## 🔍 Initial Reconnaissance
 
-For directory enumuration endpoints were
+After obtaining the target IP address and opening it in a browser, the server responded with the Apache2 default page.
 
-- /admin
-- /admin/.zip
-- /admin/panel/id_rsa
+![Apache Default Page](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2jXbyL79IpN7aO7Fa1XYpoeJnjz-1ADwUPUkO6rNUwbUP9VDzTwsFb2EouiY4Sn_aWT1I66fJ2yZ4iAuQpyApSRF2QBga4agCEMuNGlIp5OFbJnY5qiNrcEghj0hp0-aeWiG4lnt7AFU/s640/Apache+Default+Page.PNG)
 
-Nmap scan gave us 2 ports opened 
+### Initial Steps
+At this point, I initiated two critical reconnaissance tasks:
+- **Directory Enumeration** (recursive) - to discover hidden endpoints and sensitive files
+- **Nmap Scan** - to identify open ports, services, and their versions
 
-Port 22 And port 80
+---
 
-After doing so we get onto our first quesion that was how many ports are opened
-It was 2 the next question was what version of ssh is running.
+## 🌐 Nmap & Directory Enumeration
 
-It was openssh 7.6p1
+### Discovered Endpoints
+Through recursive directory enumeration, the following endpoints were identified:
+- `/admin` - Admin login portal
+- `/admin/.zip` - Backup archive
+- `/admin/panel/id_rsa` - SSH private key file
 
-Next qustion was what version of apache is running. 
+### Open Ports & Services
+The Nmap scan revealed two open ports:
+- **Port 22** - SSH Service
+- **Port 80** - HTTP Web Server
 
-It was 2.4.29 
+---
 
-Theser all anserr were got from the nmap scan result.
+## ❓ Question 1: How Many Ports Are Open?
 
-After it next question was what is hidden endpoint.
+**Answer: 2 ports** (Port 22 and Port 80)
 
-It was /admin and when visited to that endpoint we were presented with a lgoin page.
+---
 
-![img](https://miro.medium.com/v2/resize:fit:640/format:webp/0*3D2PYB0UO9YSof__.png)
+## ❓ Question 2: What Version of SSH Is Running?
 
-After this we opened the source code and got this line 
+From the Nmap scan results:
+**Answer: OpenSSH 7.6p1**
+
+The SSH service version was clearly identified in the detailed Nmap output.
+
+---
+
+## ❓ Question 3: What Version of Apache Is Running?
+
+From the Nmap scan results:
+**Answer: Apache 2.4.29**
+
+All service version information was obtained directly from the comprehensive Nmap scan results.
+
+---
+
+## ❓ Question 4: What Is the Hidden Endpoint?
+
+The hidden endpoint discovered was **`/admin`**
+
+When we navigated to this endpoint, we were presented with a login page:
+
+![Admin Login Page](https://miro.medium.com/v2/resize:fit:640/format:webp/0*3D2PYB0UO9YSof__.png)
+
+### Important Discovery 🔑
+By examining the HTML source code of the login page, we found a helpful comment:
 
 ```html
- <!-- Hey john, if you do not remember, the username is admin -->
+<!-- Hey john, if you do not remember, the username is admin -->
 ```
 
-So we are sure there the username is admin here but there is john named username too.
+This comment confirmed that the username is **`admin`**, and also hinted at another user named **`john`** who might have important roles in the system.
 
+---
 
-Since i got the id_rsa for at the location /admin/panel/id_rsa
+## 🔐 SSH Key Discovery & Passphrase Cracking
 
-Then we are able to do the login but as were doing login we are prompted to enter a passphare.
+### Finding the SSH Private Key
+During directory enumeration, we discovered the SSH private key at the location:
+**`/admin/panel/id_rsa`**
 
-But we dont know the passphrase 
+### Initial Challenge: Passphrase Protection
+When attempting SSH login with the key, we were prompted to enter a passphrase, which we did not initially know. This is a common security practice to add an extra layer of protection to SSH keys.
 
-So to do so we need to crack the passphrase.
+#### Step 1: Convert SSH Key to Hash Format
 
-For it we are going to execute these sequece of commands.
+To crack the passphrase, we first converted the SSH key to a hash format using `ssh2john`:
 
+```bash
 ssh2john <path to key> <path to hashed key>
+```
 
-ssh2john : this is the tool which helps to get the hashed key
+**What is ssh2john?**
+`ssh2john` is a utility that extracts the passphrase hash from an SSH private key file, making it suitable for dictionary attacks with tools like John the Ripper. This tool essentially converts the SSH key format into a format that password cracking tools can work with.
 
-After this we need to crack the key for pharase with the below commands 
+#### Step 2: Initial Cracking Attempts
 
-john --wordlist=/path/to/wordlsit key_hash
+We started by attempting to crack the hash using John the Ripper with standard wordlists:
 
-But when i did these seq of commands i didn't get the password.
+```bash
+john --wordlist=/path/to/wordlist key_hash
+```
 
-But soon after i changed the wordlist and tried again.
+Unfortunately, the initial wordlist attempts were unsuccessful. This is not uncommon, as passphrases can be arbitrary and may not appear in standard word lists.
 
-But this too didn't get me passpharse after spending my all long password lists i was frusturated very badly. i then decided to spend my all wordlist to crack the passphrase with the command
+#### Step 3: Successful Passphrase Cracking
 
-With the loop : 
+After trying multiple individual wordlists without success, I realized a more comprehensive approach was needed. I created a bash loop to iterate through multiple wordlist files from the Seclists collection:
 
 ```bash
 for file in /home/seclists/password/common-credentials/*.txt; do
@@ -74,47 +122,67 @@ john --wordlist=$file hashed_key
 done
 ```
 
-This command finally gives us the passphrase.
+This iterative approach tests the passphrase hash against many different wordlists sequentially. The loop continued until John the Ripper finally found a match in one of the wordlists and revealed the SSH passphrase!
 
-With the passphrase i am able to get the login with the command
+#### Step 4: SSH Access
 
-ssh -i key john@10.49.161.41
-
-And when prompted for the password i entered the password.
-
-Make sure to give key the 600 permision before connecting to ssh using the key.
-
-After it we need to bruteforce the password of here too.
-
-So to do the bruteforcing we need to first inquire that what ffuf req is acceptable
-
-since when we saw the req with curl
-
-I was it was accepting a csrf token.
-
-so for curl we need to use that csrf token too to get our request successful
-
-So i did
+With the discovered passphrase, we successfully logged into the SSH shell:
 
 ```bash
-curl -i -L \        
-  -c cookies.txt \             
-  -b cookies.txt \           
-  -d "user=admin&pass=Wrongpass" \
-  http://10.49.161.41/admin/ 
+ssh -i key john@10.49.161.41
 ```
 
-Then i got the result as error that username or password is invalid.
+When prompted, we entered the decrypted passphrase we discovered.
 
-That means our curl is working we will now create our fuzz as according to this curl.
+**🚨 Important Security Note:** Before establishing an SSH connection using a private key file, it is crucial to set the correct file permissions:
 
-before doing enumuration we need to first find size of requ with the command
+```bash
+chmod 600 key
+```
 
+This ensures the key file has read/write permissions (600) only for the owner, preventing potential security vulnerabilities where other users or processes could read or modify the key.
+
+---
+
+## 🎯 Web Admin Panel Brute Force
+
+### Challenge: CSRF Token Protection
+The web admin panel required a CSRF (Cross-Site Request Forgery) token for form submissions, making simple brute force attempts ineffective. However, CSRF tokens alone do not prevent brute force attacks if the token is not properly validated or if it can be easily obtained.
+
+#### Understanding the Request Structure
+
+To understand the exact format of HTTP requests the web application was accepting, we examined the requests using `curl`:
+
+```bash
+curl -i -L \
+  -c cookies.txt \
+  -b cookies.txt \
+  -d "user=admin&pass=Wrongpass" \
+  http://10.49.161.41/admin/
+```
+
+**Request Parameter Breakdown:**
+- `-i` : Include response headers in output
+- `-L` : Follow redirects automatically
+- `-c cookies.txt` : Save cookies to a file (session management)
+- `-b cookies.txt` : Use cookies from the file in the request
+- `-d` : POST data with username and password fields
+
+The response correctly indicated an error: "username or password is invalid", which confirmed that our curl command was properly formatted and could be adapted for fuzzing.
+
+#### Step 1: Determine Response Size
+
+Before fuzzing with multiple passwords, we needed to establish a baseline by determining the response size for an incorrect password:
+
+```bash
 curl -s -L -d "user=admin&pass=wrong" http://10.49.161.41/admin/ | wc -c
+```
 
-After seeing the size of wrong pass we will know how much to filter.
+This command helped us identify the expected response size (in bytes) for a failed login attempt. This size becomes our filtering baseline in the fuzzing attack—any response that differs significantly from this size is likely a successful authentication.
 
-And with this command below we will get the correct password.
+#### Step 2: Brute Force with ffuf
+
+With the proper request format understood and the response size baseline established, we performed the actual brute force attack using ffuf:
 
 ```bash
 ffuf -u http://10.49.156.209/admin/ \
@@ -122,129 +190,229 @@ ffuf -u http://10.49.156.209/admin/ \
      -H "Content-Type: application/x-www-form-urlencoded" \
      -d "user=admin&pass=FUZZ" \
      -w /home/Seclists/Passwords/Leaked-Databases/rockyou-75.txt -fs 733
+```
+
+**ffuf Parameters Explained:**
+- `-u` : Target URL where the fuzzing will occur
+- `-X POST` : HTTP method to use (POST for form submission)
+- `-H` : Custom request header (content type for form data)
+- `-d` : POST data with FUZZ placeholder (will be replaced with wordlist entries)
+- `-w` : Wordlist file containing potential passwords to try
+- `-fs 733` : Filter responses with a size of 733 bytes (failed login attempts)
+
+**How This Works:**
+ffuf iterates through each password in the wordlist, replacing "FUZZ" with each candidate password and sending the request. Responses matching the filter size (failed attempts) are hidden, so we only see responses that indicate success—which would have a different size.
+
+### Result: Successful Brute Force 🎉
+
+![Web Interface After Login](https://miro.medium.com/v2/resize:fit:640/format:webp/0*NhbuSbJwpw0EYBTx.png)
+
+After the successful brute force attack, we gained access to the admin panel and discovered the **web flag**. This demonstrates the importance of implementing proper rate limiting and account lockout policies to prevent brute force attacks in production environments.
+
+---
+
+## 🚪 SSH Access & User Flag
+
+### Establishing SSH Shell Access
+
+With the SSH key passphrase successfully cracked, we returned to our SSH shell with user-level access to the system.
+
+### Retrieving the User Flag
+
+Once inside the system, we located the user flag at:
+
+**`/home/john/user.txt`**
+
+---
+
+## ❓ Question 5: What Is User.txt?
+
+**Answer:** The flag located at `/home/john/user.txt`
+
+This file contains the user-level flag that proves we successfully compromised the user account.
+
+---
+
+## 🛡️ Privilege Escalation
+
+### Initial Assessment
+
+From our SSH shell (running as user `john`), we needed to identify methods for escalating our privileges to root level. This is a critical phase in penetration testing.
+
+#### Checking Sudo Privileges
+
+The first and most important step in privilege escalation assessment is to check what commands the current user can execute with elevated privileges using sudo:
+
+```bash
+sudo -l
+```
+
+### Critical Discovery ⚠️
+
+The sudo privileges check revealed a **significant security misconfiguration**: the binary `/bin/cat` can be executed as root **without requiring a password**!
+
+This is dangerous because `cat` is a utility that can read file contents, and with root privileges, it can read any file on the system, including sensitive configuration files and other users' data.
+
+#### Retrieving the Root Flag
+
+Exploiting this misconfiguration, we executed:
+
+```bash
+sudo /bin/cat /root/root.txt
+```
+
+**Success!** We obtained the root flag without needing the actual root password. This demonstrates how misconfigurations in sudo privileges can lead to trivial privilege escalation.
+
+---
+
+## ❓ Question 6: What Is Root.txt?
+
+**Answer:** The flag located at `/root/root.txt` (obtained via `sudo /bin/cat`)
+
+---
+
+## 🔑 Password Hash Cracking - Finding Root Password
+
+### Challenge: Finding the Root Password
+
+The final question required us to discover the root user's password. To accomplish this, we needed to examine password hashes stored on the system and crack them.
+
+### Understanding Linux Password Storage 📚
+
+In Unix/Linux systems, password hashes are stored in the `/etc/shadow` file (not `/etc/passwd`), which is only readable by root. The format is:
 
 ```
-![web interface after logging in](https://miro.medium.com/v2/resize:fit:640/format:webp/0*NhbuSbJwpw0EYBTx.png)
+username:password_hash:lastchanged:minimum:maximum:warn:inactive:expire
+```
 
+**Field Descriptions:**
 
-After lgogging in we are now loggedin with the brutefoced password
+| Field | Description |
+|-------|-------------|
+| **Username** | Login name of the user account |
+| **Password Hash** | Encrypted password hash (minimum 8-12 characters including special characters, digits, and lowercase letters) |
+| **Last Password Change** | Days since January 1, 1970 when password was last changed (epoch time) |
+| **Minimum** | Minimum number of days required between password changes |
+| **Maximum** | Maximum number of days the password is valid; user is forced to change after this period expires |
+| **Warn** | Days before expiration when user receives a warning to change their password |
+| **Inactive** | Days after password expiration when account is automatically disabled |
+| **Expire** | Absolute expiration date (days since Jan 1, 1970) when the login may no longer be used |
 
+### Password Hash Format and Algorithms
 
+Password hashes follow the format: `$id$salt$hashed`
 
-after login we are welcomed with our web flag.
+Where `$id` represents the hashing algorithm used:
+- **`$1$`** - MD5 (weak, legacy)
+- **`$2a$`** - Blowfish (modern, strong)
+- **`$2y$`** - Blowfish variant (PHP-compatible)
+- **`$5$`** - SHA-256 (strong, widely used)
+- **`$6$`** - SHA-512 (very strong, recommended)
 
+### Extracted Password Hashes
 
-since we have got that ssh shell now get back to it.
+From the system's `/etc/shadow` file (accessed with root privileges via sudo), we extracted the following hashes:
 
-
-there is a user.txt which is a flag and it is at the location 
-
-/home/john/user.txt which is the anser of the quesiton what is user.txt?
-
-
-and now its time for the privilage escalation 
-
-since the ssh shell is not as a root shell.
-
-For this we will do sudo -l
-
-And that binary is /bin/cat which can be executed as root without any password
-
-now its time to get the root flag with this.
-
-for this we used
-
-sudo /bin/cat /root/root.txt
-
-And in this way we got our root flag.
-
-Its time for our last question that is 
-
-Find a form to escalate your privileges.
-What is the root's password?
-
-fOR THIs we need to read the content inside the /etc/passwd.
-
-This the whole structer of /etc/passwd
-
-![structure of /etc/passwd](https://www.cyberciti.biz/faqs/uploaded_images/shadow-file-795497.png)
-
-The order is as follows:
-
-
-Username : It is your login name.
-
-
-Password : It is your encrypted password hash. The password should be minimum 8-12 characters long including special characters, digits, lower case alphabetic and more. Usually password format is set to $id$salt$hashed, The $id is the algorithm used On GNU/Linux as follows:
-
-$1$ is MD5
-
-
-$2a$ is Blowfish
-
-
-$2y$ is Blowfish
-
-
-$5$ is SHA-256
-
-
-$6$ is SHA-512
-
-
-Last password change (lastchanged) : Days since Jan 1, 1970 that password was last changed
-
-
-Minimum : The minimum number of days required between password changes i.e. the number of days left before the user is allowed to change his/her password
-
-
-Maximum : The maximum number of days the password is valid (after that user is forced to change his/her password)
-
-
-Warn : The number of days before password is to expire that user is warned that his/her password must be changed
-
-
-Inactive : The number of days after password expires that account is disabled
-
-
-Expire : days since Jan 1, 1970 that account is disabled i.e. an absolute date specifying when the login may no longer be used.
-
-
-A password hash is nothing but a string that verifies the integrity of your password during login against the stored hash so that your actual password never has to be held in /etc/shadow file. It is a security feature.
-
-
-The password hash i got for the user thm and user root are
-
-
+**User: thm**
+```
 thm:$6$hAlc6HXuBJHNjKzc$NPo/0/iuwh3.86PgaO97jTJJ/hmb0nPj8S/V6lZDsjUeszxFVZvuHsfcirm4zZ11IUqcoB9IEWYiCV.wcuzIZ.:18489:0:99999:7:::
+```
 
-
+**User: sshd**
+```
 sshd:*:18489:0:99999:7:::
+```
+*(The asterisk indicates this account cannot log in)*
 
-
+**User: john**
+```
 john:$6$iODd0YaH$BA2G28eil/ZUZAV5uNaiNPE0Pa6XHWUFp7uNTp2mooxwa4UzhfC0kjpzPimy1slPNm9r/9soRw8KqrSgfDPfI0:18490:0:99999:7:::
+```
 
-
+**User: root** (Our Target) 🎯
+```
 root:$6$zdk0.jUm$Vya24cGzM1duJkwM5b17Q205xDJ47LOAg/OpZvJ1gKbLF8PJBdKJA4a6M.JYPUTAaWu4infDjI88U9yUXEVgL.:18490:0:99999:7:::
+```
 
+### Cracking the Root Password Hash
 
-Since we need to crack the hash of root password to get the root password.
+To crack the root password, we extracted the root hash and used John the Ripper with an iterative approach through multiple wordlists:
 
-We're going to do it with john
-
-and with this loop we got the password and the content inside the pass file should be exactly the string below
-
+**Step 1: Create a file with the root hash:**
+```bash
 root:$6$zdk0.jUm$Vya24cGzM1duJkwM5b17Q205xDJ47LOAg/OpZvJ1gKbLF8PJBdKJA4a6M.JYPUTAaWu4infDjI88U9yUXEVgL.:18490:0:99999:7:::
+```
 
-
-And the command should be 
-
-
+**Step 2: Execute the cracking process using multiple wordlists:**
 ```bash
 for file in /home/Seclists/Passwords/Common-Credentials/*.txt; do
 john --wordlist=$file pass
 done
-
 ```
 
-After this john cracks the hash and we got the password
+This loop systematically tests the root password hash against multiple wordlists until John the Ripper finds a match.
+
+### Success! 🎉
+
+The iterative John the Ripper attack successfully cracked the root password hash, revealing the root user's password. This password can now be used to log in as the root user directly or to verify access control.
+
+---
+
+## ❓ Final Question: What Is the Root's Password?
+
+**Answer:** [The password discovered through the hash cracking process above]
+
+---
+
+## 📊 Attack Summary & Key Techniques Used
+
+### Techniques Demonstrated:
+
+| Technique | Purpose | Tool Used |
+|-----------|---------|-----------|
+| Directory Enumeration | Discover hidden endpoints and files | Enum tools (recursive) |
+| Port Scanning | Identify services and versions | Nmap |
+| Source Code Analysis | Extract credentials and hints | Web Browser |
+| SSH Key Extraction | Obtain authentication material | Directory discovery |
+| Passphrase Cracking | Decrypt SSH private key | ssh2john + John the Ripper |
+| Web Application Testing | Understand request/response format | curl |
+| Brute Force Attack | Guess login credentials | ffuf |
+| Privilege Escalation | Gain higher access levels | Sudo misconfiguration |
+| Password Hash Cracking | Recover plaintext passwords | John the Ripper |
+
+---
+
+## 🎓 Key Takeaways & Security Lessons
+
+✅ **Directory Enumeration Importance**: Hidden endpoints can contain sensitive files and credentials. Always perform thorough reconnaissance.
+
+✅ **SSH Key Security**: Protect SSH private keys with strong passphrases. Even if the key is compromised, the passphrase adds an extra layer of security.
+
+✅ **CSRF Tokens Alone**: CSRF tokens do not prevent brute force attacks if they're not properly validated or if they're easily obtainable.
+
+✅ **Sudo Misconfiguration Risks**: Allowing powerful utilities like `cat` to run as root without a password creates a direct path to privilege escalation.
+
+✅ **Password Strength Matters**: Strong, unique passwords that don't appear in wordlists are crucial. However, systematic hash cracking can still succeed with persistence.
+
+✅ **Multi-layered Security**: This challenge demonstrates the importance of implementing multiple security controls at each layer of an application.
+
+✅ **Rate Limiting**: Without proper rate limiting on login forms, brute force attacks can succeed quickly.
+
+✅ **Principle of Least Privilege**: Users should only have the minimum permissions necessary to perform their duties.
+
+---
+
+## 🔗 Related Resources
+
+- **TryHackMe**: [Brute-It Room](https://tryhackme.com/room/bruteit)
+- **OWASP**: Top 10 Web Application Security Risks
+- **Kali Linux Tools**:
+  - Nmap (Port scanning)
+  - ffuf (Web fuzzing)
+  - ssh2john & John the Ripper (Hash cracking)
+
+---
+
+*This writeup demonstrates a complete penetration testing methodology, from initial reconnaissance through exploitation, privilege escalation, and post-exploitation activities. All techniques shown here are performed ethically within the bounds of the TryHackMe legal training environment.*
+
+**Happy Hacking! 🛡️**
