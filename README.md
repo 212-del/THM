@@ -91,13 +91,13 @@ This repository delivers:
 |:---|:---:|
 | 🏁 **Rooms Completed** | **31** |
 | 🗂️ **Security Categories Covered** | **6** |
-| ⚔️ **Attack Techniques Documented** | **13+** |
+| ⚔️ **Attack Techniques Documented** | **14+** |
 | 🛠️ **Tools Practised** | **17+** |
 | 🖼️ **Screenshot Evidence Collected** | **115+** |
 | 📄 **Writeup Documents Written** | **62+** |
 | 🔑 **Flags Captured** | **31+** |
-| 🧠 **CVEs Researched & Exploited** | **5+** |
-| ✨ **Enhanced Writeups** | **8** |
+| 🧠 **CVEs Researched & Exploited** | **6+** |
+| ✨ **Enhanced Writeups** | **9** |
 
 </div>
 
@@ -123,6 +123,7 @@ This repository delivers:
 | 🌐 **TakeOver** | Subdomain Enumeration / Takeover | 🟢 Easy | [View →](./TakeOver_Writeup/) |
 | 🗨️ **Speed Chatting** | File Upload Bypass / Python RCE | 🟡 Medium | [View →](./Speed-Chatting_Writeup/) |
 | 🤖 **AgentT** | PHP 8.1.0-dev Backdoor / Remote Code Execution | 🟢 Easy | [View →](./AgentT_Writeup/) |
+| 🔓 **Confluence CVE-2023-22515** 🌟 | XWork Framework Broken Access Control (CVSS 10.0) | 🔴 Hard | [View →](./Confluence-CVE-2023-22515_Writeup/) |
 
 ### 🐧 Linux / CTF
 
@@ -225,6 +226,7 @@ Selected writeups have been significantly expanded with:
 - 🖼️ **The Case: Seven Minutes on the Seine** — OSINT and museum heist investigation with forensic analysis and artifact authentication
 - 📔 **Dev-Diaries** — GitHub OSINT with commit history analysis, metadata extraction techniques, and subdomain enumeration methodology
 - 🔒 **Kiba** ✨ — Kibana RCE exploitation with structured question breakdown, Linux capabilities deep-dive, and privilege escalation techniques
+- 🔓 **Confluence CVE-2023-22515** ✨ — Critical vulnerability exploitation guide with detailed XWork framework analysis, automated tool comparison, detection strategies, and mitigation procedures. CVSS 10.0 broken access control walkthrough with complete technical breakdown and defense mechanisms
 
 ---
 
@@ -263,6 +265,7 @@ Through these rooms, the following **real-world attack techniques** have been re
 | **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe, Speed Chatting, Plotted-TMS |
 | **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup, Plotted-TMS |
 | **CVE-Based RCE** | Exploiting known vulnerabilities (CVE-2019-15107) in admin panels like Webmin | Source |
+| **Broken Access Control** | Exploiting XWork method chaining to bypass setup completion checks (CVE-2023-22515) | Confluence-CVE-2023-22515 |
 | **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash |
 | **XOR Cryptanalysis** | Reversing XOR-encrypted ciphertext using known-plaintext attacks | W1seGuy |
 | **Prompt Injection** | Manipulating LLM-based AI applications into revealing secrets | CupidBot, Oracle 9 |
@@ -290,7 +293,8 @@ THM/
 │   ├── TakeOver_Writeup/                  ← Subdomain takeover
 │   ├── Speed-Chatting_Writeup/            ← File upload bypass + Python RCE
 │   ├── AgentT_Writeup/                    ← PHP 8.1.0-dev backdoor RCE
-│   └── Plotted-TMS_Writeup/               ← SQL Injection + File Upload RCE + Privilege Escalation (✨ Enhanced writeup)
+│   ├── Plotted-TMS_Writeup/               ← SQL Injection + File Upload RCE + Privilege Escalation (✨ Enhanced writeup)
+│   └── Confluence-CVE-2023-22515_Writeup/ ← Critical XWork framework vulnerability exploitation (CVSS 10.0) (✨ Enhanced writeup)
 │
 ├── 🐧 Linux / CTF
 │   ├── Ignite_Writeup/                       ← Fuel CMS RCE + Privilege Escalation (✨ Enhanced writeup)
