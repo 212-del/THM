@@ -19,9 +19,9 @@
 <br/>
 
 <!-- Shields.io Badges -->
-[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-31-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
-[![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-13%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
-[![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-17%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
+[![Rooms Completed](https://img.shields.io/badge/Rooms%20Completed-39-brightgreen?style=for-the-badge&logo=tryhackme&logoColor=white)](https://github.com/212-del/THM)
+[![Techniques Documented](https://img.shields.io/badge/Techniques%20Documented-18%2B-blue?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/212-del/THM)
+[![Tools Mastered](https://img.shields.io/badge/Tools%20Mastered-20%2B-orange?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/212-del/THM)
 [![Platform](https://img.shields.io/badge/Platform-TryHackMe-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com/p/LinuxX)
 
 <br/>
@@ -73,13 +73,23 @@ Each room documented here represents **genuine hours of hands-on practice**, res
 
 **TryHackMe** is one of the world's most widely adopted platforms for developing offensive and defensive security skills through a gamified, browser-based environment. Rooms span the full spectrum — from beginner-friendly networking fundamentals all the way to sophisticated, real-world penetration testing scenarios.
 
+### 🎯 Mission Statement
+
+This repository serves a dual purpose:
+1. **Personal Knowledge Base** — My comprehensive record of CTF solutions, technique validation, and security research
+2. **Community Resource** — A structured guide for students, aspiring penetration testers, and cybersecurity enthusiasts
+
+### 📚 Repository Contents
+
 This repository delivers:
 
-- 📝 **Step-by-step walkthroughs** for each completed room
-- 🔍 **Deep-dive explanations** of the *why* behind every technique
-- 🛠️ **Tool references and command references** for fast recall
-- 📸 **Screenshot evidence** documenting each exploitation step
+- 📝 **Step-by-step walkthroughs** for each completed room with complete exploitation methodology
+- 🔍 **Deep-dive explanations** of the *why* behind every technique, not just the *how*
+- 🛠️ **Tool references and command syntax** for fast recall and practical application
+- 📸 **Screenshot evidence** documenting each exploitation step and discovery
 - 💭 **Personal notes** on what worked, what didn't, and key lessons learned
+- 🔐 **Security best practices** and defensive recommendations for each vulnerability type
+- 🎓 **Real-world context** explaining why these vulnerabilities matter beyond CTF scenarios
 
 ---
 
@@ -89,15 +99,15 @@ This repository delivers:
 
 | 📌 Metric | 🔢 Count |
 |:---|:---:|
-| 🏁 **Rooms Completed** | **31** |
-| 🗂️ **Security Categories Covered** | **6** |
-| ⚔️ **Attack Techniques Documented** | **14+** |
-| 🛠️ **Tools Practised** | **17+** |
-| 🖼️ **Screenshot Evidence Collected** | **115+** |
-| 📄 **Writeup Documents Written** | **62+** |
-| 🔑 **Flags Captured** | **31+** |
-| 🧠 **CVEs Researched & Exploited** | **6+** |
-| ✨ **Enhanced Writeups** | **9** |
+| 🏁 **Rooms Completed** | **39** |
+| 🗂️ **Security Categories Covered** | **8** |
+| ⚔️ **Attack Techniques Documented** | **18+** |
+| 🛠️ **Tools Practised** | **20+** |
+| 🖼️ **Screenshot Evidence Collected** | **150+** |
+| 📄 **Writeup Documents Written** | **78+** |
+| 🔑 **Flags Captured** | **39+** |
+| 🧠 **CVEs Researched & Exploited** | **8+** |
+| ✨ **Enhanced Writeups** | **12** |
 
 </div>
 
@@ -123,6 +133,7 @@ This repository delivers:
 | 🌐 **TakeOver** | Subdomain Enumeration / Takeover | 🟢 Easy | [View →](./TakeOver_Writeup/) |
 | 🗨️ **Speed Chatting** | File Upload Bypass / Python RCE | 🟡 Medium | [View →](./Speed-Chatting_Writeup/) |
 | 🤖 **AgentT** | PHP 8.1.0-dev Backdoor / Remote Code Execution | 🟢 Easy | [View →](./AgentT_Writeup/) |
+| 🐦 **Fowsniff-CTF** | POP3 Brute Forcing + Email Exfiltration + OSINT | 🟢 Easy | [View →](./Fowsniff-CTF_Writeup/) |
 | 🔓 **Confluence CVE-2023-22515** 🌟 | XWork Framework Broken Access Control (CVSS 10.0) | 🔴 Hard | [View →](./Confluence-CVE-2023-22515_Writeup/) |
 
 ### 🐧 Linux / CTF
@@ -141,6 +152,9 @@ This repository delivers:
 | 💪 **Brute-It** ✨ | SSH Key Cracking + Web Form Brute Force + Sudo Privilege Escalation + Hash Cracking | 🟢 Easy | [View →](./Brute-It_Writeup/) |
 | ⚡ **Jax** | Node.js Unsafe Deserialization + RCE + NPM Privilege Escalation | 🟡 Medium | [View →](./Jax-sucks-alot............._Writeup/) |
 | 🔥 **Thompson** ✨ | Apache Tomcat Default Credentials + JSP RCE + Cron Job Privilege Escalation | 🟢 Easy | [View →](./Thompson_Writeup/) |
+| 🧪 **Ignite** ✨ | Fuel CMS RCE + Privilege Escalation | 🟡 Medium | [View →](./Ignite_Writeup/) |
+| 🔥 **Madness** | Linux Privilege Escalation + Command Injection | 🟡 Medium | [View →](./Madness_Writeup/) |
+| 🏛️ **Olympus** | Wordpress Exploitation + LFI + SQL Injection | 🟡 Medium | [View →](./Olympus_Writeup/) |
 | 📊 **Kiba** ✨ | Kibana RCE (CVE-2019-7609) + Linux Capabilities + Privilege Escalation | 🟡 Medium | [View →](./kiba_writeup/) |
 
 ### 🔐 Cryptography & Password Attacks
@@ -196,14 +210,18 @@ Scripting        Crypto         CTF Chains        Forensics
 
 **Key Milestones Achieved:**
 
-- ✅ **Web Application Pentesting** — IDOR, SSRF, LFI, SQL Injection, Authentication Bypass
-- ✅ **Linux Privilege Escalation** — SUID binaries, cron jobs, misconfigured permissions
-- ✅ **Password & Hash Attacks** — MD5, SHA-1, SHA-256, bcrypt cracking with Hashcat & John
-- ✅ **Cryptographic Analysis** — XOR cipher identification and plaintext recovery
-- ✅ **AI Security Research** — Prompt injection techniques against LLM-based applications
-- ✅ **OSINT & Threat Intelligence** — Cross-platform username correlation, social media enumeration, threat actor profiling
-- ✅ **Reconnaissance & Enumeration** — Nmap, Gobuster, ffuf, subdomain enumeration
+- ✅ **Web Application Pentesting** — IDOR, SSRF, LFI, SQL Injection, Authentication Bypass, JWT Forgery, File Upload Bypass
+- ✅ **Linux Privilege Escalation** — SUID binaries, cron jobs, misconfigured permissions, sudo exploitation, Linux capabilities
+- ✅ **Password & Hash Attacks** — MD5, SHA-1, SHA-256, bcrypt cracking with Hashcat & John the Ripper
+- ✅ **Cryptographic Analysis** — XOR cipher identification, plaintext recovery, hash cracking techniques
+- ✅ **AI Security Research** — Prompt injection techniques against LLM-based applications, authority bypass
+- ✅ **OSINT & Threat Intelligence** — Cross-platform username correlation, social media enumeration, threat actor profiling, GitHub reconnaissance
+- ✅ **Reconnaissance & Enumeration** — Nmap, Gobuster, ffuf, subdomain enumeration, DNS enumeration
 - ✅ **Exploitation Frameworks** — Metasploit, manual CVE exploitation, searchsploit
+- ✅ **Email Service Exploitation** — POP3/IMAP protocol abuse, email exfiltration, credential brute-forcing
+- ✅ **Wordpress & CMS Exploitation** — LFI vulnerabilities, SQL injection in CMS platforms, database enumeration
+- ✅ **Node.js & Deserialization Attacks** — Unsafe deserialization exploitation, NPM privilege escalation
+- ✅ **Kibana & Elasticsearch Exploitation** — CVE-2019-7609 RCE exploitation, administrative access bypass
 - 🔄 **SOC Operations** — Log analysis, incident response (In Progress)
 - ⏳ **Active Directory Attacks** — Kerberoasting, BloodHound, lateral movement (Planned)
 - ⏳ **Red Teaming** — Advanced adversary simulation (Planned)
@@ -227,6 +245,11 @@ Selected writeups have been significantly expanded with:
 - 📔 **Dev-Diaries** — GitHub OSINT with commit history analysis, metadata extraction techniques, and subdomain enumeration methodology
 - 🔒 **Kiba** ✨ — Kibana RCE exploitation with structured question breakdown, Linux capabilities deep-dive, and privilege escalation techniques
 - 🔓 **Confluence CVE-2023-22515** ✨ — Critical vulnerability exploitation guide with detailed XWork framework analysis, automated tool comparison, detection strategies, and mitigation procedures. CVSS 10.0 broken access control walkthrough with complete technical breakdown and defense mechanisms
+- 🔧 **LazyAdmin** ✨ — Database exposure exploitation with PHP code injection techniques, NOPASSWD privilege escalation, and complete attack chain
+- 💥 **Brute-It** ✨ — SSH key cracking with John the Ripper, web form brute forcing, hash cracking techniques, and sudo privilege escalation
+- 🍅 **Thompson** ✨ — Apache Tomcat default credentials exploitation, JSP reverse shell execution, and cron job-based privilege escalation
+- 🔥 **Source** ✨ — Webmin RCE exploitation via CVE-2019-15107, authentication bypass, and root access escalation
+- 🚀 **Ignite** ✨ — Fuel CMS remote code execution, database enumeration, and privilege escalation techniques
 
 ---
 
@@ -236,14 +259,17 @@ Selected writeups have been significantly expanded with:
 
 | 🏷️ Category | 🛠️ Tools Used |
 |:---|:---|
-| **🔭 Reconnaissance** | Nmap, Gobuster, ffuf, Dirb, theHarvester, Subfinder |
-| **🌐 Web Exploitation** | Burp Suite, SQLMap, Nikto, WPScan, curl |
-| **🔐 Password Attacks** | Hydra, John the Ripper, Hashcat, CrackMapExec |
-| **💥 Exploitation** | Metasploit Framework, ExploitDB, Searchsploit |
-| **⬆️ Privilege Escalation** | LinPEAS, GTFOBins, SUID/SUDO analysis |
-| **🌍 Network Analysis** | Wireshark, tcpdump, Netcat |
-| **📡 VPN & Connectivity** | OpenVPN, TryHackMe AttackBox |
-| **✍️ Scripting** | Bash, Python, PowerShell |
+| **🔭 Reconnaissance** | Nmap, Gobuster, ffuf, Dirb, theHarvester, Subfinder, Whois, Dig |
+| **🌐 Web Exploitation** | Burp Suite, SQLMap, Nikto, WPScan, curl, wget |
+| **🔐 Password Attacks** | Hydra, John the Ripper, Hashcat, CrackMapExec, SSH-keyscan |
+| **💥 Exploitation** | Metasploit Framework, ExploitDB, Searchsploit, Manual exploitation |
+| **⬆️ Privilege Escalation** | LinPEAS, GTFOBins, SUID/SUDO analysis, Cron job enumeration |
+| **🌍 Network Analysis** | Wireshark, tcpdump, Netcat, telnet, netstat |
+| **📡 VPN & Connectivity** | OpenVPN, TryHackMe AttackBox, SSH tunneling |
+| **✍️ Scripting** | Bash, Python, PowerShell, Node.js |
+| **🔍 OSINT** | whois, dig, nslookup, curl, wget, GitHub API |
+| **💾 Database** | SQLi enumeration, MySQL command-line client, MongoDB tools |
+| **🐋 Container & Dev** | Docker, Git, GitHub reconnaissance |
 
 </div>
 
@@ -260,16 +286,21 @@ Through these rooms, the following **real-world attack techniques** have been re
 | **JWT Forgery** | Forging JSON Web Tokens by manipulating the payload to escalate privileges | TryHeartMe |
 | **IDOR** | Insecure Direct Object Reference — accessing unauthorised resources by manipulating IDs | Corridor, Neighbour |
 | **SSRF** | Server-Side Request Forgery — tricking the server into making internal requests | MD2PDF |
-| **LFI** | Local File Inclusion — reading sensitive server files via unsanitised input | Lo-Fi |
-| **SQL Injection** | Extracting and manipulating database data through unsanitised queries | SimpleCTF, Plotted-TMS |
+| **LFI** | Local File Inclusion — reading sensitive server files via unsanitised input | Lo-Fi, Ignite |
+| **SQL Injection** | Extracting and manipulating database data through unsanitised queries | SimpleCTF, Plotted-TMS, Olympus |
 | **File Upload Bypass** | Uploading malicious files by circumventing extension/MIME filters | RootMe, Speed Chatting, Plotted-TMS |
-| **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup, Plotted-TMS |
-| **CVE-Based RCE** | Exploiting known vulnerabilities (CVE-2019-15107) in admin panels like Webmin | Source |
+| **SUID Exploitation** | Abusing SUID-set binaries for privilege escalation to root | RootMe, Lookup, Plotted-TMS, Olympus |
+| **Cron Job Exploitation** | Leveraging misconfigured cron jobs for privilege escalation | Thompson, Ignite, Madness |
+| **CVE-Based RCE** | Exploiting known vulnerabilities (CVE-2019-7609, CVE-2019-15107) | Kibana, Source, Ignite |
 | **Broken Access Control** | Exploiting XWork method chaining to bypass setup completion checks (CVE-2023-22515) | Confluence-CVE-2023-22515 |
-| **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash |
+| **Hash Cracking** | Identifying and cracking MD5, SHA-1, SHA-256, bcrypt hashes | Crack the Hash, Brute-It, Fowsniff-CTF |
 | **XOR Cryptanalysis** | Reversing XOR-encrypted ciphertext using known-plaintext attacks | W1seGuy |
 | **Prompt Injection** | Manipulating LLM-based AI applications into revealing secrets | CupidBot, Oracle 9 |
 | **Subdomain Enumeration** | Discovering hidden subdomains vulnerable to takeover | TakeOver |
+| **POP3 Brute Forcing** | Attacking email services through protocol-level brute force attacks | Fowsniff-CTF |
+| **Node.js Deserialization** | Unsafe object deserialization leading to RCE in Node.js applications | Jax-sucks-alot |
+| **Wordpress Exploitation** | LFI and SQL injection attacks against Wordpress installations | Olympus |
+| **Linux Capabilities Abuse** | Exploiting Linux capabilities for privilege escalation without SUID | Kiba |
 
 </div>
 
@@ -307,7 +338,14 @@ THM/
 │   ├── Dig-Dug_Writeup/                      ← DNS enumeration + custom DNS querying
 │   ├── Brooklyn-Nine-Nine_Writeup/           ← Anonymous FTP + SSH brute force + GTFOBins privesc
 │   ├── Bugged_Writeup/                       ← SSH brute force + IoT/MQTT network analysis
-│   └── Thompson_Writeup/                     ← Apache Tomcat RCE + Cron Job Privesc (✨ Enhanced writeup)
+│   ├── Thompson_Writeup/                     ← Apache Tomcat RCE + Cron Job Privesc (✨ Enhanced writeup)
+│   ├── Brute-It_Writeup/                     ← SSH Key Cracking + Sudo Privesc (✨ Enhanced writeup)
+│   ├── Jax-sucks-alot............._Writeup/  ← Node.js Deserialization RCE + NPM Privesc
+│   ├── Madness_Writeup/                      ← Linux Privilege Escalation + Command Injection
+│   ├── Olympus_Writeup/                      ← Wordpress Exploitation + LFI + SQL Injection
+│   ├── Kiba_Writeup/                         ← Kibana RCE (CVE-2019-7609) + Linux Capabilities (✨ Enhanced writeup)
+│   ├── Fowsniff-CTF_Writeup/                 ← POP3 Brute Forcing + Email Exfiltration + OSINT
+│   └── LazyAdmin_Writeup/                    ← Database Exposure + PHP Injection + Privesc (✨ Enhanced writeup)
 │
 ├── 🔐 Cryptography
 │   ├── Crack-The-Hash_Writeup/            ← Hash cracking (MD5, SHA, bcrypt)
@@ -345,13 +383,13 @@ RoomName_Writeup/
 |:---|:---:|:---:|
 | Pre-Security Fundamentals | 🔄 In Progress | — |
 | Jr. Penetration Tester | 🔄 In Progress | — |
-| Web Application Security | 🔄 In Progress | 11 rooms |
-| Cryptography Essentials | 🔄 In Progress | 3 rooms |
-| AI Security | 🔄 In Progress | 3 rooms |
-| OSINT & Threat Intelligence | 🔄 In Progress | 2 rooms |
-| Social Engineering & Phishing | 🔄 In Progress | 1 room |
-| Linux / CTF | 🔄 In Progress | 8 rooms |
-| SOC Level 1 | ⏳ Planned | — |
+| Web Application Security | ✅ Advanced | 12 rooms |
+| Cryptography Essentials | ✅ Advanced | 3 rooms |
+| AI Security | ✅ Advanced | 3 rooms |
+| OSINT & Threat Intelligence | ✅ Advanced | 5 rooms |
+| Social Engineering & Phishing | ✅ Advanced | 1 room |
+| Linux / CTF | ✅ Advanced | 14 rooms |
+| SOC Level 1 | 🔄 In Progress | 1 room |
 | Offensive Pentesting | ⏳ Planned | — |
 | Red Teaming | ⏳ Planned | — |
 | Active Directory | ⏳ Planned | — |

