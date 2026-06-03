@@ -84,7 +84,7 @@ However, on the website homepage, we discovered a critical piece of information:
 
 After visiting the compromised Twitter account, we found multiple posts containing valuable information:
 
-![Twitter account](https://private-user-images.githubusercontent.com/88498991/369710876-8cc0076b-1fdb-4be5-8ff5-10c7b241feab.png?jwt=******
+![Twitter account](https://miro.medium.com/v2/resize:fit:720/format:webp/1*6KcqLktaT6oR48hT7e14GA.png)
 
 **Note:** The links in the Twitter bio are no longer accessible, and the Pastebin links referenced in the posts have also expired:
 - https://pastebin.com/378rLnGi (expired)
@@ -92,7 +92,7 @@ After visiting the compromised Twitter account, we found multiple posts containi
 
 However, one particular post contains **critical credentials**:
 
-![interesting post](https://private-user-images.githubusercontent.com/88498991/369711355-26b02afe-1716-44a1-85fd-654d317c04d9.png?jwt=******
+![interesting post](https://miro.medium.com/v2/resize:fit:640/format:webp/1*lCmxHBq_6HhZYGZFPPh6uA.png)
 
 ---
 
