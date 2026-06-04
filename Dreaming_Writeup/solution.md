@@ -1089,11 +1089,14 @@ sudo -u death /usr/bin/python3 /home/death/getDreams.py
 
 We were only getting 
 
+```bash
+
 
  | Alice   | Flying in the sky                  |
  | Bob     | Exploring ancient ruins            |
  | Carol   | Becoming a successful entrepreneur |
- | Dave    | Becoming a professional musician  
+ | Dave    | Becoming a professional musician   |
+```
 
 But since now we have inserted a new row so it should also be fetched which will lead in command execution.
 
