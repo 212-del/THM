@@ -99,3 +99,37 @@ And inside his file the file user.txt was saved.
 ## Part 4 Root.txt flag.
 
 
+While enumurating a bit more we found a another file named .wget_hsts on the home folder of user melodias.
+
+The content inside were 
+
+```content
+# HSTS 1.0 Known Hosts database for GNU Wget.
+# Edit at your own risk.
+# <hostname>[:<port>]   <incl. subdomains>      <created>       <max-age>
+gist.githubusercontent.com      0       0       1565570405      31536000
+```
+
+
+Here is the way to crack that passpharse that is required to decrypt the file backup.pgp using the private key
+
+
+Here are the steps below:
+
+- gpg --import private.asc && gpg --decrypt backup.pgp
+
+- gpg2john private.asc > hash.txt
+
+- john hash.txt --wordlist=/home/Seclists/Passwords/Leaked-Databases/rockyou-75.txt 
+
+
+So in this way you will got the passphrase and now you could decrypt the file backup.pgp
+
+In the backup.pgp i saw the content of /etc/passwd
+
+And into this was the hash passowrd of root file.
+
+
+Now i break the hash using john and got the  password of root.
+
+After breakng the password we will get the pass and will be logged in as root with ssh and get the root flag with  cat root.txt
