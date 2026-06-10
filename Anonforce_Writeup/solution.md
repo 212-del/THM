@@ -132,4 +132,6 @@ And into this was the hash passowrd of root file.
 
 Now i break the hash using john and got the  password of root.
 
-After breakng the password we will get the pass and will be logged in as root with ssh and get the root flag with  cat root.txt
+After breakng the password we will get the pass and will be logged in as root with ssh and get the root flag with  cat root.txt.
+
+That's It!!!!!!!!
