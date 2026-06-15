@@ -35,7 +35,7 @@
 | 5 | [🏠 Post-Login Enumeration](#-post-login-enumeration) |
 | 6 | [⬆️ Privilege Escalation via `less`](#%EF%B8%8F-privilege-escalation-via-less) |
 | 7 | [🏁 Flags](#-flags) |
-| 8 | [📝 Key Takeaways](#-key-takeaways) |
+
 
 ---
 
