@@ -129,7 +129,7 @@ There was a file named user.txt
 which contains the flag of user.txt
 
 
-## ⬆️ Privilege Escalation via  `less`
+## ⬆️ Privilege Escalation via  `python`
 
 
 After login we saw are now currently as a root user.
@@ -167,6 +167,7 @@ Delete the bak.py file and create a new one. with the content of bak.py
 With a payload of rev shell that is being obtained via the gtfobins
 
 
+## 🏁 Flags
 
 Here is our payload
 
