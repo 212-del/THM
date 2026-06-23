@@ -27,4 +27,29 @@ Enumerate the machine and get all the important information
 
 ##  🎯 Task 3: Hash Cracking & Brute-force
 
- 
+| Sl.No	| Questions	| Hints		|
+|-------|---------------|---------------|
+| 1	| FTP Password  | Hail hydra!	|
+| 2	| Zip File Password | Mr.John 	|
+| 3	| steg Password | Nothing	|
+| 4	| What is the other agent(full name)? | Nothing |
+| 5	| SSH 	Password | Nothing 	|
+
+##  🎯 Task 4: Capture the User Flag
+
+you know the drill
+
+| Sl.No | Questions | Hints	|
+|-------|-----------|-----------|
+| 1	| What is the user flag? | NOthing |
+| 2 	| What is the incident of the photo called? | Reverse Image and Foxnews |
+
+##  🎯 Task 5: Privilage Escalation
+
+Enough with the extraordinary stuff? Time to get real.
+
+| Sl.No | Questions	| Hints		|
+|-------|---------------|---------------|
+| 1	| CVE number for the escalation (Format: CVE-xxxx-xxxx) | Nothing |
+| 2	| What is the root flag? 	| Nothing |
+| 3	| (Bonus) Who is agent R? 	| Nothing |
