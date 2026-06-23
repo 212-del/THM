@@ -83,4 +83,16 @@ Now when we did it we got something special text that is
 What are you doing! Are you one of the 25 employees? If not, I going to report this incident
 ```
 
+And since whatever that program is saying i made a small script that will loop with all a to z as the value of user-agent.
+
+here is the mini script
+
+```
+for file in $(echo {A..Z}); do                          
+echo "for $file"
+ curl -s  -H "User-Agent: $file" http://10.49.177.146| wc -c | grep -v 218
+done
+```
+
+218 is the length for the wrong response size.
 
