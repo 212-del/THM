@@ -40,6 +40,9 @@ For this here is the simple loolipoop nmap command to scan for open ports.
 
 > nmap --top-ports 1000 <Ip of room>
 
+
+## Step 2 -- Initial Foothold
+
 Lets Went to our second Question that is 
 
 | Quesiton | Hints |
@@ -96,3 +99,114 @@ done
 
 218 is the length for the wrong response size.
 
+but changing the user-agent gave us a new page this means that new page could be a secret page.
+
+
+But why did we get this secret page what helped us to get this secret page that is user-agent.
+
+so our answer for this question will be user-agent.
+
+
+Lets Move on to our third question to solve this room.
+
+It is asking what is the agent name?
+
+for this i thought with the value of user-agent = R the endpoint will be different so i run a directory bruteforcing with the user-agent value = R
+
+
+But we dont find any valuable endpoint.
+
+
+After this we found a way to change the user-agent using the inspect tab.
+
+with this trick when i chnaged the user-agent to C i got something unexpected.
+
+
+This response was not given even with this command 
+
+> curl -v  -H "User-Agent: C" http://10.48.188.99
+
+
+Now the trick to change the user-agent via the inspect tab is
+
+Ctrl + Shift + I
+
+then 
+
+Ctrl + Shift + P
+
+Then enter "Show Network Conditions"
+
+Now here you can change the value of user-agent.
+
+when changed the user-agent i got the the response
+
+```
+Attention chris,
+
+Do you still remember our deal? Please tell agent J about the stuff ASAP. Also, change your god damn password, is weak!
+
+From,
+Agent R
+```
+
+it worked by browser method cuz with curl i didn't enabaled the redirect via the flag -L.
+
+
+: <<'END_NOTE'
+These are my notes.
+You can write multiple lines here.
+Bash ignores everything until END_NOTE.
+
+The Setup (What You Were Testing)
+You were poking at a web security lab where:
+
+Changing the User-Agent in Chrome's DevTools (via Network Conditions) and reloading made the browser land on a completely different endpoint.
+Hitting that new endpoint directly with curl worked fine and gave the expected response.
+But copying the exact same request the browser made (via "Copy as cURL") and running it in the terminal did not reproduce the browser's behavior — it gave back the normal/plain response instead.
+
+This is a great instinct to test, by the way — mismatched browser-vs-curl behavior is exactly how people discover UA-based routing, hidden redirects, and access-control bugs in the wild.
+The Investigation (What We Ruled Out Together)
+Think of it like a detective story where we crossed suspects off the list one by one:
+
+JavaScript redirect? ❌ Ruled out — you disabled JS in DevTools and the redirect still happened.
+Service worker intercepting the request? ❌ Ruled out — you checked the Application tab, no service worker registered.
+Client Hints / Sec-CH-UA headers not matching? — Possible, but not confirmed as the cause here.
+Cookies/session state set on a prior request? — Possible, but not confirmed as the cause here.
+An HTML <meta http-equiv="refresh"> tag sitting in the page that curl just doesn't act on? — This was my strongest guess, since it explains "no JS, no service worker, but still auto-navigates."
+
+The Actual Answer
+It turned out to be much simpler than any of those five theories: you weren't following redirects with curl.
+Here's the "aha" in plain terms — imagine the server sends back a letter that says "Thanks! Now go to this other address instead." That's an HTTP redirect (like a 301 or 302 status code with a Location: header).
+
+A browser is like a person who reads that letter and automatically walks to the new address without you telling it to. This is just normal browser behavior — it always follows redirects unless told not to.
+curl, by default, is like someone who reads the letter, sees the instruction, and just stops and hands you the letter — it does not walk to the new address on its own. You have to explicitly tell curl "hey, if you get an instruction to go somewhere else, follow it" — and that's exactly what the -L flag does (-L = "follow Location headers").
+
+So the sequence was:
+
+You change the UA in the browser → reload.
+Server sees the new UA and responds with a redirect (e.g., 302 Found, Location: /new-endpoint).
+Browser automatically follows that → lands on /new-endpoint → shows the expected content.
+When you ran plain curl (without -L) with the same UA, curl got that same 302 redirect response back — but just displayed it as-is (or showed nothing useful) instead of following it, since you never told it to.
+Once you added -L, curl started behaving like the browser: it saw the redirect and automatically followed it to the new endpoint — and boom, matching result.
+
+What You Learned
+This is a genuinely useful lesson for security testing, so let's nail it down clearly:
+
+curl does not follow redirects by default. You must add -L (or --location) if you want it to behave like a real browser when a server responds with a 3xx status code and a Location header.
+"Copy as cURL" from DevTools also does not add -L automatically. So even a perfectly copied browser request will not auto-follow redirects unless you add the flag yourself. This is a common trap — people assume "Copy as cURL" gives them 100% browser-equivalent behavior, but it doesn't include this one crucial piece.
+To debug UA-based routing/redirect logic properly, always check the status code first (curl -v shows this clearly) before assuming something JS-related or cookie-related is going on. A 301/302/303/307/308 status with a Location: header is the simplest and most common explanation — and it's easy to overlook because curl "silently" doesn't act on it unless asked.
+
+Quick reference for next time you test something like this:
+bashcurl -v -H "User-Agent: <ua>" http://target        # -v shows you the status code and headers, so you can SEE the redirect happening
+curl -L -H "User-Agent: <ua>" http://target         # -L makes curl follow it, like a browser would
+This lines up nicely with your ethical hacking / Red Hat Ethical Hacker background too — UA-based conditional redirects are a real pattern you'll see in bug bounty and pentest work (e.g., mobile-only endpoints, bot-detection bypass pages, or hidden admin panels gated by a specific UA string). Good catch running this test carefully instead of assuming — that's exactly the kind of instinct that catches real bugs.
+
+END_NOTE
+
+
+## Step 3 -- Some Bypasses
+
+In this question we are asked that 
+
+FTP Password
