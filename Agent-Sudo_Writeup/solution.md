@@ -216,6 +216,9 @@ So we have recently found the username chris
 
 We are going to bruteforce the password this ftp user via the hydra
 
+
+Minor update
+
 > hydra -l <target_username> -P <wordlist.txt> ftp://<target_server>:21
 
 
