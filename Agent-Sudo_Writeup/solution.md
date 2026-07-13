@@ -275,3 +275,141 @@ Meaning our zip file  is there we gonna extarct it by
 ```
 binwalk -e cute-alien.jpg
 ```
+
+after this i got a folder with named
+
+_cute-alien.jpg
+
+And it gave me 3 files.
+
+``` 365 365.zlib 8702.zip ```
+
+Now the file 8702.zip is password proctected.
+
+For this we're going to break this with this trick.
+
+first going to convert the zip to hash with 
+
+zip2john 8702.zip > zip.hash
+
+Next we're going to break it with john 
+
+``` john --wordlist=/home/Seclists/Passwords/Common-Credentials/xato-net-10-million-passwords-1000000.txt zip.hash 
+```
+
+And we will get the pass.
+
+then when we unzip it with passphrase. i got this context
+
+```
+Agent C,
+
+We need to send the picture to 'QXJlYTUx' as soon as possible!
+
+By,
+Agent R
+```
+
+Now lets come on to our next file that is 365.zlip which contains 2 file which can be verified with this output
+
+```
+7z l 365.zlib 
+
+7-Zip 26.02 (x64) : Copyright (c) 1999-2026 Igor Pavlov : 2026-06-25
+ 64-bit locale=en_US.UTF-8 Threads:2 OPEN_MAX:4096, ASM
+
+Scanning the drive for archives:
+1 file, 33973 bytes (34 KiB)
+
+Listing archive: 365.zlib
+
+--
+Path = 365.zlib
+Type = zip
+Offset = 33693
+Physical Size = 280
+
+   Date      Time    Attr         Size   Compressed  Name
+------------------- ----- ------------ ------------  ------------------------
+2019-10-29 17:59:11 .....           86           98  To_agentR.txt
+------------------- ----- ------------ ------------  ------------------------
+2019-10-29 17:59:11                 86           98  1 files
+                                                       
+```
+
+What you're seeing is a file that isn't just a ZIP file. It's a larger file (365.zlib, 33,973 bytes) that contains an embedded ZIP archive starting at offset 33693.
+
+This line is the clue:
+
+Type = zip
+Offset = 33693
+Physical Size = 280
+
+It means:
+
+Total file size: 33973 bytes
+ZIP archive starts at byte 33693
+ZIP archive size: 280 bytes
+
+
+Now we are going to seprate both files with the command 
+
+``` dd if=365.zlib of=embedded.zip bs=1 skip=33693 ```
+ 
+and
+
+```dd if=365.zlib of=prefix.bin bs=1 count=33693 ```
+
+After this when we extracted the embedded.zip with the same cracked pass we got the same content that is
+
+```
+Agent C,
+
+We need to send the picture to 'QXJlYTUx' as soon as possible!
+
+By,
+Agent R
+```
+
+after it when i do more reseach on the prefix.bin i got that both the reuslt of 
+
+file 365 and file prefix.bin has same output.
+
+xxd 365 | tail -n 10 and xxd prefix.bin | tail -n 10 has too the same outputs.
+
+it could be verified using this command and its output 
+
+```
+ md5sum decoded.bin 365
+1e7ac52e2601e6722fda312938ab2c1d  decoded.bin
+1e7ac52e2601e6722fda312938ab2c1d  365
+```
+
+So here we tried QXJlYTUx as the steghide password of cute_alien.jpg
+
+So here we didn't get any data and said it is false password.
+
+Since the password is base64 encoded we decoded it with base64.
+
+and the result is Area51.
+
+after decrypting the file with that i got a file named messege.txt
+
+
+And the content within the messege.txt is 
+
+
+```
+Hi james,
+
+Glad you find this message. Your login password is hackerrules!
+
+Don't ask me why the password look cheesy, ask agent R who set this password for you.
+
+Your buddy,
+chris
+```
+
+Here we loggedin with james and got the user_flag.txt
+
+l
