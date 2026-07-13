@@ -234,3 +234,44 @@ I logged into the ftp and got these files
 Now we extract those files to our local machine and proceeding to our next question that is
 
 
+Then i checked are they those that they actually look.
+
+with these commands
+
+```
+$ file To_agentJ.txt                          
+To_agentJ.txt: ASCII text
+                                                                             
+$ file cutie.png    
+cutie.png: PNG image data, 528 x 528, 8-bit colormap, non-interlaced
+                                                                             
+$ file cute-alien.jpg 
+cute-alien.jpg: JPEG image data, JFIF standard 1.01, resolution (DPI), density 96x96, segment length 16, baseline, precision 8, 440x501, components 3
+
+```
+
+And now we're soure that they are actually they that they look.
+
+Since it looks ok but in this part of task there is one another question too that asks for what is the zip password.
+
+But we did't find any zip from python.
+
+We need to look deep into the files.
+
+I did binwalk for all these files but the result of "cutie.jpg" gave me something relevent that is 
+
+```
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             PNG image, 528 x 528, 8-bit colormap, non-interlaced
+869           0x365           Zlib compressed data, best compression
+34562         0x8702          Zip archive data, encrypted compressed size: 98, uncompressed size: 86, name: To_agentR.txt
+34820         0x8804          End of Zip archive, footer length: 22
+```
+
+Meaning our zip file  is there we gonna extarct it by 
+
+```
+binwalk -e cute-alien.jpg
+```
