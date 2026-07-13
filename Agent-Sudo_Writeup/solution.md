@@ -153,7 +153,8 @@ Agent R
 it worked by browser method cuz with curl i didn't enabaled the redirect via the flag -L.
 
 
-: << END_NOTE '
+: << END_NOTE
+
 These are my notes.
 You can write multiple lines here.
 Bash ignores everything until END_NOTE.
