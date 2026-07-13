@@ -210,3 +210,25 @@ END_NOTE
 In this question we are asked that 
 
 FTP Password
+
+
+So we have recently found the username chris
+
+We are going to bruteforce the password this ftp user via the hydra
+
+> hydra -l <target_username> -P <wordlist.txt> ftp://<target_server>:21
+
+
+After this we got the password 
+
+I logged into the ftp and got these files 
+
+```
+-rw-r--r--    1 0        0             217 Oct 29  2019 To_agentJ.txt
+-rw-r--r--    1 0        0           33143 Oct 29  2019 cute-alien.jpg
+-rw-r--r--    1 0        0           34842 Oct 29  2019 cutie.png
+```
+
+Now we extract those files to our local machine and proceeding to our next question that is
+
+
