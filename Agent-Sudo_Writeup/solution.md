@@ -297,6 +297,8 @@ Next we're going to break it with john
 ``` john --wordlist=/home/Seclists/Passwords/Common-Credentials/xato-net-10-million-passwords-1000000.txt zip.hash 
 ```
 
+## Step 4 -- Strong Foothold
+
 And we will get the pass.
 
 then when we unzip it with passphrase. i got this context
@@ -412,4 +414,5 @@ chris
 
 Here we loggedin with james and got the user_flag.txt
 
-l
+
+## Step 5 --
