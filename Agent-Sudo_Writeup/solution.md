@@ -415,4 +415,14 @@ chris
 Here we loggedin with james and got the user_flag.txt
 
 
-## Step 5 --
+and we a pic too with named Alien_autopsy.jpg
+
+and the questio was What is the incident of the photo called?
+
+when i seach online that image i found the answer that was 
+
+Roswell alien autopsy >> and this was the answer too.
+
+## Step 5 -- Privilage Escalation
+
+For this part we are going to use linpeas-- a software that helps us in Privilage escalation
