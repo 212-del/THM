@@ -426,3 +426,11 @@ Roswell alien autopsy >> and this was the answer too.
 ## Step 5 -- Privilage Escalation
 
 For this part we are going to use linpeas-- a software that helps us in Privilage escalation
+
+Now this command will help us that as a current user can i set executable permission or not
+
+``` test -O any_filename && echo YES || echo NO```
+
+when i test this for the linpeas file 
+
+It said yes i could execute linpeas file so i put the linpeas in the tareget machine and run it on target machine.
