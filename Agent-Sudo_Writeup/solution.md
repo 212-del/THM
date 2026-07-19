@@ -88,7 +88,7 @@ Now when we did it we got something special text that is
 What are you doing! Are you one of the 25 employees? If not, I going to report this incident
 ```
 
-!(https://miro.medium.com/v2/resize:fit:700/1*O1KiwLBExHB-cq-HRet6og.png)
+![img](https://miro.medium.com/v2/resize:fit:700/1*O1KiwLBExHB-cq-HRet6og.png)
 
 And since whatever that program is saying i made a small script that will loop with all a to z as the value of user-agent.
 
@@ -153,6 +153,7 @@ Do you still remember our deal? Please tell agent J about the stuff ASAP. Also, 
 From,
 Agent R
 ```
+![img](https://miro.medium.com/v2/resize:fit:700/1*Ot3TlQWWC4hAkEw5hyboEQ.png)
 
 it worked by browser method cuz with curl i didn't enabaled the redirect via the flag -L.
 
@@ -227,6 +228,8 @@ We are going to bruteforce the password this ftp user via the hydra
 
 After this we got the password 
 
+![img](https://miro.medium.com/v2/resize:fit:671/1*bb_BGkUfpk5NcTrAGSPGiQ.png)
+
 I logged into the ftp and got these files 
 
 ```
@@ -234,6 +237,8 @@ I logged into the ftp and got these files
 -rw-r--r--    1 0        0           33143 Oct 29  2019 cute-alien.jpg
 -rw-r--r--    1 0        0           34842 Oct 29  2019 cutie.png
 ```
+
+![img](https://miro.medium.com/v2/resize:fit:570/1*wK9IzOCEp7gHprAs8s5r8g.png)
 
 Now we extract those files to our local machine and proceeding to our next question that is
 
@@ -274,6 +279,8 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 34820         0x8804          End of Zip archive, footer length: 22
 ```
 
+![img](https://miro.medium.com/v2/resize:fit:700/1*GuPdt_7sYc4CMge8LtONMw.png)
+
 Meaning our zip file  is there we gonna extarct it by 
 
 ```
@@ -300,6 +307,8 @@ Next we're going to break it with john
 
 ``` john --wordlist=/home/Seclists/Passwords/Common-Credentials/xato-net-10-million-passwords-1000000.txt zip.hash 
 ```
+
+![img](https://miro.medium.com/v2/resize:fit:700/1*OVryd4A1myGzVy3w86ju1w.png)
 
 ## Step 4 -- Strong Foothold
 
@@ -377,6 +386,8 @@ By,
 Agent R
 ```
 
+![img](https://miro.medium.com/v2/resize:fit:611/1*sj0knvbnirvMknYK7KlYqQ.png)
+
 after it when i do more reseach on the prefix.bin i got that both the reuslt of 
 
 file 365 and file prefix.bin has same output.
@@ -399,8 +410,9 @@ Since the password is base64 encoded we decoded it with base64.
 
 and the result is Area51.
 
-after decrypting the file with that i got a file named messege.txt
+after decrypting the file with steghide that i got me a file named messege.txt
 
+![img](https://miro.medium.com/v2/resize:fit:444/1*sUwChrdPIdF0GodD8Jju2w.png)
 
 And the content within the messege.txt is 
 
@@ -416,12 +428,18 @@ Your buddy,
 chris
 ```
 
+![img](https://miro.medium.com/v2/resize:fit:684/1*jRZ5Vc8DIwoef3FrT2PTyQ.png)
+
 Here we loggedin with james and got the user_flag.txt
 
 
 and we a pic too with named Alien_autopsy.jpg
 
+![img](https://miro.medium.com/v2/resize:fit:311/1*mOmvtqUB1wrfhj-magH5VQ.png)
+
 and the questio was What is the incident of the photo called?
+
+![img](https://miro.medium.com/v2/resize:fit:700/1*KrOEYj8cfmtX1ZSwJ3_K4A.png)
 
 when i seach online that image i found the answer that was 
 
@@ -455,6 +473,8 @@ User james may run the following commands on agent-sudo:
     (ALL, !root) /bin/bash
 ```
 
+![img](https://miro.medium.com/v2/resize:fit:700/1*P248QMU4rutDurymYLsAWw.png)
+
 If james does sudo /bin/bash, it will prevent escalation to UID 0 since !root is specified but what if we use a numeric ID instead of the root word
 
 ```
@@ -478,7 +498,52 @@ By,
 DesKel a.k.a Agent R
 
 ```
+
+![img](https://miro.medium.com/v2/resize:fit:700/1*7cnHWVP4gAu_zMi8Ny053Q.png)
 Issuing a sudo -l command shows that the current user could run (ALL, !root) /bin/bash command on the machine.
 
 Searching Google for this particular command gives the CVE number of this vulnerability.
 
+## Conclusion --
+Port scanned the target machine.
+
+
+Modified the user-agent to get FTP username.
+
+
+Brute-forced password for this user with Hydra.
+
+
+Logged-in with ftp, downloaded a couple of image files.
+
+
+Found a zip archive file within one image.
+
+
+Cracked the archive’s password with John the Ripper.
+
+
+Found message with a string encoded in base64.
+
+
+Decoded the string — found password for extracting data from the second picture.
+
+
+Within the second image file a message was found. It contained username and password of the second user.
+
+I used these credentials to SSH into the system.
+
+
+Got the user flag.
+
+
+User could run (ALL, !root) /bin/bash command on the target system.
+
+
+Found a CVE to exploit this command.
+
+
+Using this exploit I got the root shell.
+
+
+Obtained the root flag and the name of Agent R.
