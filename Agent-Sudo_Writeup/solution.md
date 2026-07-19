@@ -41,6 +41,8 @@ For this here is the simple loolipoop nmap command to scan for open ports.
 > nmap --top-ports 1000 <Ip of room>
 
 
+
+
 ## Step 2 -- Initial Foothold
 
 Lets Went to our second Question that is 
@@ -85,6 +87,8 @@ Now when we did it we got something special text that is
 ```
 What are you doing! Are you one of the 25 employees? If not, I going to report this incident
 ```
+
+!(https://miro.medium.com/v2/resize:fit:700/1*O1KiwLBExHB-cq-HRet6og.png)
 
 And since whatever that program is saying i made a small script that will loop with all a to z as the value of user-agent.
 
