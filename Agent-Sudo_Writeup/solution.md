@@ -500,6 +500,8 @@ DesKel a.k.a Agent R
 ```
 
 ![img](https://miro.medium.com/v2/resize:fit:700/1*7cnHWVP4gAu_zMi8Ny053Q.png)
+
+
 Issuing a sudo -l command shows that the current user could run (ALL, !root) /bin/bash command on the machine.
 
 Searching Google for this particular command gives the CVE number of this vulnerability.
