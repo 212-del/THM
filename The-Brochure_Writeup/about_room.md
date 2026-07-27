@@ -23,6 +23,17 @@ The brochure's hero photo has an AI fingerprint. Follow the account that posted 
       <stop offset="100%" stop-color="#FF8A4C"/>
     </radialGradient>
 
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- One sparkle -->
+    <polygon id="ray" points="39,2 41,15 39,13 37,15"
+             fill="#FFD23F"/>
   </defs>
 
   <!-- Outer sparkles -->
