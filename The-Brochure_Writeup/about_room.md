@@ -14,6 +14,8 @@ The brochure's hero photo has an AI fingerprint. Follow the account that posted 
 
 ##  🎯 Task 2: Osint... Hacker Holidays: Day 0
 
+![Points](https://img.shields.io/badge/Points-30-brightgreen?style=for-the-badge)
+
 
 |Questions   | Hints         |
 |------------|---------------|
