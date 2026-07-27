@@ -45,3 +45,81 @@ PORT   STATE SERVICE VERSION
 |_http-title: Endgame Trainer
 No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
 ```
+
+
+Lets undersand the board and position
+
+Here is the board 
+
+![Board](https://user-images.githubusercontent.com/99700157/189538278-7ead0640-6f7a-4939-8ed0-909fdb170996.png)
+
+Here the piece at the bottom left is at the position a1. 
+The Piece at the position bottom right is h1. 
+
+Similarly we could understand all positions.
+
+Here is something important stuff i leant that if we look at the request that is captured. 
+
+```REQ Body
+POST /api/move HTTP/1.1
+Host: 10.48.184.80
+Content-Length: 23
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36
+Content-Type: application/json
+Accept: */*
+Sec-GPC: 1
+Accept-Language: en-US,en;q=0.5
+Origin: http://10.48.184.80
+Referer: http://10.48.184.80/
+Accept-Encoding: gzip, deflate, br
+Cookie: sid=565b7c6c61e0860cf385d48f12e32cd1
+Connection: keep-alive
+
+{"from":"a1","to":"a8"}
+```
+
+Now In this we are moving the a1 piece. i.e. Elephant
+
+To the postion a8 to checkmate.
+
+In the response i got 
+
+```Res Body
+
+HTTP/1.1 400 Bad Request
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 80
+ETag: W/"50-vbVldvUULxPq+DdD1STJ6cKrwtg"
+Date: Mon, 27 Jul 2026 02:21:30 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"ok":false,"error":"illegal move","fen":"6k1/5ppp/8/8/5PPP/8/R7/6K1 w - - 1 5"}
+```
+
+Now we're going to do the same stuff but by changing the approch that is we are going to intercept the req to /api/move in the Burp's Interceptor.
+
+
+So here we intercept it in the interceptor i got the response 
+
+```RES BODY
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Set-Cookie: sid=037be96afbf97022794449c8712be884; Path=/; HttpOnly; SameSite=Lax
+Content-Type: application/json; charset=utf-8
+Content-Length: 155
+ETag: W/"9b-4UJFSVz7fqu+CivQPQPb7IbmWH0"
+Date: Mon, 27 Jul 2026 03:09:37 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+
+{"ok":true,"move":"a1a8","fen":"R5k1/5ppp/8/8/8/8/5PPP/6K1 b - - 1 1","status":"checkmate","turn":"b","winner":"white","flag":"THM{REDACTED}
+
+```
+
+But why i didn't get this in the repeater too. For this when i send the same req again into the repeater then i got the above response.
+
+It was a room glitch.
+
+So here in the response we got the flag.
