@@ -4,7 +4,7 @@
 
 <br/>
 
-[![TryHackMe](https://img.shields.io/badge/TryHackMe-Fools-Mate-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com)
+[![TryHackMe](https://img.shields.io/badge/TryHackMe-Fools--Mate-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com)
 [![Difficulty](https://img.shields.io/badge/Difficulty-Easy-brightgreen?style=for-the-badge&logo=shield&logoColor=white)]()
 [![Technique](https://img.shields.io/badge/Technique-Clickjacking-blue?style=for-the-badge&logo=php&logoColor=white)]()
 
