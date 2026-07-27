@@ -18,6 +18,12 @@ The brochure's hero photo has an AI fingerprint. Follow the account that posted 
   <img src="sun.svg" alt="Sun Icon" width="78">
 </p>
 
+<p align="center" style="color: #f0d9a8;>
+  Hacker Holidays · The Byte Lotus Hotel
+</p>
+
+<p style="font-size: 24px;">The Brochure</p>
+
 |Questions   | Hints         |
 |------------|---------------|
 |What is the flag? | Nothing |
