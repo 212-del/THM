@@ -6,7 +6,7 @@
 
 [![TryHackMe](https://img.shields.io/badge/TryHackMe-AgentT-red?style=for-the-badge&logo=tryhackme&logoColor=white)](https://tryhackme.com)
 [![Difficulty](https://img.shields.io/badge/Difficulty-Easy-brightgreen?style=for-the-badge&logo=shield&logoColor=white)]()
-[![Technique](https://img.shields.io/badge/Technique-RCE%20%7C%20PHP%208.1.0--dev-blue?style=for-the-badge&logo=php&logoColor=white)]()
+[![Technique](https://img.shields.io/badge/Technique-Clickjacking-blue?style=for-the-badge&logo=php&logoColor=white)]()
 
 </div>
 
