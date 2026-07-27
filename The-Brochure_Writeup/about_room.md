@@ -21,7 +21,11 @@ The brochure's hero photo has an AI fingerprint. Follow the account that posted 
 ![Category](https://img.shields.io/badge/Category-OSINT-yellow?style=for-the-badge)
 ![Difficulty](https://img.shields.io/badge/Difficulty-Easy-blue?style=for-the-badge)
 
+
+
 </p>
+
+
 
 ###🛎️ Concierge Briefing
 
