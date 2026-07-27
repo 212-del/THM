@@ -14,7 +14,9 @@ The brochure's hero photo has an AI fingerprint. Follow the account that posted 
 
 ##  🎯 Task 2: Osint... Hacker Holidays: Day 0
 
-![sun](sun.svg)
+<p align="center">
+  <img src="sun.svg" alt="Sun Icon" width="78">
+</p>
 
 |Questions   | Hints         |
 |------------|---------------|
