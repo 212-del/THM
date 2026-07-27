@@ -22,7 +22,7 @@ The brochure's hero photo has an AI fingerprint. Follow the account that posted 
   Hacker Holidays · The Byte Lotus Hotel
 </p>
 
-<p style="font-size: 24px;"><b>The Brochure</b></p>
+<p style="font-size: 52px;"><b>The Brochure</b></p>
 
 |Questions   | Hints         |
 |------------|---------------|
