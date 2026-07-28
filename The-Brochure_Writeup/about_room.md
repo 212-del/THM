@@ -48,12 +48,9 @@ Follow the trail, uncover the hidden connection, and find what was left behind.
 
   <img src="https://img.shields.io/badge/OSINT-F0883E" alt="OSINT">&nbsp;
 
-
   <img src="https://img.shields.io/badge/Social%20Media-F0883E" alt="Social Media">&nbsp;
 
-
   <img src="https://img.shields.io/badge/Image%20Analysis-F0883E" alt="Image Analysis">&nbsp;&nbsp;&nbsp;&nbsp;
-
 
   <img src="https://img.shields.io/badge/Beginner-F0883E" alt="Beginner">&nbsp;
 
