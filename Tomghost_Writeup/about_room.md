@@ -31,6 +31,3 @@ Admins Note: This room contains inappropriate content in the form of a username 
 | Escalate privileges and obtain root.txt | Nothing |
 
 
-|Questions   | Hints         |
-|------------|---------------|
-|What is the flag? | Nothing |
