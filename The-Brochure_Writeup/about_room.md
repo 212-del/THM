@@ -49,12 +49,14 @@ Follow the trail, uncover the hidden connection, and find what was left behind.
 
 <p align="center">
 
-<img src="https://img.shields.io/badge/OSINT-#F0883E" alt="OSINT">
-<img src="https://img.shields.io/badge/Social%20Media-F0883E" alt="Social Media">
-<img src="https://img.shields.io/badge/Image%20Analysis-#F0883E" alt="Image Analysis">
-<img src="https://img.shields.io/badge/Beginner-#F0883E" alt="Beginner">
+  <img src="https://img.shields.io/badge/OSINT-#F0883E" alt="OSINT">
+  <img src="https://img.shields.io/badge/Social%20Media-F0883E" alt="Social Media">
+  <img src="https://img.shields.io/badge/Image%20Analysis-#F0883E" alt="Image Analysis">
+  <img src="https://img.shields.io/badge/Beginner-#F0883E" alt="Beginner">
 
 </p>
+
+
 |Questions   | Hints         |
 |------------|---------------|
 |What is the flag? | Nothing |
