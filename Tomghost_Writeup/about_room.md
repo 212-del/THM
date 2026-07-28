@@ -25,7 +25,10 @@ Admins Note: This room contains inappropriate content in the form of a username 
 
 </p>
 
-
+| Questions    | Hints		|
+|--------------|----------------|
+|Compromise this machine and obtain user.txt| Nothing|
+| Escalate privileges and obtain root.txt | Nothing |
 
 
 |Questions   | Hints         |
