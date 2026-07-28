@@ -39,7 +39,7 @@ And tehre was only 1 following that is "Vera"
 
 ![Vera](https://miro.medium.com/v2/resize:fit:388/format:webp/1*TZ0sGsbIXc5oxSHftaj4rQ.png)
 
-<p align="centre">
+<p align="center">
 
 <img src="https://miro.medium.com/v2/resize:fit:388/format:webp/1*TZ0sGsbIXc5oxSHftaj4rQ.png"  width="220" alt="Hacking Animation"/>
 
