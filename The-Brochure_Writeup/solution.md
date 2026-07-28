@@ -56,3 +56,5 @@ So i Stiched them together and here is the final result after stitching and deco
 
 ![Flag](https://miro.medium.com/v2/resize:fit:720/format:webp/1*e2dUCg8hEPe3IFf11lmCwg.png)
 
+
+And in this way the room ends well.
