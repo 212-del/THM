@@ -26,7 +26,7 @@ After searching the Hotel name on web we got a instagram attached to this hotel.
 
 ![hotel](https://miro.medium.com/v2/resize:fit:720/format:webp/1*12KGNHizOfbS3Z7nV2GWcA.png)
 
-And here is one of the image in the post 
+And here is one of the image in the post and this is the same image that is in the task zip file that is provided by the room.
 
 ![post](https://miro.medium.com/v2/resize:fit:720/format:webp/1*0CgpOH5HEUppSkMJ3K01VQ.png)
 
@@ -39,6 +39,6 @@ And tehre was only 1 following that is "Vera"
 
 ![Vera](https://miro.medium.com/v2/resize:fit:388/format:webp/1*TZ0sGsbIXc5oxSHftaj4rQ.png)
 
-now here is the accound of vera
+now here is the accound of vera that is "veratheconcierge"
 
 ![vera](https://miro.medium.com/v2/resize:fit:720/format:webp/1*_d69yrOXKwjdWs1pWVibjA.png)
