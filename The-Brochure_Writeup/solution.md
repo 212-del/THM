@@ -37,7 +37,6 @@ So we Checked who they were following, since the brief specifically said the tra
 
 And tehre was only 1 following that is "Vera"
 
-![Vera](https://miro.medium.com/v2/resize:fit:388/format:webp/1*TZ0sGsbIXc5oxSHftaj4rQ.png)
 
 <p align="center">
 
@@ -49,3 +48,11 @@ And tehre was only 1 following that is "Vera"
 now here is the accound of vera that is "veratheconcierge"
 
 ![vera](https://miro.medium.com/v2/resize:fit:720/format:webp/1*_d69yrOXKwjdWs1pWVibjA.png)
+
+
+All 3 Post contains a base64 encoded text splitted in 3 posts.
+
+So i Stiched them together and here is the final result after stitching and decodeing it
+
+![Flag](https://miro.medium.com/v2/resize:fit:720/format:webp/1*e2dUCg8hEPe3IFf11lmCwg.png)
+
