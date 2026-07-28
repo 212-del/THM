@@ -46,7 +46,7 @@ Follow the trail, uncover the hidden connection, and find what was left behind.
 
 <p align="center">
 
-  <img src="https://img.shields.io/badge/OSINT-F0883E" alt="OSINT" width="120">
+  <img src="https://img.shields.io/badge/OSINT-F0883E" alt="OSINT" width="120" height="20">
 
   <img src="https://img.shields.io/badge/Social%20Media-F0883E" alt="Social Media">
 
