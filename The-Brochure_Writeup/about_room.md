@@ -41,6 +41,10 @@ Follow the trail, uncover the hidden connection, and find what was left behind.
 - [ ]  Submit the flag.
 
 
+![Image](https://miro.medium.com/v2/resize:fit:640/format:webp/1*27F3PFEWHirp41UqRC6Vyg.png)
+
+
+![image](https://img.shields.io/badge/Build-Passing-brightgreen?style=social)
 
 |Questions   | Hints         |
 |------------|---------------|
