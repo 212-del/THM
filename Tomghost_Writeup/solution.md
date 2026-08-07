@@ -118,3 +118,53 @@ Something interesting was shown when listing the content of the user directory, 
 
 
 **tryhackme.asc:** this is a key file that we have to crack in order to get the paraphrase that will be used to decrypt the credential.pgp file.
+
+
+In order to start the cracking processing of “tryhackme.asc”, I started to copy these files to my local machine first, by typing:
+
+
+```
+scp skyfuck@tomghost.thm:/home/skyfuck/tryhackme.asc .
+
+```
+
+> SCP (secure copy) command in the Linux system is used to copy file(s) between servers in a secure way.
+
+![img](https://miro.medium.com/v2/resize:fit:720/format:webp/1*tXto2Nb145Jw83TyJNOOnw.png)
+
+We can save this file using others methods too.
+
+Now after getting the hash anyhow we willl convert this key to hash 
+
+using the
+
+gpg2john tryhack.asc > hash
+
+Now crack it with john 
+
+john --wordlist=rockyou.txt hash
+
+
+And we got the key as 
+
+alexandru        (tryhackme) 
+
+Now since I have the cracked password I can decrypt the credential.pgp by using :
+
+gpg --import tryhackme.asc
+
+Since its a .pgp file we will be using gpg to decrypt.
+
+— import : is used to import the key file
+
+gpg -d credential.pgp
+
+— d: is used to decrypt the .pgp file.
+
+And then you will be prompted to enter the cracked password from the tryhackme.asc file.
+
+![img](https://miro.medium.com/v2/resize:fit:720/format:webp/1*I_PpKQVVHnD8zsvh23sYBQ.png)
+
+Now we could login merlin with ssh credentials
+
+
