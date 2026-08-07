@@ -48,4 +48,73 @@ Now we have 4 services
 - http
 
 
-Here when searched the version number
+Here when searched the ajp on exploitdb it showed me few results.
+
+
+But the exploit tahat could actrully exploit the service ajp was via the msfconsole so i started the msfconsole 
+
+And inside the msfconsole i searched "search 2020-1938* 
+
+cuz this was the one cve in that exploit that could exploit the ajp actaully.
+
+
+![exploit](https://miro.medium.com/v2/resize:fit:720/format:webp/1*AdiOiGDSxg325qUna2baSw.pngA)
+
+Now we could use it by setting it 
+
+with the command 
+
+```
+use auxiliary/admin/http/tomcat_ghostcat
+```
+
+![exploit](https://miro.medium.com/v2/resize:fit:720/format:webp/1*WMP7oOizuzfKztLhTh-4ag.png)
+
+And saw what we need to set to run this auxiliary by the commadn 
+
+
+```
+show options
+```
+
+![options](https://miro.medium.com/v2/resize:fit:720/format:webp/1*Ta50i0n3GCsox_2Fuov5pg.png)
+
+
+what we need to set is the rhost and we set it by the command 
+
+
+```
+set RHOSTS 10.112.188.87
+```
+
+And now we see again that it is being set or not so we did the show options again 
+
+![options](https://miro.medium.com/v2/resize:fit:720/format:webp/1*0MQAw6-tCaPk4PRXjeYp1w.png)
+
+And here we are ready to go so we hit run .
+
+and we got something crutial.
+
+![user](https://miro.medium.com/v2/resize:fit:720/format:webp/1*foyKD0ASaZMQuL4FevQlcQ.png)
+
+Here we have a user named skyroot and his password too.
+
+We're going to login to ssh with this user and password.
+
+![gotin](https://miro.medium.com/v2/resize:fit:720/format:webp/1*9xQ8U_XdHGuY5bASfXujRA.png)
+
+Here we're in.
+
+
+As expected, this is an actual user of the machine, and simply by navigating through the machine, I was able to find the user flag.
+
+![mage](https://miro.medium.com/v2/resize:fit:720/format:webp/1*c1wqPjvWTIzzpPXXpaUXKQ.png)
+
+Something interesting was shown when listing the content of the user directory, as you can see we found 2 files :
+
+
+
+**credential.pgp:** this PGP file is an encrypted file that might contain credentials for another user and can only be decrypted by a paraphrase to check its content.
+
+
+**tryhackme.asc:** this is a key file that we have to crack in order to get the paraphrase that will be used to decrypt the credential.pgp file.
